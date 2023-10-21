@@ -1,4 +1,4 @@
-import { relations } from 'drizzle-orm';
+import { relations, getTableColumns } from 'drizzle-orm';
 import { pgTable, text, timestamp } from 'drizzle-orm/pg-core';
 
 import { stores } from './store.js';
@@ -15,3 +15,8 @@ export const users = pgTable('user', {
 export const usersRelations = relations(users, ({ many }) => ({
   stores: many(stores),
 }));
+
+export type User = Omit<typeof users.$inferSelect, 'password'>;
+
+const { password, ...userFields } = getTableColumns(users);
+export { userFields };
