@@ -1,14 +1,16 @@
-export const siteConfig = {
+export const siteConfig: SiteConfig = {
   title: 'BuyAt.store',
-  navLinks: [
-    {
-      label: 'Shoes',
-      path: '/shoes',
-    },
-    {
-      label: 'Jeans',
-      path: '/jeans',
-    },
-  ],
+  navLinks: [],
   coverImage: 'src/assets/images/background-1.png',
 };
+
+interface SiteConfig {
+  title: string;
+  navLinks: Array<NavLink>;
+  coverImage: string;
+}
+
+interface NavLink {
+  label: string;
+  path: string;
+}

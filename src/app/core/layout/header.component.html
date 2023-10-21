@@ -2,7 +2,7 @@
   <div class="header__container">
     <div class="header__left">
       <a class="header__logo" [routerLink]="'/'">{{ title }}</a>
-      <nav class="header__nav">
+      <nav class="header__nav" *ngIf="navLinks.length">
         <a
           class="header__nav-link"
           *ngFor="let navLink of navLinks"
