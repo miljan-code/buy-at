@@ -4,6 +4,9 @@
 .home {
   &__hero {
     position: relative;
+
+    max-width: $bp-largest;
+    margin: 0 auto;
     padding: 12px 0;
 
     &-img {
