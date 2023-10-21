@@ -1,0 +1,24 @@
+@import "../../../styles/mixins";
+@import "../../../styles/variables";
+
+.home {
+  &__hero {
+    position: relative;
+    padding: 12px 0;
+
+    &-img {
+      width: 100%;
+      height: 350px;
+
+      object-fit: cover;
+      border-radius: 12px;
+    }
+
+    &-title {
+      @include center-absolute;
+
+      font-family: $font-heading;
+      font-size: 48px;
+    }
+  }
+}

@@ -10,4 +10,5 @@ export const siteConfig = {
       path: '/jeans',
     },
   ],
+  coverImage: 'src/assets/images/background-1.png',
 };

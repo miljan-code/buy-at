@@ -10,7 +10,7 @@ import { HeaderComponent } from './core/layout/header.component';
   imports: [CommonModule, RouterOutlet, HeaderComponent],
   template: `
     <app-header />
-    <main>
+    <main class="main">
       <router-outlet />
     </main>
   `,

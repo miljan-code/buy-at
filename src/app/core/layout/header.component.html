@@ -6,7 +6,7 @@
         <a
           class="header__nav-link"
           *ngFor="let navLink of navLinks"
-          [routerLink]="navLink.path"
+          [routerLink]="'/category' + navLink.path"
           >{{ navLink.label }}</a
         >
       </nav>
