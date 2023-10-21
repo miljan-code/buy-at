@@ -4,7 +4,7 @@ export const siteConfig: SiteConfig = {
   coverImage: 'src/assets/images/background-1.png',
 };
 
-interface SiteConfig {
+export interface SiteConfig {
   title: string;
   navLinks: Array<NavLink>;
   coverImage: string;
