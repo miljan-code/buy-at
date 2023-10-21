@@ -1,0 +1,61 @@
+@import "../../../styles/variables";
+
+.header {
+  border-bottom: 1px solid $color-border;
+
+  &__container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    max-width: $bp-largest;
+    margin: 0 auto;
+
+    padding: $section-padding;
+  }
+
+  &__left {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+  }
+
+  &__logo {
+    font-family: $font-primary;
+    font-weight: 600;
+    font-size: 1.6rem;
+  }
+
+  &__nav {
+    display: flex;
+    gap: 8px;
+
+    &-link {
+      color: $color-white-hover;
+      transition: 0.3s;
+
+      &:hover {
+        color: $color-white;
+      }
+    }
+  }
+
+  &__cart-button {
+    font-size: 16px;
+    color: $color-black;
+
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    background-color: $color-white;
+    padding: 8px 16px;
+    border-radius: $rounded-full;
+    transition: 0.3s;
+    cursor: pointer;
+
+    &:hover {
+      background-color: $color-white-hover;
+    }
+  }
+}

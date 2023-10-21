@@ -1,0 +1,19 @@
+// COLORS
+$color-border: var(--gray-800);
+$color-white: var(--surface-900);
+$color-black: var(--surface-0);
+
+$color-white-hover: darken(white, 20%);
+
+// PADDINGS & MARGINS
+$section-padding: 16px 24px;
+
+// RADIUS
+$rounded-full: 9999px;
+
+// FONT
+$font-primary: "Inter", sans-serif;
+$font-heading: "Heading", sans-serif;
+
+// SCREENS
+$bp-largest: 75em; // 1200px

@@ -1,0 +1,21 @@
+<header class="header">
+  <div class="header__container">
+    <div class="header__left">
+      <a class="header__logo" [routerLink]="'/'">{{ title }}</a>
+      <nav class="header__nav">
+        <a
+          class="header__nav-link"
+          *ngFor="let navLink of navLinks"
+          [routerLink]="navLink.path"
+          >{{ navLink.label }}</a
+        >
+      </nav>
+    </div>
+    <div class="header__right">
+      <a class="header__cart-button" [routerLink]="'/cart'">
+        <span class="pi pi-shopping-bag" style="font-size: 16px"></span>
+        <span class="">0</span>
+      </a>
+    </div>
+  </div>
+</header>
