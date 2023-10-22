@@ -1,6 +1,10 @@
-import jwt from 'jsonwebtoken';
 import type { Response } from 'express';
-import type { User } from '../db/schema/user.js';
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+
+import type { User } from '../types/prisma.js';
+
+dotenv.config();
 
 interface UserId {
   userId: User['id'];
@@ -12,11 +16,10 @@ declare module 'jsonwebtoken' {
 
 const jwtSecret = {
   key: process.env.JWT_SECRET,
-  passphrase: process.env.JWT_PASSPHRASE,
 };
 
 export const generateToken = (res: Response, userId: User['id']) => {
-  const token = jwt.sign({ userId }, jwtSecret, { expiresIn: '7d' });
+  const token = jwt.sign({ userId }, jwtSecret.key, { expiresIn: '7d' });
 
   res.cookie('jwt', token, {
     httpOnly: true,

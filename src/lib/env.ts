@@ -4,7 +4,6 @@ const envVariables = z.object({
   NODE_ENV: z.union([z.literal('development'), z.literal('production')]),
   DATABASE_URL: z.string(),
   JWT_SECRET: z.string(),
-  JWT_PASSPHRASE: z.string(),
 });
 
 envVariables.parse(process.env);
