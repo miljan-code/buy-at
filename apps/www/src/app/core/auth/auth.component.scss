@@ -1,0 +1,44 @@
+@import '../../../styles/variables';
+@import '../../../styles/mixins';
+
+.auth {
+  margin: 0 auto;
+  padding: $section-padding;
+  max-width: $bp-largest;
+  height: calc(100vh - $header-height);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &__header {
+    font-size: 1.8rem;
+  }
+
+  &__subheader {
+    color: $color-muted;
+    margin-bottom: 32px;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &__form-group {
+    @include form-group;
+  }
+
+  &__info-text {
+    margin-top: 24px;
+    font-size: 13px;
+
+    &--link {
+      color: $color-primary;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+      cursor: pointer;
+    }
+  }
+}

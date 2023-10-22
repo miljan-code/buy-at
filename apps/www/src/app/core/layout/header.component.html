@@ -1,0 +1,24 @@
+<header class="header">
+  <div class="header__container">
+    <div class="header__left">
+      <a class="header__logo" [routerLink]="'/'">
+        <span>Buy</span>
+        <span
+          class="pi pi-at"
+          style="font-size: 16px; font-weight: 600; margin-top: 1px"
+        ></span>
+      </a>
+      <nav class="header__nav" *ngIf="navLinks.length">
+        <a
+          class="header__nav-link"
+          *ngFor="let navLink of navLinks"
+          [routerLink]="navLink.path"
+          >{{ navLink.label }}</a
+        >
+      </nav>
+    </div>
+    <div class="header__right">
+      <p-button [routerLink]="'/auth'" label="Login" />
+    </div>
+  </div>
+</header>

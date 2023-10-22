@@ -1,0 +1,22 @@
+// COLORS
+$color-background: var(--surface-ground);
+$color-border: var(--gray-800);
+$color-white: var(--surface-900);
+$color-black: var(--surface-0);
+$color-primary: var(--primary-color);
+
+$color-white-hover: darken(white, 20%);
+$color-muted: darken(white, 40%);
+
+// PADDINGS & MARGINS & HEIGHTS
+$header-height: 60px;
+$section-padding: 12px 24px;
+
+// RADIUS
+$rounded-full: 9999px;
+
+// FONT
+$font-primary: 'Inter', sans-serif;
+
+// SCREENS
+$bp-largest: 75em; // 1200px

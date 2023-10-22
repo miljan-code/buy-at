@@ -1,0 +1,42 @@
+<section class="auth">
+  <p-card [style]="{ width: '32rem' }">
+    <h2 class="auth__header">Sign in</h2>
+    <p class="auth__subheader">Please sign in to continue using BuyAt</p>
+    <form [formGroup]="loginForm" (ngSubmit)="signIn()" class="auth__form">
+      <div class="auth__form-group">
+        <label for="email">E-mail address</label>
+        <input id="email" type="email" pInputText formControlName="email" />
+        <p
+          *ngIf="loginForm.get('email')?.hasError('wrongEmail')"
+          style="color: var(--red-400)"
+        >
+          Email address is incorrect.
+        </p>
+      </div>
+      <div class="auth__form-group">
+        <label for="password">Password</label>
+        <input
+          id="password"
+          type="password"
+          pInputText
+          formControlName="password"
+        />
+        <p
+          *ngIf="loginForm.get('password')?.hasError('wrongPassword')"
+          style="color: var(--red-400)"
+        >
+          Password is incorrect.
+        </p>
+      </div>
+      <p-button
+        label="Sign in"
+        type="submit"
+        [style]="{ 'margin-top': '12px' }"
+      ></p-button>
+    </form>
+    <p class="auth__info-text">
+      Don't have an account?
+      <span class="auth__info-text--link">Sign up here</span>.
+    </p>
+  </p-card>
+</section>
