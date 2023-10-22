@@ -8,7 +8,7 @@ export const errorHandler = (
   error: unknown,
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   if (error instanceof z.ZodError) {
     return res.status(422).json({
