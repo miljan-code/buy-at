@@ -1,11 +1,10 @@
 import type { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import asyncHandler from 'express-async-handler';
-import { eq } from 'drizzle-orm';
 
-import { db } from '../db/index.js';
+import { db } from '../lib/db.js';
 import { CustomError } from '../lib/exceptions.js';
-import { users, userFields, type User } from '../db/schema/user.js';
+import type { User } from '../types/prisma.js';
 
 declare global {
   namespace Express {
@@ -24,13 +23,15 @@ export const authentication = asyncHandler(
       throw new CustomError('Not authorized', 401);
     }
 
-    const [user] = await db
-      .select(userFields)
-      .from(users)
-      .where(eq(users.id, decoded.userId));
+    const user = await db.user.findUnique({
+      where: {
+        id: decoded.userId,
+      },
+    });
     if (!user) throw new CustomError('User not found', 404);
+    const { password, ...userWithoutPassword } = user;
 
-    res.locals.user = user;
+    res.locals.user = userWithoutPassword;
     next();
   }
 );
