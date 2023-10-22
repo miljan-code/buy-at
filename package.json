@@ -1,45 +1,16 @@
 {
-  "name": "buyat-ng",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "type": "module",
+  "name": "buyat",
   "scripts": {
-    "build": "tsup",
-    "lint": "tsc",
-    "start:server": "nodemon dist/index.js",
-    "dev:server": "concurrently \"tsup --watch\" \"nodemon -q dist/index.js\"",
-    "dev:template": "cd template && ng serve --o --live-reload true --disable-host-check",
-    "dev:www": "cd www && ng serve --port=4201",
-    "db:generate": "drizzle-kit generate:pg --config=drizzle.config.ts"
+    "dev:api": "pnpm --filter api dev",
+    "dev:template": "pnpm --filter template start --o --live-reload true --disable-host-check",
+    "dev:www": "pnpm --filter www start --port=4201",
+    "prepare": "husky install"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "@paralleldrive/cuid2": "^2.2.2",
-    "@prisma/client": "^5.4.2",
-    "bcryptjs": "^2.4.3",
-    "cookie-parser": "^1.4.6",
-    "cors": "^2.8.5",
-    "dotenv": "^16.3.1",
-    "express": "^4.18.2",
-    "express-async-handler": "^1.2.0",
-    "jsonwebtoken": "^9.0.2",
-    "zod": "^3.22.4"
+    "husky": "^8.0.3"
   },
   "devDependencies": {
-    "@total-typescript/ts-reset": "^0.5.1",
-    "@types/bcryptjs": "^2.4.5",
-    "@types/cookie-parser": "^1.4.5",
-    "@types/cors": "^2.8.15",
-    "@types/express": "^4.17.20",
-    "@types/jsonwebtoken": "^9.0.4",
-    "@types/node": "^20.8.7",
-    "concurrently": "^8.2.2",
-    "nodemon": "^3.0.1",
-    "prisma": "^5.4.2",
-    "tsup": "^7.2.0",
-    "typescript": "^5.2.2"
+    "prettier": "^3.0.3",
+    "husky": "^8.0.0"
   }
 }
