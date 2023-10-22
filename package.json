@@ -10,6 +10,7 @@
     "start:server": "nodemon dist/index.js",
     "dev:server": "concurrently \"tsup --watch\" \"nodemon -q dist/index.js\"",
     "dev:template": "cd template && ng serve --o --live-reload true --disable-host-check",
+    "dev:www": "cd www && ng serve --port=4201",
     "db:generate": "drizzle-kit generate:pg --config=drizzle.config.ts"
   },
   "keywords": [],
