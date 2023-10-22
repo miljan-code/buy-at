@@ -12,7 +12,7 @@ const authRoutes = express.Router();
 
 authRoutes.post('/register', registerUser);
 authRoutes.post('/login', loginUser);
-authRoutes.post('/logout', logoutUser);
+authRoutes.get('/logout', logoutUser);
 authRoutes.get('/', authentication, getCurrentUser);
 
 export { authRoutes };
