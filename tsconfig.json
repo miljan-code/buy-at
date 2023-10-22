@@ -12,5 +12,5 @@
     "forceConsistentCasingInFileNames": true,
     "moduleResolution": "node16"
   },
-  "exclude": ["node_modules", "template"]
+  "exclude": ["node_modules", "template", "www"]
 }
