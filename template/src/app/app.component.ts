@@ -30,13 +30,19 @@ export class AppComponent implements OnInit, OnDestroy {
     this.configService
       .getConfig()
       .pipe(takeUntil(this.destroy$))
-      .subscribe((config) => {
-        if (!config && currentLocation !== this.mainAppUrl) {
+      .subscribe({
+        next: (config) => {
+          if (!config && currentLocation !== this.mainAppUrl) {
+            window.location.href = this.mainAppUrl;
+            return;
+          }
+
+          if (config) this.configService.config.next(config);
+        },
+        error: () => {
           window.location.href = this.mainAppUrl;
           return;
-        }
-
-        if (config) this.configService.config.next(config);
+        },
       });
   }
 

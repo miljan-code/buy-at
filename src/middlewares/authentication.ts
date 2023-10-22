@@ -16,9 +16,11 @@ declare global {
 
 export const authentication = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
+    console.log(req.cookies);
     const token = req.cookies.jwt as string | undefined;
     if (!token) throw new CustomError('Unauthorized', 401);
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
     if (typeof decoded === 'string' || !decoded.exp) {
       throw new CustomError('Not authorized', 401);
     }

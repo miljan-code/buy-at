@@ -15,6 +15,22 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  stores Store[]
+
   @@index([email])
   @@map(name: "users")
+}
+
+model Store {
+  id        String   @id @unique
+  name      String
+  slug      String   @unique
+  ownerId   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  owner User @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+
+  @@index([slug])
+  @@map(name: "stores")
 }

@@ -6,7 +6,7 @@ import {
   logoutUser,
   registerUser,
 } from '../controllers/auth-controller.js';
-import { authentication } from '../middlewares/auth-middleware.js';
+import { authentication } from '../middlewares/authentication.js';
 
 const authRoutes = express.Router();
 
