@@ -17,6 +17,13 @@
   margin: 0 auto;
 }
 
+@mixin flex-between($direction: row) {
+  display: flex;
+  flex-direction: $direction;
+  align-items: center;
+  justify-content: space-between;
+}
+
 @mixin gradient-primary {
   background: linear-gradient(to right, var(--indigo-500), var(--primary-700));
 }

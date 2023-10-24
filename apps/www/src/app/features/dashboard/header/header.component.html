@@ -1,0 +1,15 @@
+<header class="header">
+  <div class="header__container">
+    <a class="header__logo" [routerLink]="'/dashboard'">
+      <span>Buy</span>
+      <span
+        class="pi pi-at"
+        style="font-size: 16px; font-weight: 600; margin-top: 1px"
+      ></span>
+    </a>
+    <div class="header__user">
+      <span>{{ currentUser?.name }}</span>
+      <span (click)="signOut()" class="pi pi-sign-out icon"></span>
+    </div>
+  </div>
+</header>
