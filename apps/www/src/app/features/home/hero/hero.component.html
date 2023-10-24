@@ -1,0 +1,19 @@
+<div class="hero">
+  <div class="hero__background"></div>
+  <a class="hero__link"
+    >Making E-Commerce Accessable for Everyone &nbsp;&nbsp;&rarr;</a
+  >
+  <h2 class="hero__label">Start Your Business Today</h2>
+  <p class="hero__sublabel">
+    BuyAt is supporting the next generation of entrepreneurs,<br />
+    the world’s biggest brands, and everyone in between
+  </p>
+  <div class="hero__buttons">
+    <a
+      pButton
+      [routerLink]="currentUser ? '/dashboard' : '/auth'"
+      label="Get started"
+    ></a>
+    <a pButton label="See demo" target="_blank" href="https://google.com"></a>
+  </div>
+</div>

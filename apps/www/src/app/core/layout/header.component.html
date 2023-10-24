@@ -17,9 +17,12 @@
         >
       </nav>
     </div>
-    <div class="header__right">
-      <p-button [routerLink]="'/auth'" label="Sign in" *ngIf="!currentUser" />
-      <p-button (click)="signOut()" label="Sign out" *ngIf="currentUser" />
+    <div class="header__right" *ngIf="currentUser">
+      <a pButton [routerLink]="'/dashboard'" label="Dashboard"></a>
+      <span (click)="signOut()" class="pi pi-sign-out icon"></span>
+    </div>
+    <div class="header__right" *ngIf="!currentUser">
+      <a pButton [routerLink]="'/auth'" label="Sign in"></a>
     </div>
   </div>
 </header>

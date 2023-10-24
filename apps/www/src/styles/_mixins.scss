@@ -11,3 +11,12 @@
   flex-direction: column;
   gap: 0.5rem;
 }
+
+@mixin container {
+  max-width: $bp-largest;
+  margin: 0 auto;
+}
+
+@mixin gradient-primary {
+  background: linear-gradient(to right, var(--indigo-500), var(--primary-700));
+}

@@ -55,6 +55,12 @@ export class AuthComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.authService.currentUser$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((user) => {
+        if (user) this.router.navigateByUrl('');
+      });
+
     this.loginForm = new FormGroup<LoginForm>({
       email: new FormControl('', {
         validators: [Validators.required],

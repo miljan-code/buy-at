@@ -1,0 +1,10 @@
+@import '../../../styles/variables';
+@import '../../../styles/mixins';
+
+.home {
+  &__container {
+    @include container;
+
+    padding: $section-padding;
+  }
+}

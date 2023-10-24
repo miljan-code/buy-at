@@ -1,7 +1,8 @@
 @import '../../../styles/variables';
+@import '../../../styles/mixins';
 
 .header {
-  border-bottom: 1px solid $color-border;
+  // border-bottom: 1px solid $color-border;
   height: $header-height;
 
   &__container {
@@ -9,8 +10,7 @@
     align-items: center;
     justify-content: space-between;
 
-    max-width: $bp-largest;
-    margin: 0 auto;
+    @include container;
 
     height: 100%;
     padding: 0 24px;
@@ -45,4 +45,16 @@
       }
     }
   }
+
+  &__right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+}
+
+.icon {
+  font-size: 16px;
+  color: $color-primary;
+  cursor: pointer;
 }
