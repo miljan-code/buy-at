@@ -1,0 +1,27 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+
+  font-family: $font-primary;
+}
+
+html {
+  box-sizing: border-box;
+  font-size: 14px;
+
+  height: 100%;
+}
+
+body {
+  font-family: $font-primary;
+  font-size: 14px;
+
+  background-color: $color-background;
+  color: $color-white;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}

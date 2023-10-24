@@ -1,0 +1,48 @@
+@import '../../../styles/variables';
+
+.header {
+  border-bottom: 1px solid $color-border;
+  height: $header-height;
+
+  &__container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    max-width: $bp-largest;
+    margin: 0 auto;
+
+    height: 100%;
+    padding: 0 24px;
+  }
+
+  &__left {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+  }
+
+  &__logo {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    font-family: $font-primary;
+    font-weight: 600;
+    font-size: 1.6rem;
+  }
+
+  &__nav {
+    display: flex;
+    gap: 12px;
+
+    &-link {
+      color: $color-white-hover;
+      transition: 0.3s;
+
+      &:hover {
+        color: $color-white;
+      }
+    }
+  }
+}
