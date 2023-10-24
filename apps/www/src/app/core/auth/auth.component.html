@@ -8,7 +8,7 @@
         <input id="email" type="email" pInputText formControlName="email" />
         <p
           *ngIf="loginForm.get('email')?.hasError('wrongEmail')"
-          style="color: var(--red-400)"
+          class="form-error"
         >
           Email address is incorrect.
         </p>
@@ -23,7 +23,7 @@
         />
         <p
           *ngIf="loginForm.get('password')?.hasError('wrongPassword')"
-          style="color: var(--red-400)"
+          class="form-error"
         >
           Password is incorrect.
         </p>
@@ -36,7 +36,54 @@
     </form>
     <p class="auth__info-text">
       Don't have an account?
-      <span class="auth__info-text--link">Sign up here</span>.
+      <span (click)="handleDialog()" class="auth__info-text--link"
+        >Sign up here</span
+      >.
     </p>
   </p-card>
+
+  <p-dialog
+    [(visible)]="dialogVisible"
+    [draggable]="false"
+    [closable]="false"
+    [style]="{ width: '36rem' }"
+  >
+    <h2 class="auth__header">Sign up</h2>
+    <p class="auth__subheader">Please sign up to continue using BuyAt</p>
+    <form [formGroup]="registerForm" (ngSubmit)="signUp()" class="auth__form">
+      <div class="auth__form-group">
+        <label for="username">Username</label>
+        <input
+          id="username"
+          type="username"
+          pInputText
+          formControlName="username"
+        />
+      </div>
+      <div class="auth__form-group">
+        <label for="email">E-mail address</label>
+        <input id="email" type="email" pInputText formControlName="email" />
+      </div>
+      <div class="auth__form-group">
+        <label for="password">Password</label>
+        <input
+          id="password"
+          type="password"
+          pInputText
+          formControlName="password"
+        />
+      </div>
+      <p-button
+        label="Sign up"
+        type="submit"
+        [style]="{ 'margin-top': '12px' }"
+      ></p-button>
+    </form>
+    <p class="auth__info-text">
+      Already have an account?
+      <span (click)="handleDialog()" class="auth__info-text--link"
+        >Sign in here</span
+      >.
+    </p>
+  </p-dialog>
 </section>

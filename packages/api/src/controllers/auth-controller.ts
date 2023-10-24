@@ -5,7 +5,6 @@ import bcrypt from 'bcryptjs';
 
 import { db } from '../lib/db.js';
 import { generateToken } from '../lib/jwt.js';
-import { CustomError } from '../lib/exceptions.js';
 import {
   loginUserSchema,
   registerUserSchema,
@@ -19,7 +18,7 @@ const registerUser = asyncHandler(async (req: Request, res: Response) => {
   const user = await db.user.create({
     data: {
       id: createId(),
-      name: userData.name,
+      name: userData.username,
       email: userData.email,
       password: hashedPassword,
     },
@@ -40,17 +39,28 @@ const loginUser = asyncHandler(async (req: Request, res: Response) => {
     },
   });
   if (!user) {
-    throw new CustomError(
-      `User with email address ${userData.email} doesn't exist.`,
-      404
-    );
+    res.status(200).json({
+      status: 'fail',
+      data: {
+        errorName: 'wrongEmail',
+        message: `User with that email address doesn't exist`,
+      },
+    });
+    return;
   }
   const passwordIsCorrect = await bcrypt.compare(
     userData.password,
-    user.password
+    user.password,
   );
   if (!passwordIsCorrect) {
-    throw new CustomError('Password is incorrect.', 403);
+    res.status(200).json({
+      status: 'fail',
+      data: {
+        errorName: 'wrongPassword',
+        message: `Password is incorrect`,
+      },
+    });
+    return;
   }
 
   generateToken(res, user.id);

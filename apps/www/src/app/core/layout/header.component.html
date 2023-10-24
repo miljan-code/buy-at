@@ -18,7 +18,8 @@
       </nav>
     </div>
     <div class="header__right">
-      <p-button [routerLink]="'/auth'" label="Login" />
+      <p-button [routerLink]="'/auth'" label="Sign in" *ngIf="!currentUser" />
+      <p-button (click)="signOut()" label="Sign out" *ngIf="currentUser" />
     </div>
   </div>
 </header>
