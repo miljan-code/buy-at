@@ -45,4 +45,23 @@ const getStore = asyncHandler(async (req: Request, res: Response) => {
   res.status(200).json(storeConfig);
 });
 
-export { createStore, getStore };
+const getStoresByUserId = asyncHandler(async (req: Request, res: Response) => {
+  const { userId } = req.params;
+  const user = req.res?.locals.user;
+  if (!user || user.id !== userId) {
+    throw new CustomError('Not authorized', 401);
+  }
+
+  const stores = await db.store.findMany({
+    where: {
+      ownerId: userId,
+    },
+  });
+
+  res.status(200).json({
+    status: 'success',
+    data: stores,
+  });
+});
+
+export { createStore, getStore, getStoresByUserId };

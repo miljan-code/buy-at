@@ -73,7 +73,10 @@ const loginUser = asyncHandler(async (req: Request, res: Response) => {
 });
 
 const logoutUser = asyncHandler(async (req: Request, res: Response) => {
-  res.clearCookie('jwt');
+  res.cookie('__buyat_jwt', '', {
+    httpOnly: true,
+    expires: new Date(0),
+  });
   res.status(200).json({
     status: 'success',
     data: null,

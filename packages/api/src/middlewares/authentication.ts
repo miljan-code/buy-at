@@ -16,8 +16,7 @@ declare global {
 
 export const authentication = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
-    console.log(req.cookies);
-    const token = req.cookies.jwt as string | undefined;
+    const token = req.cookies['__buyat_jwt'] as string | undefined;
     if (!token) throw new CustomError('Unauthorized', 401);
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
@@ -35,5 +34,5 @@ export const authentication = asyncHandler(
 
     res.locals.user = userWithoutPassword;
     next();
-  }
+  },
 );
