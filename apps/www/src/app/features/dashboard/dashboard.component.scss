@@ -1,10 +1,17 @@
 @import '../../../styles/variables';
 @import '../../../styles/mixins';
 
-.home {
+.dashboard {
+  padding: 24px 0;
+
   &__container {
     @include container;
 
     padding: $section-padding;
+  }
+
+  &__label {
+    font-family: 'Heading', 'Inter', sans-serif;
+    font-size: 32px;
   }
 }
