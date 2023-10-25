@@ -15,6 +15,29 @@ export const routes: Routes = [
         (c) => c.DashboardComponent,
       ),
     canActivate: [AuthGuard],
+    children: [
+      {
+        path: '',
+        loadComponent: () =>
+          import('./features/dashboard/stores/stores.component').then(
+            (c) => c.StoresComponent,
+          ),
+      },
+      {
+        path: 'store/new',
+        loadComponent: () =>
+          import(
+            './features/dashboard/create-store/create-store.component'
+          ).then((c) => c.CreateStoreComponent),
+      },
+      {
+        path: 'store/:storeId',
+        loadComponent: () =>
+          import('./features/dashboard/store/store.component').then(
+            (c) => c.StoreComponent,
+          ),
+      },
+    ],
   },
   {
     path: 'auth',

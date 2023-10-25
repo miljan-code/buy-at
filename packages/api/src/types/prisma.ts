@@ -1,3 +1,5 @@
-import type { User as UserDB } from '@prisma/client';
+import type { Store, User as UserDB } from '@prisma/client';
 
-export type User = Omit<UserDB, 'password'>;
+export type User = Omit<UserDB, 'password'> & {
+  stores: Store[];
+};

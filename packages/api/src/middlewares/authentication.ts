@@ -28,6 +28,9 @@ export const authentication = asyncHandler(
       where: {
         id: decoded.userId,
       },
+      include: {
+        stores: true,
+      },
     });
     if (!user) throw new CustomError('User not found', 404);
     const { password, ...userWithoutPassword } = user;

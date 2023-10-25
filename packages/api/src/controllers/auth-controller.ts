@@ -22,6 +22,9 @@ const registerUser = asyncHandler(async (req: Request, res: Response) => {
       email: userData.email,
       password: hashedPassword,
     },
+    include: {
+      stores: true,
+    },
   });
   const { password, ...returningUser } = user;
 
@@ -36,6 +39,9 @@ const loginUser = asyncHandler(async (req: Request, res: Response) => {
   const user = await db.user.findUnique({
     where: {
       email: userData.email,
+    },
+    include: {
+      stores: true,
     },
   });
   if (!user) {
