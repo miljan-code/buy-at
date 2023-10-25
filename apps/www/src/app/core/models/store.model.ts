@@ -6,3 +6,7 @@ export interface Store {
   createdAt: Date;
   updatedAt: Date;
 }
+
+export interface CreateStoreOpts {
+  storeName: string;
+}

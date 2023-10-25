@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { siteConfig } from 'src/config/site';
-import type { Store } from '../models/store.model';
+import type { CreateStoreOpts, Store } from '../models/store.model';
 import type { User } from '../models/user.model';
 import type { APIResponse } from '../models/rest.model';
 
@@ -21,22 +21,13 @@ export class StoreService {
     });
   }
 
-  createStore({
-    userId,
-    storeName,
-  }: CreateStoreOpts): Observable<APIResponse<Store>> {
+  createStore({ storeName }: CreateStoreOpts): Observable<APIResponse<Store>> {
     return this.http.post<APIResponse<Store>>(
       this.apiUrl,
       {
-        userId,
         storeName,
       },
       { withCredentials: true },
     );
   }
-}
-
-interface CreateStoreOpts {
-  userId: User['id'];
-  storeName: string;
 }
