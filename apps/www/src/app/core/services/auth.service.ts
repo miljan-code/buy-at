@@ -22,23 +22,38 @@ export class AuthService {
     this.currentUser.next(this.localService.get(this.localService.userKey));
   }
 
+  // TODO: check token validity
+
   login(email: string, password: string): Observable<APIResponse<User>> {
-    return this.http.post<APIResponse<User>>(`${this.apiUrl}/login`, {
-      email,
-      password,
-    });
+    return this.http.post<APIResponse<User>>(
+      `${this.apiUrl}/login`,
+      {
+        email,
+        password,
+      },
+      { withCredentials: true },
+    );
   }
 
-  register(username: string, email: string, password: string) {
-    return this.http.post<APIResponse<User>>(`${this.apiUrl}/register`, {
-      username,
-      email,
-      password,
-    });
+  register(
+    username: string,
+    email: string,
+    password: string,
+  ): Observable<APIResponse<User>> {
+    return this.http.post<APIResponse<User>>(
+      `${this.apiUrl}/register`,
+      {
+        username,
+        email,
+        password,
+      },
+      { withCredentials: true },
+    );
   }
 
-  logout(): void {
-    this.currentUser.next(null);
-    this.localService.remove(this.localService.userKey);
+  logout(): Observable<APIResponse<null>> {
+    return this.http.get<APIResponse<null>>(`${this.apiUrl}/logout`, {
+      withCredentials: true,
+    });
   }
 }

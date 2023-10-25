@@ -3,15 +3,17 @@
 
 .dashboard {
   padding: 24px 0;
+  height: calc(100vh - 60px);
 
   &__container {
     @include container;
 
     padding: $section-padding;
+    height: 100%;
   }
 
   &__label {
-    font-family: 'Heading', 'Inter', sans-serif;
+    font-family: $font-heading;
     font-size: 32px;
   }
 }

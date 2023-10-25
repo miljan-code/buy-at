@@ -16,14 +16,15 @@ interface CreateStoreForm {
 }
 
 @Component({
-  selector: 'app-first-store',
+  selector: 'app-create-store',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, InputTextModule, ButtonModule],
-  templateUrl: './first-store.component.html',
-  styleUrls: ['./first-store.component.scss'],
+  templateUrl: './create-store.component.html',
+  styleUrls: ['./create-store.component.scss'],
 })
-export class FirstStoreComponent implements OnInit {
+export class CreateStoreComponent implements OnInit {
   createStoreForm!: FormGroup<CreateStoreForm>;
+  showcaseCover = '../../../../assets/images/background-1.png';
 
   constructor() {}
 

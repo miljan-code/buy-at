@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 
 import { AuthService } from 'src/app/core/services/auth.service';
+import { LocalService } from 'src/app/core/services/local.service';
 import type { User } from 'src/app/core/models/user.model';
 
 @Component({
@@ -16,7 +17,10 @@ export class HeaderBaseComponent implements OnInit, OnDestroy {
   currentUser: User | null = null;
   protected destroy$ = new Subject<void>();
 
-  constructor(public authService: AuthService) {}
+  constructor(
+    public authService: AuthService,
+    public localService: LocalService,
+  ) {}
 
   ngOnInit(): void {
     this.authService.currentUser$
@@ -30,6 +34,13 @@ export class HeaderBaseComponent implements OnInit, OnDestroy {
   }
 
   signOut(): void {
-    this.authService.logout();
+    this.authService
+      .logout()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((res) => {
+        if (res.status === 'fail') return;
+        this.authService.currentUser.next(null);
+        this.localService.remove(this.localService.userKey);
+      });
   }
 }
