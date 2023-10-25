@@ -6,12 +6,14 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
+
 import { StoreService } from 'src/app/core/services/store.service';
-import { Subject, takeUntil } from 'rxjs';
-import { Router } from '@angular/router';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 interface CreateStoreForm {
   storeName: FormControl<string>;
@@ -32,6 +34,7 @@ export class CreateStoreComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
 
   constructor(
+    private readonly authService: AuthService,
     private readonly storeService: StoreService,
     private readonly router: Router,
   ) {}
@@ -62,6 +65,13 @@ export class CreateStoreComponent implements OnInit, OnDestroy {
       .subscribe((res) => {
         if (res.status === 'fail') return;
         this.router.navigateByUrl(`/dashboard/store/${res.data.slug}`);
+        this.authService
+          .getCurrentUser()
+          .pipe(takeUntil(this.destroy$))
+          .subscribe((res) => {
+            if (res.status === 'fail') return;
+            this.authService.currentUser.next(res.data);
+          });
       });
   }
 }

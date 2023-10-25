@@ -5,7 +5,6 @@ import { Subject, takeUntil } from 'rxjs';
 
 import { AuthService } from 'src/app/core/services/auth.service';
 import type { User } from 'src/app/core/models/user.model';
-import type { Store } from 'src/app/core/models/store.model';
 
 @Component({
   selector: 'app-stores',
@@ -16,7 +15,6 @@ import type { Store } from 'src/app/core/models/store.model';
 })
 export class StoresComponent implements OnInit, OnDestroy {
   currentUser: User | null = null;
-  stores: Store[] = [];
   private destroy$ = new Subject<void>();
 
   constructor(

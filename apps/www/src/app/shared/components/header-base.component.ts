@@ -1,11 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 
 import { AuthService } from 'src/app/core/services/auth.service';
 import { LocalService } from 'src/app/core/services/local.service';
-import type { User } from 'src/app/core/models/user.model';
 
 @Component({
   selector: 'app-header-base',
@@ -13,20 +12,13 @@ import type { User } from 'src/app/core/models/user.model';
   imports: [CommonModule, RouterModule],
   template: '',
 })
-export class HeaderBaseComponent implements OnInit, OnDestroy {
-  currentUser: User | null = null;
+export class HeaderBaseComponent implements OnDestroy {
   protected destroy$ = new Subject<void>();
 
   constructor(
     public authService: AuthService,
     public localService: LocalService,
   ) {}
-
-  ngOnInit(): void {
-    this.authService.currentUser$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((user) => (this.currentUser = user));
-  }
 
   ngOnDestroy(): void {
     this.destroy$.next();

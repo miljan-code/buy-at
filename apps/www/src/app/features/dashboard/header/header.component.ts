@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 import { HeaderBaseComponent } from 'src/app/shared/components/header-base.component';
+import type { User } from 'src/app/core/models/user.model';
 
 @Component({
   selector: 'app-header-dashboard',
@@ -11,4 +12,6 @@ import { HeaderBaseComponent } from 'src/app/shared/components/header-base.compo
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent extends HeaderBaseComponent {}
+export class HeaderComponent extends HeaderBaseComponent {
+  @Input() currentUser: User | null = null;
+}
