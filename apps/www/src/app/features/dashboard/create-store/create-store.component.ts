@@ -9,6 +9,7 @@ import {
 
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
+import { StoreService } from 'src/app/core/services/store.service';
 
 interface CreateStoreForm {
   storeName: FormControl<string>;
@@ -16,16 +17,18 @@ interface CreateStoreForm {
 }
 
 @Component({
-  selector: 'app-first-store',
+  selector: 'app-create-store',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, InputTextModule, ButtonModule],
-  templateUrl: './first-store.component.html',
-  styleUrls: ['./first-store.component.scss'],
+  templateUrl: './create-store.component.html',
+  styleUrls: ['./create-store.component.scss'],
 })
-export class FirstStoreComponent implements OnInit {
+export class CreateStoreComponent implements OnInit {
   createStoreForm!: FormGroup<CreateStoreForm>;
+  storeNamePlaceholder = 'BuyAt.store';
+  showcaseCover = '../../../../assets/images/background-1.png';
 
-  constructor() {}
+  constructor(private readonly storeService: StoreService) {}
 
   ngOnInit(): void {
     this.createStoreForm = new FormGroup<CreateStoreForm>({
@@ -39,5 +42,9 @@ export class FirstStoreComponent implements OnInit {
     });
   }
 
-  createStore(): void {}
+  createStore(): void {
+    const { storeName } = this.createStoreForm.value;
+    if (!storeName) return;
+    this.storeService.createStore({ storeName });
+  }
 }

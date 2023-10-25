@@ -1,13 +1,17 @@
 // COLORS
+$color-primary: var(--primary-color);
 $color-background: var(--surface-ground);
 $color-border: var(--gray-800);
-$color-white: var(--surface-900);
-$color-black: var(--surface-0);
-$color-primary: var(--primary-color);
 $color-destructive: var(--red-400);
-
-$color-white-hover: darken(white, 20%);
 $color-muted: darken(white, 40%);
+
+$color-black: var(--surface-0);
+
+$color-white: var(--surface-900);
+$color-white-hover: darken(white, 20%);
+
+$color-yellow: var(--yellow-500);
+$color-green: var(--green-500);
 
 // PADDINGS & MARGINS & HEIGHTS
 $header-height: 60px;
@@ -18,6 +22,7 @@ $rounded-full: 9999px;
 
 // FONT
 $font-primary: 'Inter', sans-serif;
+$font-heading: 'Heading', sans-serif;
 
 // SCREENS
 $bp-largest: 75em; // 1200px
