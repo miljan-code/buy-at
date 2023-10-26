@@ -4,11 +4,13 @@ export const siteConfig: SiteConfig = {
     auth: 'http://localhost:5000/api/auth',
     store: 'http://localhost:5000/api/store',
   },
+  environment: 'development',
 };
 
 export interface SiteConfig {
   title: string;
   apiUrls: ApiUrls;
+  environment: 'development' | 'production';
 }
 
 interface ApiUrls {

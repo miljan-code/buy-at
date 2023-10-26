@@ -1,15 +1,16 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 
 import { AuthService } from '~core/services/auth.service';
+import { LinkifyPipe } from '~shared/pipes/linkify.pipe';
 import type { User } from '~core/models/user.model';
 
 @Component({
   selector: 'app-stores',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule, LinkifyPipe],
   templateUrl: './stores.component.html',
   styleUrls: ['./stores.component.scss'],
 })

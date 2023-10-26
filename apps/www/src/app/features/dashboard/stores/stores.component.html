@@ -1,3 +1,32 @@
-<div *ngFor="let store of currentUser?.stores">
-  <p>{{ store.name }}</p>
+<div class="stores">
+  <h2 class="stores__label">Stores</h2>
+  <ul class="stores__list">
+    <li class="stores__card stores__card--add">
+      <a [routerLink]="'/dashboard/store/new'" class="stores__card-link"></a>
+      <span class="pi pi-plus"></span>
+      <span>Add store</span>
+    </li>
+    <li
+      class="stores__card stores__card--store"
+      *ngFor="let store of currentUser?.stores"
+    >
+      <a
+        [routerLink]="'/dashboard/store/' + store.slug"
+        class="stores__card-link"
+      ></a>
+      <div class="stores__card-header">
+        <span>{{ store.name }}</span>
+      </div>
+      <div class="stores__card-body">
+        <p>{{ store.name }}</p>
+        <p>{{ store.slug | linkify }}</p>
+        <p>Updated at {{ store.updatedAt | date }}</p>
+        <div>
+          <div></div>
+          <span>Active</span>
+        </div>
+        <p>Free</p>
+      </div>
+    </li>
+  </ul>
 </div>

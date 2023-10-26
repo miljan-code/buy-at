@@ -1,7 +1,110 @@
 @import 'variables';
+@import 'mixins';
 
 .stores {
   &__label {
     font-family: $font-heading;
+    font-size: 48px;
+
+    margin-bottom: 12px;
+  }
+
+  &__list {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  &__card {
+    position: relative;
+
+    min-height: 360px;
+    width: 280px;
+
+    border: 1px solid $color-border;
+    border-radius: 24px;
+
+    overflow: hidden;
+
+    &--add {
+      @include flex(center, center, column);
+      gap: 24px;
+      cursor: pointer;
+
+      & span:first-child {
+        font-size: 32px;
+        color: $color-primary;
+      }
+    }
+
+    &--store {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    &-header {
+      @include flex(center, center, column);
+      min-height: 164px;
+      background-color: $color-primary;
+      color: $color-black;
+      font-weight: 500;
+    }
+
+    &-body {
+      @include flex(stretch, center, column);
+      gap: 4px;
+      padding: 18px;
+      font-size: 13px;
+      height: 100%;
+
+      & p:first-child {
+        margin-bottom: 4px;
+      }
+
+      & p:nth-child(2) {
+        color: $color-primary;
+      }
+
+      & p:nth-child(3) {
+        color: $color-muted;
+        margin-bottom: 16px;
+      }
+
+      & div {
+        @include flex(center);
+        gap: 8px;
+
+        & div {
+          width: 12px;
+          height: 12px;
+          border-radius: 100%;
+          background-color: var(--green-500);
+        }
+      }
+
+      & p:last-child {
+        margin-top: auto;
+        padding: 2px 6px;
+        width: fit-content;
+        border-radius: 2px;
+        background-color: $color-primary;
+        color: $color-black;
+        font-weight: 500;
+      }
+    }
+
+    &-link {
+      &::before {
+        content: '';
+        position: absolute;
+        display: block;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 24px;
+      }
+    }
   }
 }
