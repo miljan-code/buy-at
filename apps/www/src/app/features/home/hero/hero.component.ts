@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
@@ -12,6 +12,7 @@ import type { User } from '~core/models/user.model';
   imports: [CommonModule, ButtonModule, RouterModule],
   templateUrl: './hero.component.html',
   styleUrls: ['./hero.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeroComponent {
   @Input() currentUser: User | null = null;

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
@@ -14,6 +14,7 @@ import type { NavLink } from '~config/site';
   imports: [CommonModule, RouterModule, ButtonModule, HeaderBaseComponent],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent extends HeaderBaseComponent {
   @Input() currentUser: User | null = null;
