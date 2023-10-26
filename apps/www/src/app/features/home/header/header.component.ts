@@ -4,9 +4,9 @@ import { RouterModule } from '@angular/router';
 
 import { ButtonModule } from 'primeng/button';
 
-import { HeaderBaseComponent } from 'src/app/shared/components/header-base.component';
-import type { User } from 'src/app/core/models/user.model';
-import type { NavLink } from 'src/config/site';
+import { HeaderBaseComponent } from '~shared/components/header-base.component';
+import type { User } from '~core/models/user.model';
+import type { NavLink } from '~config/site';
 
 @Component({
   selector: 'app-header-home',

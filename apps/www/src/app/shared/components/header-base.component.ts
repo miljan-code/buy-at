@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 
-import { AuthService } from 'src/app/core/services/auth.service';
-import { LocalService } from 'src/app/core/services/local.service';
+import { AuthService } from '~core/services/auth.service';
+import { LocalService } from '~core/services/local.service';
 
 @Component({
   selector: 'app-header-base',

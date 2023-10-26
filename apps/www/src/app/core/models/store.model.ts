@@ -1,6 +1,6 @@
 export interface Store {
   id: string;
-  storeName: string;
+  name: string;
   slug: string;
   ownerId: string;
   createdAt: Date;

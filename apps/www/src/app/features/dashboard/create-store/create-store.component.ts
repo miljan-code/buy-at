@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormControl,
@@ -12,8 +12,8 @@ import { Subject, takeUntil } from 'rxjs';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 
-import { StoreService } from 'src/app/core/services/store.service';
-import { AuthService } from 'src/app/core/services/auth.service';
+import { StoreService } from '~core/services/store.service';
+import { AuthService } from '~core/services/auth.service';
 
 interface CreateStoreForm {
   storeName: FormControl<string>;
@@ -34,9 +34,9 @@ export class CreateStoreComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
 
   constructor(
-    private readonly authService: AuthService,
     private readonly storeService: StoreService,
     private readonly router: Router,
+    private readonly authService: AuthService,
   ) {}
 
   ngOnInit(): void {
@@ -62,16 +62,15 @@ export class CreateStoreComponent implements OnInit, OnDestroy {
     this.storeService
       .createStore({ storeName })
       .pipe(takeUntil(this.destroy$))
-      .subscribe((res) => {
-        if (res.status === 'fail') return;
-        this.router.navigateByUrl(`/dashboard/store/${res.data.slug}`);
-        this.authService
-          .getCurrentUser()
-          .pipe(takeUntil(this.destroy$))
-          .subscribe((res) => {
-            if (res.status === 'fail') return;
-            this.authService.currentUser.next(res.data);
-          });
+      .subscribe((store) => {
+        if (store.status === 'fail') return;
+        const currentUser = this.authService.currentUser.value;
+        if (!currentUser) return;
+        this.authService.currentUser.next({
+          ...currentUser,
+          stores: [...currentUser.stores, store.data],
+        });
+        this.router.navigateByUrl(`/dashboard/store/${store.data.slug}`);
       });
   }
 }

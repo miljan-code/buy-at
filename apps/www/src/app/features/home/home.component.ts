@@ -4,8 +4,8 @@ import { Subject, takeUntil } from 'rxjs';
 
 import { HeroComponent } from './hero/hero.component';
 import { HeaderComponent } from './header/header.component';
-import { AuthService } from 'src/app/core/services/auth.service';
-import type { User } from 'src/app/core/models/user.model';
+import { AuthService } from '~core/services/auth.service';
+import type { User } from '~core/models/user.model';
 
 @Component({
   selector: 'app-home',

@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 import { siteConfig } from 'src/config/site';
-import { LocalService } from './local.service';
 import type { APIResponse } from '../models/rest.model';
 import type { User } from '../models/user.model';
 
@@ -15,14 +14,7 @@ export class AuthService {
   currentUser = new BehaviorSubject<User | null>(null);
   currentUser$ = this.currentUser.asObservable();
 
-  constructor(
-    private readonly http: HttpClient,
-    private readonly localService: LocalService,
-  ) {
-    this.currentUser.next(this.localService.get(this.localService.userKey));
-  }
-
-  // TODO: check token validity
+  constructor(private readonly http: HttpClient) {}
 
   login(email: string, password: string): Observable<APIResponse<User>> {
     return this.http.post<APIResponse<User>>(
@@ -58,8 +50,18 @@ export class AuthService {
   }
 
   getCurrentUser(): Observable<APIResponse<User>> {
-    return this.http.get<APIResponse<User>>(this.apiUrl, {
-      withCredentials: true,
-    });
+    return this.http
+      .get<APIResponse<User>>(this.apiUrl, {
+        withCredentials: true,
+      })
+      .pipe(
+        tap({
+          next: (user) => {
+            if (user.status === 'success') {
+              this.currentUser.next(user.data);
+            }
+          },
+        }),
+      );
   }
 }

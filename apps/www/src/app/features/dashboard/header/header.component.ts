@@ -2,8 +2,8 @@ import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
-import { HeaderBaseComponent } from 'src/app/shared/components/header-base.component';
-import type { User } from 'src/app/core/models/user.model';
+import { HeaderBaseComponent } from '~shared/components/header-base.component';
+import type { User } from '~core/models/user.model';
 
 @Component({
   selector: 'app-header-dashboard',

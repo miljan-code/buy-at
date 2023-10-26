@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 
 import { ButtonModule } from 'primeng/button';
 
-import type { User } from 'src/app/core/models/user.model';
+import type { User } from '~core/models/user.model';
 
 @Component({
   selector: 'app-hero',

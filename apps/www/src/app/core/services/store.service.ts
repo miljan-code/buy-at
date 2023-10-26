@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { siteConfig } from 'src/config/site';
+import { siteConfig } from '~config/site';
 import type { CreateStoreOpts, Store } from '../models/store.model';
 import type { User } from '../models/user.model';
 import type { APIResponse } from '../models/rest.model';
