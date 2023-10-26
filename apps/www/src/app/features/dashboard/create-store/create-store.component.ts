@@ -63,14 +63,13 @@ export class CreateStoreComponent implements OnInit, OnDestroy {
       .createStore({ storeName })
       .pipe(takeUntil(this.destroy$))
       .subscribe((store) => {
-        if (store.status === 'fail') return;
         const currentUser = this.authService.currentUser.value;
         if (!currentUser) return;
         this.authService.currentUser.next({
           ...currentUser,
-          stores: [...currentUser.stores, store.data],
+          stores: [...currentUser.stores, store],
         });
-        this.router.navigateByUrl(`/dashboard/store/${store.data.slug}`);
+        this.router.navigateByUrl(`/dashboard/store/${store.slug}`);
       });
   }
 }

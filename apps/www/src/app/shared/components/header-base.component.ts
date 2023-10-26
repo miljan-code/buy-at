@@ -29,8 +29,7 @@ export class HeaderBaseComponent implements OnDestroy {
     this.authService
       .logout()
       .pipe(takeUntil(this.destroy$))
-      .subscribe((res) => {
-        if (res.status === 'fail') return;
+      .subscribe(() => {
         this.authService.currentUser.next(null);
         this.localService.remove(this.localService.userKey);
       });

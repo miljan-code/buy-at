@@ -3,7 +3,6 @@ import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 import { siteConfig } from 'src/config/site';
-import type { APIResponse } from '../models/rest.model';
 import type { User } from '../models/user.model';
 
 @Injectable({
@@ -16,8 +15,8 @@ export class AuthService {
 
   constructor(private readonly http: HttpClient) {}
 
-  login(email: string, password: string): Observable<APIResponse<User>> {
-    return this.http.post<APIResponse<User>>(
+  login(email: string, password: string): Observable<User> {
+    return this.http.post<User>(
       `${this.apiUrl}/login`,
       {
         email,
@@ -31,8 +30,8 @@ export class AuthService {
     username: string,
     email: string,
     password: string,
-  ): Observable<APIResponse<User>> {
-    return this.http.post<APIResponse<User>>(
+  ): Observable<User> {
+    return this.http.post<User>(
       `${this.apiUrl}/register`,
       {
         username,
@@ -43,24 +42,20 @@ export class AuthService {
     );
   }
 
-  logout(): Observable<APIResponse<null>> {
-    return this.http.get<APIResponse<null>>(`${this.apiUrl}/logout`, {
+  logout(): Observable<null> {
+    return this.http.get<null>(`${this.apiUrl}/logout`, {
       withCredentials: true,
     });
   }
 
-  getCurrentUser(): Observable<APIResponse<User>> {
+  getCurrentUser(): Observable<User> {
     return this.http
-      .get<APIResponse<User>>(this.apiUrl, {
+      .get<User>(this.apiUrl, {
         withCredentials: true,
       })
       .pipe(
         tap({
-          next: (user) => {
-            if (user.status === 'success') {
-              this.currentUser.next(user.data);
-            }
-          },
+          next: (user) => this.currentUser.next(user),
         }),
       );
   }

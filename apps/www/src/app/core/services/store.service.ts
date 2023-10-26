@@ -4,8 +4,6 @@ import { Observable } from 'rxjs';
 
 import { siteConfig } from '~config/site';
 import type { CreateStoreOpts, Store } from '../models/store.model';
-import type { User } from '../models/user.model';
-import type { APIResponse } from '../models/rest.model';
 
 @Injectable({
   providedIn: 'root',
@@ -15,18 +13,10 @@ export class StoreService {
 
   constructor(private readonly http: HttpClient) {}
 
-  getUserStores(userId: User['id']): Observable<APIResponse<Store[]>> {
-    return this.http.get<APIResponse<Store[]>>(`${this.apiUrl}/${userId}`, {
-      withCredentials: true,
-    });
-  }
-
-  createStore({ storeName }: CreateStoreOpts): Observable<APIResponse<Store>> {
-    return this.http.post<APIResponse<Store>>(
+  createStore({ storeName }: CreateStoreOpts): Observable<Store> {
+    return this.http.post<Store>(
       this.apiUrl,
-      {
-        storeName,
-      },
+      { storeName },
       { withCredentials: true },
     );
   }

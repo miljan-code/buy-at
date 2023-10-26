@@ -14,9 +14,10 @@ import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import { DialogModule } from 'primeng/dialog';
 
-import { AuthService } from '../services/auth.service';
-import { LocalService } from '../services/local.service';
-import type { User } from '../models/user.model';
+import { AuthService } from '~core/services/auth.service';
+import { LocalService } from '~core/services/local.service';
+import type { User } from '~core/models/user.model';
+import type { Error } from '~core/models/error.model';
 
 interface LoginForm {
   email: FormControl<string>;
@@ -95,20 +96,13 @@ export class AuthComponent implements OnInit {
       .login(email, password)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
-        next: (res) => {
-          if (res.status === 'success') {
-            this.saveUserAndNavigateTo(res.data);
-            return;
+        next: (user) => this.saveUserAndNavigateTo(user),
+        error: ({ errorName, message }: Error) => {
+          if (errorName === 'wrongEmail') {
+            this.loginForm.get('email')?.setErrors({ [errorName]: message });
           }
-          if (res.data.errorName === 'wrongEmail') {
-            this.loginForm
-              .get('email')
-              ?.setErrors({ [res.data.errorName]: res.data.message });
-          }
-          if (res.data.errorName === 'wrongPassword') {
-            this.loginForm
-              .get('password')
-              ?.setErrors({ [res.data.errorName]: res.data.message });
+          if (errorName === 'wrongPassword') {
+            this.loginForm.get('password')?.setErrors({ [errorName]: message });
           }
         },
       });
@@ -120,10 +114,7 @@ export class AuthComponent implements OnInit {
     this.authService
       .register(username, email, password)
       .pipe(takeUntil(this.destroy$))
-      .subscribe((res) => {
-        if (res.status === 'fail') return;
-        this.saveUserAndNavigateTo(res.data);
-      });
+      .subscribe((user) => this.saveUserAndNavigateTo(user));
   }
 
   handleDialog(): void {
