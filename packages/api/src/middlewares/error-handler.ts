@@ -12,7 +12,6 @@ export const errorHandler = (
 ) => {
   if (error instanceof z.ZodError) {
     return res.status(422).json({
-      status: 'fail',
       message: error.issues,
     });
   }
@@ -20,7 +19,6 @@ export const errorHandler = (
   if (error instanceof Prisma.PrismaClientKnownRequestError) {
     if (error.code === 'P2002' && req.url.includes('register')) {
       return res.status(409).json({
-        status: 'fail',
         message: 'Email address is already in use',
       });
     }
@@ -28,13 +26,11 @@ export const errorHandler = (
 
   if (error instanceof CustomError) {
     return res.status(error.code).json({
-      status: 'fail',
       message: error.message,
     });
   }
 
   return res.status(500).json({
-    status: 'fail',
     message: 'Something went wrong',
   });
 };

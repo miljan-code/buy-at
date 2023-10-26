@@ -21,10 +21,7 @@ const createStore = asyncHandler(async (req: Request, res: Response) => {
     },
   });
 
-  res.status(201).json({
-    status: 'success',
-    data: store,
-  });
+  res.status(201).json(store);
 });
 
 const getStore = asyncHandler(async (req: Request, res: Response) => {
@@ -59,10 +56,7 @@ const getStoresByUserId = asyncHandler(async (req: Request, res: Response) => {
     },
   });
 
-  res.status(200).json({
-    status: 'success',
-    data: stores,
-  });
+  res.status(200).json(stores);
 });
 
 export { createStore, getStore, getStoresByUserId };

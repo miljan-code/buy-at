@@ -21,7 +21,7 @@ export const authentication = asyncHandler(
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
     if (typeof decoded === 'string' || !decoded.exp) {
-      throw new CustomError('Not authorized', 401);
+      return next();
     }
 
     const user = await db.user.findUnique({

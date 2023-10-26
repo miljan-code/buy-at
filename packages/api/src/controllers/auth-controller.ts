@@ -30,7 +30,7 @@ const registerUser = asyncHandler(async (req: Request, res: Response) => {
 
   generateToken(res, user.id);
 
-  res.status(201).json({ status: 'success', data: returningUser });
+  res.status(201).json(returningUser);
 });
 
 const loginUser = asyncHandler(async (req: Request, res: Response) => {
@@ -45,12 +45,9 @@ const loginUser = asyncHandler(async (req: Request, res: Response) => {
     },
   });
   if (!user) {
-    res.status(200).json({
-      status: 'fail',
-      data: {
-        errorName: 'wrongEmail',
-        message: `User with that email address doesn't exist`,
-      },
+    res.status(403).json({
+      errorName: 'wrongEmail',
+      message: `User with that email address doesn't exist`,
     });
     return;
   }
@@ -59,12 +56,9 @@ const loginUser = asyncHandler(async (req: Request, res: Response) => {
     user.password,
   );
   if (!passwordIsCorrect) {
-    res.status(200).json({
-      status: 'fail',
-      data: {
-        errorName: 'wrongPassword',
-        message: `Password is incorrect`,
-      },
+    res.status(401).json({
+      errorName: 'wrongPassword',
+      message: `Password is incorrect`,
     });
     return;
   }
@@ -72,10 +66,7 @@ const loginUser = asyncHandler(async (req: Request, res: Response) => {
   generateToken(res, user.id);
 
   const { password, ...returningUser } = user;
-  res.status(200).json({
-    status: 'success',
-    data: returningUser,
-  });
+  res.status(200).json(returningUser);
 });
 
 const logoutUser = asyncHandler(async (req: Request, res: Response) => {
@@ -83,16 +74,13 @@ const logoutUser = asyncHandler(async (req: Request, res: Response) => {
     httpOnly: true,
     expires: new Date(0),
   });
-  res.status(200).json({
-    status: 'success',
-    data: null,
-  });
+  res.status(200).json(null);
 });
 
 const getCurrentUser = asyncHandler(async (req: Request, res: Response) => {
   const user = req.res?.locals.user;
 
-  res.status(200).json({ status: 'success', data: user });
+  res.status(200).json(user);
 });
 
 export { registerUser, loginUser, logoutUser, getCurrentUser };
