@@ -1,12 +1,12 @@
-<div class="first-store">
+<div class="create-store">
   <form
     [formGroup]="createStoreForm"
     (ngSubmit)="createStore()"
-    class="first-store__form"
+    class="create-store__form"
   >
-    <div class="first-store__wrapper">
-      <h3 class="first-store__form-label">Let's build your store</h3>
-      <div class="first-store__form-group">
+    <div class="create-store__wrapper">
+      <h3 class="create-store__form-label">Let's build your store</h3>
+      <div class="create-store__form-group">
         <label for="storeName">Store name</label>
         <input
           id="storeName"
@@ -18,12 +18,12 @@
       <button
         pButton
         label="Create store"
-        class="first-store__form-button"
+        class="create-store__form-button"
         type="submit"
       ></button>
     </div>
-    <div class="first-store__upload-cover">
-      <p class="first-store__upload-cover-label">Cover photo</p>
+    <div class="create-store__upload-cover">
+      <p class="create-store__upload-cover-label">Cover photo</p>
       <span pButton label="Upload" class="p-button-secondary"></span>
     </div>
   </form>

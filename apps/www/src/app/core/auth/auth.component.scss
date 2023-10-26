@@ -1,5 +1,6 @@
 @import 'variables';
 @import 'mixins';
+@import 'functions';
 
 .auth {
   margin: 0 auto;
@@ -12,18 +13,18 @@
   justify-content: center;
 
   &__header {
-    font-size: 1.8rem;
+    font-size: rem(32px);
   }
 
   &__subheader {
     color: $color-muted;
-    margin-bottom: 32px;
+    margin-bottom: rem(32px);
   }
 
   &__form {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: rem(8px);
   }
 
   &__form-group {
@@ -31,13 +32,13 @@
   }
 
   &__info-text {
-    margin-top: 24px;
-    font-size: 13px;
+    margin-top: rem(24px);
+    font-size: rem(14px);
 
     &--link {
       color: $color-primary;
       text-decoration: underline;
-      text-underline-offset: 4px;
+      text-underline-offset: rem(4px);
       cursor: pointer;
     }
   }

@@ -1,5 +1,6 @@
 @import 'variables';
 @import 'mixins';
+@import 'functions';
 
 .header {
   border-bottom: 1px solid $color-border;
@@ -7,7 +8,7 @@
   &__container {
     @include container;
     @include flex(center, space-between);
-    height: 59px;
+    height: calc($header-height - 1px);
 
     padding: $section-padding;
   }
@@ -19,13 +20,13 @@
 
     font-family: $font-primary;
     font-weight: 600;
-    font-size: 1.6rem;
+    font-size: rem(24px);
   }
 
   &__user {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: rem(16px);
 
     & > span:first-child {
       text-decoration: underline $color-white;
@@ -41,7 +42,8 @@
 }
 
 .icon {
-  font-size: 16px;
+  margin-top: 4px;
+  font-size: rem(16px);
   color: $color-primary;
   cursor: pointer;
 }

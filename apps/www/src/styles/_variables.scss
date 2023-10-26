@@ -1,3 +1,5 @@
+@import 'functions';
+
 // COLORS
 $color-primary: var(--primary-color);
 $color-background: var(--surface-ground);
@@ -14,8 +16,8 @@ $color-yellow: var(--yellow-500);
 $color-green: var(--green-500);
 
 // PADDINGS & MARGINS & HEIGHTS
-$header-height: 60px;
-$section-padding: 12px 24px;
+$header-height: rem(72px);
+$section-padding: rem(14px) rem(28px);
 
 // RADIUS
 $rounded-full: 9999px;

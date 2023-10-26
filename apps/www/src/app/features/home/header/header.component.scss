@@ -1,8 +1,8 @@
 @import 'variables';
 @import 'mixins';
+@import 'functions';
 
 .header {
-  // border-bottom: 1px solid $color-border;
   height: $header-height;
 
   &__container {
@@ -13,13 +13,13 @@
     @include container;
 
     height: 100%;
-    padding: 0 24px;
+    padding: 0 rem(32px);
   }
 
   &__left {
     display: flex;
     align-items: center;
-    gap: 32px;
+    gap: rem(32px);
   }
 
   &__logo {
@@ -29,12 +29,12 @@
 
     font-family: $font-primary;
     font-weight: 600;
-    font-size: 1.6rem;
+    font-size: rem(26px);
   }
 
   &__nav {
     display: flex;
-    gap: 12px;
+    gap: rem(12px);
 
     &-link {
       color: $color-white-hover;
@@ -49,12 +49,12 @@
   &__right {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: rem(16px);
   }
 }
 
 .icon {
-  font-size: 16px;
+  font-size: rem(18px);
   color: $color-primary;
   cursor: pointer;
 }

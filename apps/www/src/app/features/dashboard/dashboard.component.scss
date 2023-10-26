@@ -1,19 +1,15 @@
 @import 'variables';
 @import 'mixins';
+@import 'functions';
 
 .dashboard {
-  padding: 24px 0;
-  height: calc(100vh - 60px);
+  padding: rem(24px) 0;
+  height: calc(100vh - $header-height);
 
   &__container {
     @include container;
 
     padding: $section-padding;
     height: 100%;
-  }
-
-  &__label {
-    font-family: $font-heading;
-    font-size: 32px;
   }
 }

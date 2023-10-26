@@ -1,8 +1,9 @@
 @import 'variables';
 @import 'mixins';
+@import 'functions';
 
 .hero {
-  padding: 48px 0;
+  padding: rem(56px) 0;
 
   &__container {
     position: relative;
@@ -29,8 +30,8 @@
   &__link {
     @include gradient-primary;
     border-radius: $rounded-full;
-    padding: 8px 24px;
-    margin-bottom: 36px;
+    padding: rem(8px) rem(24px);
+    margin-bottom: rem(36px);
 
     font-weight: 600;
     cursor: pointer;
@@ -38,20 +39,20 @@
 
   &__label {
     font-family: $font-heading;
-    font-size: 64px;
+    font-size: rem(72px);
   }
 
   &__sublabel {
     text-align: center;
-    font-size: 20px;
+    font-size: rem(20px);
     line-height: 1.4;
     color: $color-white-hover;
 
-    margin-bottom: 24px;
+    margin-bottom: rem(24px);
   }
 
   &__buttons {
     display: flex;
-    gap: 16px;
+    gap: rem(16px);
   }
 }
