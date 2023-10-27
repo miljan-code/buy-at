@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 
 import { AuthGuard } from './shared/guards/auth.guard';
+import { DashboardGuard } from '~shared/guards/dashboard.guard';
 
 export const routes: Routes = [
   {
@@ -22,6 +23,7 @@ export const routes: Routes = [
           import('./features/dashboard/stores/stores.component').then(
             (c) => c.StoresComponent,
           ),
+        canActivate: [DashboardGuard],
       },
       {
         path: 'store/new',

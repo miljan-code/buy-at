@@ -1,6 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 
 import { AuthService } from '~core/services/auth.service';
@@ -18,6 +18,7 @@ export class HeaderBaseComponent implements OnDestroy {
   constructor(
     public authService: AuthService,
     public localService: LocalService,
+    public router: Router,
   ) {}
 
   ngOnDestroy(): void {
@@ -32,6 +33,7 @@ export class HeaderBaseComponent implements OnDestroy {
       .subscribe(() => {
         this.authService.currentUser.next(null);
         this.localService.remove(this.localService.userKey);
+        this.router.navigateByUrl('/');
       });
   }
 }

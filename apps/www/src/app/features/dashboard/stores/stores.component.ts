@@ -18,20 +18,12 @@ export class StoresComponent implements OnInit, OnDestroy {
   currentUser: User | null = null;
   private destroy$ = new Subject<void>();
 
-  constructor(
-    private readonly authService: AuthService,
-    private readonly router: Router,
-  ) {}
+  constructor(private readonly authService: AuthService) {}
 
   ngOnInit(): void {
     this.authService.currentUser$
       .pipe(takeUntil(this.destroy$))
-      .subscribe((user) => {
-        this.currentUser = user;
-        if (!this.currentUser?.stores.length) {
-          this.router.navigateByUrl('/dashboard/store/new');
-        }
-      });
+      .subscribe((user) => (this.currentUser = user));
   }
 
   ngOnDestroy(): void {
