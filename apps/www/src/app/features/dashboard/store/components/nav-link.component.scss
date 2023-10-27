@@ -1,0 +1,17 @@
+@import 'variables';
+@import 'mixins';
+@import 'functions';
+
+.nav-link {
+  @include flex(center);
+  gap: rem(8px);
+  transition: 0.3s;
+
+  &:hover {
+    color: $color-primary;
+  }
+
+  &--active {
+    color: $color-primary;
+  }
+}

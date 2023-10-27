@@ -1,3 +1,4 @@
+@import 'variables';
 @import 'mixins';
 @import 'functions';
 
@@ -7,14 +8,11 @@
 
   &__menu {
     width: fit-content;
+    padding: rem(12px) rem(24px);
 
     &-group {
       @include flex(stretch, flex-start, column);
       gap: rem(12px);
     }
-  }
-
-  &__main {
-    flex: 1;
   }
 }

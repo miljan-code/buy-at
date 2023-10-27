@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 import { siteConfig } from '~config/site';
 import type { CreateStoreOpts, Store } from '../models/store.model';
@@ -10,6 +10,8 @@ import type { CreateStoreOpts, Store } from '../models/store.model';
 })
 export class StoreService {
   private readonly apiUrl = siteConfig.apiUrls.store;
+  store = new BehaviorSubject<Store | null>(null);
+  store$ = this.store.asObservable();
 
   constructor(private readonly http: HttpClient) {}
 

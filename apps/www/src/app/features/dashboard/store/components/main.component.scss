@@ -1,0 +1,18 @@
+@import 'variables';
+@import 'functions';
+
+.store-main {
+  flex: 1;
+
+  &__heading {
+    font-size: rem(18px);
+    font-weight: 600;
+
+    margin-bottom: rem(8px);
+  }
+
+  &__subheading {
+    font-size: rem(15px);
+    color: $color-muted;
+  }
+}

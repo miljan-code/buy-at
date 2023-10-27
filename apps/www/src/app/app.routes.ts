@@ -1,7 +1,9 @@
-import { Routes } from '@angular/router';
+import { type Routes } from '@angular/router';
 
 import { AuthGuard } from './shared/guards/auth.guard';
 import { DashboardGuard } from '~shared/guards/dashboard.guard';
+
+// TODO: Refactor routes
 
 export const routes: Routes = [
   {
@@ -38,6 +40,15 @@ export const routes: Routes = [
           import('./features/dashboard/store/store.component').then(
             (c) => c.StoreComponent,
           ),
+        children: [
+          {
+            path: '',
+            loadComponent: () =>
+              import(
+                './features/dashboard/store/components/main.component'
+              ).then((c) => c.MainComponent),
+          },
+        ],
       },
     ],
   },

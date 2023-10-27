@@ -1,7 +1,0 @@
-@import 'functions';
-@import 'mixins';
-
-.nav-link {
-  @include flex(center);
-  gap: rem(8px);
-}
