@@ -20,4 +20,10 @@ export class StoreService {
       { withCredentials: true },
     );
   }
+
+  getStore(slug: string): Observable<Store> {
+    return this.http.get<Store>(`${this.apiUrl}?slug=${slug}`, {
+      withCredentials: true,
+    });
+  }
 }

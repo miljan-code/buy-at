@@ -1,0 +1,20 @@
+@import 'mixins';
+@import 'functions';
+
+.store {
+  display: flex;
+  gap: rem(48px);
+
+  &__menu {
+    width: fit-content;
+
+    &-group {
+      @include flex(stretch, flex-start, column);
+      gap: rem(12px);
+    }
+  }
+
+  &__main {
+    flex: 1;
+  }
+}

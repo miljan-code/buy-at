@@ -1,1 +1,13 @@
-<p>Store ID: {{ storeId }}</p>
+<div class="store">
+  <aside class="store__menu">
+    <ul class="store__menu-group">
+      <app-nav-link
+        *ngFor="let navLink of navLinks"
+        [label]="navLink.label"
+        [url]="currentURL + navLink.path"
+        [icon]="navLink.icon"
+      />
+    </ul>
+  </aside>
+  <div class="store__main">Store main</div>
+</div>

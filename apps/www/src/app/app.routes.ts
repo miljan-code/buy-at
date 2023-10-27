@@ -33,7 +33,7 @@ export const routes: Routes = [
           ).then((c) => c.CreateStoreComponent),
       },
       {
-        path: 'store/:storeId',
+        path: 'store/:slug',
         loadComponent: () =>
           import('./features/dashboard/store/store.component').then(
             (c) => c.StoreComponent,
