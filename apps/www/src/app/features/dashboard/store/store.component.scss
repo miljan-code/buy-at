@@ -8,7 +8,7 @@
 
   &__menu {
     width: fit-content;
-    padding: rem(12px) rem(24px);
+    padding: rem(12px) rem(24px) rem(12px) 0;
 
     &-group {
       @include flex(stretch, flex-start, column);

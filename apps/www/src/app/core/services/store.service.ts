@@ -16,16 +16,10 @@ export class StoreService {
   constructor(private readonly http: HttpClient) {}
 
   createStore({ storeName }: CreateStoreOpts): Observable<Store> {
-    return this.http.post<Store>(
-      this.apiUrl,
-      { storeName },
-      { withCredentials: true },
-    );
+    return this.http.post<Store>(this.apiUrl, { storeName });
   }
 
   getStore(slug: string): Observable<Store> {
-    return this.http.get<Store>(`${this.apiUrl}?slug=${slug}`, {
-      withCredentials: true,
-    });
+    return this.http.get<Store>(`${this.apiUrl}?slug=${slug}`);
   }
 }

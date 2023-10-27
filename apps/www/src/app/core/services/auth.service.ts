@@ -16,14 +16,10 @@ export class AuthService {
   constructor(private readonly http: HttpClient) {}
 
   login(email: string, password: string): Observable<User> {
-    return this.http.post<User>(
-      `${this.apiUrl}/login`,
-      {
-        email,
-        password,
-      },
-      { withCredentials: true },
-    );
+    return this.http.post<User>(`${this.apiUrl}/login`, {
+      email,
+      password,
+    });
   }
 
   register(
@@ -31,32 +27,20 @@ export class AuthService {
     email: string,
     password: string,
   ): Observable<User> {
-    return this.http.post<User>(
-      `${this.apiUrl}/register`,
-      {
-        username,
-        email,
-        password,
-      },
-      { withCredentials: true },
-    );
+    return this.http.post<User>(`${this.apiUrl}/register`, {
+      username,
+      email,
+      password,
+    });
   }
 
   logout(): Observable<null> {
-    return this.http.get<null>(`${this.apiUrl}/logout`, {
-      withCredentials: true,
-    });
+    return this.http.get<null>(`${this.apiUrl}/logout`);
   }
 
   getCurrentUser(): Observable<User> {
     return this.http
-      .get<User>(this.apiUrl, {
-        withCredentials: true,
-      })
-      .pipe(
-        tap({
-          next: (user) => this.currentUser.next(user),
-        }),
-      );
+      .get<User>(this.apiUrl)
+      .pipe(tap({ next: (user) => this.currentUser.next(user) }));
   }
 }

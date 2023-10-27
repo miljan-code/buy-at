@@ -11,6 +11,7 @@ import { routes } from './app.routes';
 
 import { AuthService } from '~core/services/auth.service';
 import { ErrorInterceptor } from '~core/interceptors/error.interceptor';
+import { AuthInterceptor } from '~core/interceptors/auth.interceptor';
 
 export function initAuth(authService: AuthService) {
   return () => authService.getCurrentUser();
@@ -30,6 +31,11 @@ export const appConfig: ApplicationConfig = {
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ErrorInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
       multi: true,
     },
   ],
