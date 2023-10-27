@@ -5,12 +5,11 @@ import {
   getStore,
   getStoresByUserId,
 } from '../controllers/store-controller.js';
-import { authentication } from '../middlewares/authentication.js';
 
 const storeRoutes = express.Router();
 
 storeRoutes.get('/', getStore);
-storeRoutes.get('/:userId', authentication, getStoresByUserId);
-storeRoutes.post('/', authentication, createStore);
+storeRoutes.get('/:userId', getStoresByUserId);
+storeRoutes.post('/', createStore);
 
 export { storeRoutes };

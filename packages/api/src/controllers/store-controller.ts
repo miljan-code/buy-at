@@ -25,22 +25,22 @@ const createStore = asyncHandler(async (req: Request, res: Response) => {
 });
 
 const getStore = asyncHandler(async (req: Request, res: Response) => {
-  const storeSlug = req.headers.origin?.slice(7).split('.').at(0);
+  const user = req.res?.locals.user;
+  if (!user) throw new CustomError('Unauthorized', 401);
+  const slug = req.query.slug;
+  if (typeof slug !== 'string') {
+    throw new CustomError('Something went wrong', 500);
+  }
 
   const store = await db.store.findUnique({
     where: {
-      slug: storeSlug,
+      slug,
+      ownerId: user.id,
     },
   });
   if (!store) throw new CustomError('Store not found', 404);
 
-  const storeConfig = {
-    title: store.name,
-    navLinks: [],
-    coverImage: 'src/assets/images/background-2.png',
-  };
-
-  res.status(200).json(storeConfig);
+  res.status(200).json(store);
 });
 
 const getStoresByUserId = asyncHandler(async (req: Request, res: Response) => {

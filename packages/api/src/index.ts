@@ -5,6 +5,8 @@ import cookieParser from 'cookie-parser';
 
 import { storeRoutes } from './routes/store-routes.js';
 import { authRoutes } from './routes/auth-routes.js';
+import { templateRoutes } from './routes/template-routes.js';
+import { authentication } from './middlewares/authentication.js';
 import { errorHandler } from './middlewares/error-handler.js';
 
 dotenv.config();
@@ -23,8 +25,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors(corsOpts));
 app.use(cookieParser());
 
-app.use('/api/store', storeRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/store', authentication, storeRoutes);
+app.use('/api/template', templateRoutes);
 
 app.use(errorHandler);
 
