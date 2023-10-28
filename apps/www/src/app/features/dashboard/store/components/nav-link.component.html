@@ -1,4 +1,9 @@
-<a [routerLink]="url" routerLinkActive="nav-link--active" class="nav-link">
+<a
+  [routerLink]="url"
+  routerLinkActive="nav-link--active"
+  [routerLinkActiveOptions]="{ exact: true }"
+  class="nav-link"
+>
   <span [className]="icon"></span>
   <span>{{ label }}</span>
 </a>

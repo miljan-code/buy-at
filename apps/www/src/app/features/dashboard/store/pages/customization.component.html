@@ -1,0 +1,50 @@
+<div class="customization">
+  <section class="section">
+    <div class="section__heading">
+      <h2 class="section__label">Branding</h2>
+      <p class="section__sublabel">Customize branding of your store</p>
+    </div>
+    <form class="section__form">
+      <div class="section__form-group">
+        <label for="storeName">Store name</label>
+        <input
+          id="storeName"
+          type="text"
+          pInputText
+          formControlName="storeName"
+          class="section__form-input"
+        />
+      </div>
+      <div class="section__form-group--sided">
+        <div>
+          <label for="logo">Logo</label>
+          <span class="section__form-input--upload">Upload logo</span>
+        </div>
+        <div class="section__form-image">
+          <span class="pi pi-image section__form-image--logo"></span>
+        </div>
+      </div>
+      <div class="section__form-group--sided">
+        <div>
+          <label for="favicon">Favicon</label>
+          <span class="section__form-input--upload">Upload favicon</span>
+        </div>
+        <div class="section__form-image">
+          <span class="pi pi-image section__form-image--icon"></span>
+        </div>
+      </div>
+      <div class="section__form-group">
+        <label for="cover">Cover image</label>
+        <div class="section__upload-cover">
+          <span pButton label="Upload" class="p-button-secondary"></span>
+        </div>
+      </div>
+      <button
+        pButton
+        type="submit"
+        label="Save changes"
+        class="section__form-button"
+      ></button>
+    </form>
+  </section>
+</div>

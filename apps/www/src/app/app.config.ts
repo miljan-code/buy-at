@@ -8,7 +8,6 @@ import {
 import { provideAnimations } from '@angular/platform-browser/animations';
 
 import { routes } from './app.routes';
-
 import { AuthService } from '~core/services/auth.service';
 import { ErrorInterceptor } from '~core/interceptors/error.interceptor';
 import { AuthInterceptor } from '~core/interceptors/auth.interceptor';

@@ -1,0 +1,75 @@
+@import 'variables';
+@import 'mixins';
+@import 'functions';
+
+.section {
+  @include flex($direction: column);
+  gap: rem(32px);
+
+  &__label {
+    font-family: $font-heading;
+    font-size: rem(32px);
+    margin-bottom: rem(4px);
+  }
+
+  &__sublabel {
+    color: $color-muted;
+  }
+
+  &__form {
+    @include flex($direction: column);
+    gap: rem(32px);
+    padding: rem(32px) rem(24px);
+
+    border: 1px solid $color-border;
+    border-radius: rem(24px);
+
+    &-group {
+      @include form-group;
+
+      &--sided {
+        @include flex(center, space-between);
+
+        & *:first-child {
+          @include form-group;
+        }
+      }
+    }
+
+    &-input {
+      width: 50%;
+
+      &--upload {
+        font-size: rem(15px);
+        color: $color-primary;
+        text-decoration: underline;
+        text-underline-offset: rem(4px);
+        cursor: pointer;
+      }
+    }
+
+    &-image {
+      &--logo {
+        font-size: rem(64px);
+        color: $color-muted;
+      }
+
+      &--icon {
+        font-size: rem(32px);
+        color: $color-muted;
+      }
+    }
+
+    &-button {
+      width: fit-content;
+    }
+  }
+
+  &__upload-cover {
+    @include flex(center, center, column);
+    padding: rem(48px);
+
+    border: 1px dashed $color-border;
+    border-radius: rem(24px);
+  }
+}

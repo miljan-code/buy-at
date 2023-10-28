@@ -4,6 +4,13 @@ export const STORE_ROUTES: Routes = [
   {
     path: '',
     loadComponent: () =>
-      import('./components/main.component').then((c) => c.MainComponent),
+      import('./pages/main.component').then((c) => c.MainComponent),
+  },
+  {
+    path: 'customization',
+    loadComponent: () =>
+      import('./pages/customization.component').then(
+        (c) => c.CustomizationComponent,
+      ),
   },
 ];

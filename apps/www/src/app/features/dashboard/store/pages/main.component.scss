@@ -1,0 +1,78 @@
+@import 'variables';
+@import 'functions';
+@import 'mixins';
+
+%box {
+  flex: 1;
+  border: 1px solid $color-border;
+  border-radius: rem(12px);
+  height: rem(140px);
+  color: $color-muted;
+}
+
+.store-main {
+  @include flex($direction: column);
+  gap: rem(24px);
+}
+
+.heading {
+  margin-bottom: rem(12px);
+
+  &__label {
+    font-size: rem(18px);
+    font-weight: 600;
+
+    margin-bottom: rem(8px);
+  }
+
+  &__sublabel {
+    font-size: rem(15px);
+    color: $color-muted;
+  }
+}
+
+.learn {
+  @include flex(center);
+  gap: rem(24px);
+
+  &__box {
+    @extend %box;
+    @include flex(center, center, column);
+    gap: rem(16px);
+    transition: 0.3s;
+    cursor: pointer;
+
+    &:hover {
+      background-color: $color-border;
+    }
+  }
+
+  &__icon {
+    font-size: rem(24px);
+  }
+}
+
+.stats {
+  @include flex;
+  gap: rem(24px);
+
+  &__box {
+    @extend %box;
+    @include flex($justify: space-between, $direction: column);
+    padding: rem(32px) rem(24px);
+
+    &-header {
+      @include flex(center, space-between);
+    }
+
+    &-label {
+      font-weight: 500;
+    }
+
+    &-amount {
+      color: $color-white;
+      font-weight: 600;
+      font-size: rem(24px);
+    }
+  }
+}
