@@ -8,7 +8,7 @@
     </li>
     <li
       class="stores__card stores__card--store"
-      *ngFor="let store of currentUser?.stores"
+      *ngFor="let store of stores$ | async"
     >
       <a
         [routerLink]="'/dashboard/store/' + store.slug"

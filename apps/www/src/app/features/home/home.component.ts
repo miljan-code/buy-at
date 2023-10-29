@@ -1,11 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Subject, takeUntil } from 'rxjs';
 
+import { AuthService } from '~core/services/auth.service';
 import { HeroComponent } from './hero/hero.component';
 import { HeaderComponent } from './header/header.component';
-import { AuthService } from '~core/services/auth.service';
-import type { User } from '~core/models/user.model';
 
 @Component({
   selector: 'app-home',
@@ -13,20 +11,8 @@ import type { User } from '~core/models/user.model';
   imports: [CommonModule, HeroComponent, HeaderComponent],
   templateUrl: './home.component.html',
 })
-export class HomeComponent implements OnInit, OnDestroy {
-  currentUser: User | null = null;
-  protected destroy$ = new Subject<void>();
+export class HomeComponent {
+  currentUser$ = this.authService.currentUser$;
 
   constructor(public authService: AuthService) {}
-
-  ngOnInit(): void {
-    this.authService.currentUser$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((user) => (this.currentUser = user));
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
 }

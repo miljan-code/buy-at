@@ -1,4 +1,4 @@
-<app-header-home [currentUser]="currentUser" />
+<app-header-home [currentUser]="currentUser$ | async" />
 <main>
-  <app-hero [currentUser]="currentUser" />
+  <app-hero [currentUser]="currentUser$ | async" />
 </main>

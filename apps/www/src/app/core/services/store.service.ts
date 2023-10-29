@@ -10,7 +10,7 @@ import type { CreateStoreOpts, Store } from '../models/store.model';
 })
 export class StoreService {
   private readonly apiUrl = siteConfig.apiUrls.store;
-  store = new BehaviorSubject<Store | null>(null);
+  private store = new BehaviorSubject<Store | null>(null);
   store$ = this.store.asObservable();
 
   constructor(private readonly http: HttpClient) {}
@@ -21,5 +21,9 @@ export class StoreService {
 
   getStore(slug: string): Observable<Store> {
     return this.http.get<Store>(`${this.apiUrl}?slug=${slug}`);
+  }
+
+  setStore(store: Store): void {
+    this.store.next(store);
   }
 }

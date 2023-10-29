@@ -1,4 +1,4 @@
-<app-header-dashboard [currentUser]="currentUser" />
+<app-header-dashboard [currentUser]="currentUser$ | async" />
 <main>
   <section class="dashboard">
     <div class="dashboard__container">

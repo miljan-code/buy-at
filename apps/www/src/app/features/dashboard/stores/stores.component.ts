@@ -1,11 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, RouterModule } from '@angular/router';
-import { Subject, takeUntil } from 'rxjs';
+import { RouterModule } from '@angular/router';
+import { map } from 'rxjs';
 
 import { AuthService } from '~core/services/auth.service';
 import { LinkifyPipe } from '~shared/pipes/linkify.pipe';
-import type { User } from '~core/models/user.model';
 
 @Component({
   selector: 'app-stores',
@@ -14,20 +13,10 @@ import type { User } from '~core/models/user.model';
   templateUrl: './stores.component.html',
   styleUrls: ['./stores.component.scss'],
 })
-export class StoresComponent implements OnInit, OnDestroy {
-  currentUser: User | null = null;
-  private destroy$ = new Subject<void>();
+export class StoresComponent {
+  stores$ = this.authService.currentUser$.pipe(
+    map((user) => user && user.stores),
+  );
 
   constructor(private readonly authService: AuthService) {}
-
-  ngOnInit(): void {
-    this.authService.currentUser$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((user) => (this.currentUser = user));
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
 }
