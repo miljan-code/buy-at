@@ -16,7 +16,15 @@ const port = process.env.PORT;
 const app = express();
 
 const corsOpts = {
-  origin: 'http://localhost:4201',
+  origin: (origin, cb) => {
+    const www = 'http://localhost:4201';
+    const templateRegex = `^http:\/\/[a-zA-Z0-9-]+\.localhost:4200$`;
+    if (!origin || origin.match(www) || origin.match(templateRegex)) {
+      cb(null, true);
+    } else {
+      cb(new Error('Not allowed by CORS'));
+    }
+  },
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
 } satisfies CorsOptions;

@@ -18,6 +18,7 @@ const createStore = asyncHandler(async (req: Request, res: Response) => {
       name: storeData.storeName,
       slug,
       ownerId: user.id,
+      coverImage: storeData.coverImage || null,
     },
   });
 

@@ -27,6 +27,8 @@ model Store {
   slug       String   @unique
   ownerId    String
   coverImage String?
+  logo       String?
+  favicon    String?
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 
