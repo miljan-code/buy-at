@@ -12,9 +12,9 @@ export class UploadService {
 
   constructor(private readonly http: HttpClient) {}
 
-  uploadImage(file: File): Observable<string | null> {
+  uploadImage(file: File): Observable<string> {
     const uploadFileData = new FormData();
     uploadFileData.append('image', file, file.name);
-    return this.http.post<string | null>(this.apiUrl, uploadFileData);
+    return this.http.post<string>(this.apiUrl, uploadFileData);
   }
 }

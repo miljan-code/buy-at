@@ -15,8 +15,8 @@ export class StoreService {
 
   constructor(private readonly http: HttpClient) {}
 
-  createStore({ storeName }: CreateStoreOpts): Observable<Store> {
-    return this.http.post<Store>(this.apiUrl, { storeName });
+  createStore(storeOpts: CreateStoreOpts): Observable<Store> {
+    return this.http.post<Store>(this.apiUrl, storeOpts);
   }
 
   getStore(slug: string): Observable<Store> {

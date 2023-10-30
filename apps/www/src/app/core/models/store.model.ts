@@ -4,10 +4,13 @@ export interface Store {
   slug: string;
   ownerId: string;
   coverImage: string | null;
+  logo: string | null;
+  favicon: string | null;
   createdAt: Date;
   updatedAt: Date;
 }
 
 export interface CreateStoreOpts {
   storeName: string;
+  coverImage: string | undefined;
 }

@@ -6,15 +6,15 @@ export const dashboardConfig = {
       icon: 'pi pi-home',
     },
     {
-      label: 'Products',
-      path: '/products',
-      icon: 'pi pi-box',
-    },
-    {
       label: 'Customization',
       path: '/customization',
       icon: 'pi pi-table',
     },
+    // {
+    //   label: 'Products',
+    //   path: '/products',
+    //   icon: 'pi pi-box',
+    // },
   ],
 } satisfies DashboardConfig;
 

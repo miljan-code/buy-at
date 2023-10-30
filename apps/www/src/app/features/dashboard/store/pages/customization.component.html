@@ -4,38 +4,85 @@
       <h2 class="section__label">Branding</h2>
       <p class="section__sublabel">Customize branding of your store</p>
     </div>
-    <form class="section__form">
+    <form
+      [formGroup]="customizationForm"
+      (ngSubmit)="submitForm()"
+      class="section__form"
+    >
       <div class="section__form-group">
         <label for="storeName">Store name</label>
         <input
           id="storeName"
           type="text"
           pInputText
-          formControlName="storeName"
+          formControlName="name"
           class="section__form-input"
         />
       </div>
       <div class="section__form-group--sided">
         <div>
-          <label for="logo">Logo</label>
-          <span class="section__form-input--upload">Upload logo</span>
+          <div>
+            <label>Logo</label>
+            <label for="logo" class="section__form-input--upload"
+              >Upload logo</label
+            >
+            <input
+              id="logo"
+              type="file"
+              style="display: none"
+              upload
+              (onUpload)="handleImage($event, 'logo')"
+            />
+          </div>
+          <span
+            *ngIf="store?.logo"
+            class="section__form-input--remove"
+            (click)="handleImage(null, 'logo')"
+            >Remove logo</span
+          >
         </div>
         <div class="section__form-image">
-          <span class="pi pi-image section__form-image--logo"></span>
+          <img
+            [src]="store?.logo || picPlaceholder"
+            class="section__form-image--logo"
+          />
         </div>
       </div>
       <div class="section__form-group--sided">
         <div>
-          <label for="favicon">Favicon</label>
-          <span class="section__form-input--upload">Upload favicon</span>
+          <div>
+            <label>Favicon</label>
+            <label for="favicon" class="section__form-input--upload"
+              >Upload favicon</label
+            >
+            <input
+              id="favicon"
+              type="file"
+              style="display: none"
+              upload
+              (onUpload)="handleImage($event, 'favicon')"
+            />
+          </div>
+          <span
+            *ngIf="store?.favicon"
+            class="section__form-input--remove"
+            (click)="handleImage(null, 'favicon')"
+            >Remove favicon</span
+          >
         </div>
         <div class="section__form-image">
-          <span class="pi pi-image section__form-image--icon"></span>
+          <img
+            [src]="store?.favicon || picPlaceholder"
+            class="section__form-image--icon"
+          />
         </div>
       </div>
       <div class="section__form-group">
         <label for="cover">Cover image</label>
         <div class="section__upload-cover">
+          <div class="section__upload-cover-bg" *ngIf="store?.coverImage">
+            <img [src]="store?.coverImage" />
+          </div>
           <label
             for="file-upload"
             pButton
@@ -47,8 +94,14 @@
             type="file"
             style="display: none"
             upload
-            (onUpload)="handleUploadCover($event)"
+            (onUpload)="handleImage($event, 'coverImage')"
           />
+          <span
+            *ngIf="store?.coverImage"
+            class="section__form-input--remove"
+            (click)="handleImage(null, 'coverImage')"
+            >Remove cover</span
+          >
         </div>
       </div>
       <button

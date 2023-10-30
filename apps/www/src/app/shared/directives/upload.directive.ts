@@ -14,11 +14,12 @@ import { UploadService } from '~core/services/upload.service';
   standalone: true,
 })
 export class UploadDirective implements OnDestroy {
-  @Output() onUpload = new EventEmitter<string | null>();
+  @Output() onUpload = new EventEmitter<string>();
   private destroy$ = new Subject<void>();
 
   constructor(private readonly uploadService: UploadService) {}
 
+  // TODO: handle file types based on type of upload (Logo|Fav)
   @HostListener('change', ['$event']) onChange(event: Event): void {
     const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
     const element = event.target as HTMLInputElement;

@@ -19,7 +19,7 @@ import { UploadDirective } from '~shared/directives/upload.directive';
 
 interface CreateStoreForm {
   storeName: FormControl<string>;
-  coverImage: FormControl<string | null>;
+  coverImage: FormControl<string>;
 }
 
 @Component({
@@ -39,7 +39,7 @@ interface CreateStoreForm {
 export class CreateStoreComponent implements OnInit, OnDestroy {
   createStoreForm!: FormGroup<CreateStoreForm>;
   storeNamePlaceholder = 'BuyAt.store';
-  showcaseCover = '../../../../assets/images/background-1.png';
+  showcaseCover = '/assets/images/background-1.png';
   private destroy$ = new Subject<void>();
 
   constructor(
@@ -49,10 +49,10 @@ export class CreateStoreComponent implements OnInit, OnDestroy {
   ) {}
 
   createStore(): void {
-    const { storeName } = this.createStoreForm.value;
+    const { storeName, coverImage } = this.createStoreForm.value;
     if (!storeName) return;
     this.storeService
-      .createStore({ storeName })
+      .createStore({ storeName, coverImage })
       .pipe(takeUntil(this.destroy$))
       .subscribe((store) => {
         const currentUser = this.authService.currentUser.value;
@@ -65,8 +65,7 @@ export class CreateStoreComponent implements OnInit, OnDestroy {
       });
   }
 
-  handleUpload(imageUrl: string | null): void {
-    if (!imageUrl) return;
+  handleUpload(imageUrl: string): void {
     this.showcaseCover = imageUrl;
     this.createStoreForm.controls.coverImage.setValue(imageUrl);
   }
@@ -77,9 +76,7 @@ export class CreateStoreComponent implements OnInit, OnDestroy {
         validators: [Validators.required, Validators.minLength(4)],
         nonNullable: true,
       }),
-      coverImage: new FormControl(null, {
-        nonNullable: false,
-      }),
+      coverImage: new FormControl(),
     });
   }
 
