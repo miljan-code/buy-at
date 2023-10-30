@@ -3,11 +3,12 @@ import cors, { CorsOptions } from 'cors';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 
-import { storeRoutes } from './routes/store-routes.js';
-import { authRoutes } from './routes/auth-routes.js';
-import { templateRoutes } from './routes/template-routes.js';
-import { authentication } from './middlewares/authentication.js';
-import { errorHandler } from './middlewares/error-handler.js';
+import { storeRoutes } from './routes/store.routes.js';
+import { authRoutes } from './routes/auth.routes.js';
+import { templateRoutes } from './routes/template.routes.js';
+import { uploadRotues } from './routes/upload.routes.js';
+import { authentication } from './middlewares/auth.middleware.js';
+import { errorHandler } from './middlewares/error.middleware.js';
 
 dotenv.config();
 
@@ -28,6 +29,7 @@ app.use(cookieParser());
 app.use('/api/auth', authRoutes);
 app.use('/api/store', authentication, storeRoutes);
 app.use('/api/template', templateRoutes);
+app.use('/api/upload', authentication, uploadRotues);
 
 app.use(errorHandler);
 

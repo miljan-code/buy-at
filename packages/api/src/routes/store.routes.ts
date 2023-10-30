@@ -4,7 +4,7 @@ import {
   createStore,
   getStore,
   getStoresByUserId,
-} from '../controllers/store-controller.js';
+} from '../controllers/store.controller.js';
 
 const storeRoutes = express.Router();
 

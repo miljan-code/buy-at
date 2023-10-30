@@ -1,6 +1,6 @@
 import express from 'express';
 
-import { getTemplate } from '../controllers/template-controller.js';
+import { getTemplate } from '../controllers/template.controller.js';
 
 const templateRoutes = express.Router();
 
