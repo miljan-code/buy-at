@@ -11,15 +11,18 @@ import { ConfigService } from './core/services/config.service';
   standalone: true,
   imports: [CommonModule, RouterOutlet, HeaderComponent],
   template: `
-    <app-header />
-    <main class="main">
-      <router-outlet />
-    </main>
+    <ng-container *ngIf="!loading">
+      <app-header />
+      <main class="main">
+        <router-outlet />
+      </main>
+    </ng-container>
   `,
 })
 export class AppComponent implements OnInit, OnDestroy {
   private mainAppUrl = 'http://localhost:4200/';
   private destroy$ = new Subject<void>();
+  loading = true;
 
   constructor(private readonly configService: ConfigService) {}
 
@@ -38,6 +41,7 @@ export class AppComponent implements OnInit, OnDestroy {
           }
 
           if (config) this.configService.config.next(config);
+          this.loading = false;
         },
         error: () => {
           window.location.href = this.mainAppUrl;

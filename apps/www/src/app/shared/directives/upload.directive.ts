@@ -15,6 +15,7 @@ import { UploadService } from '~core/services/upload.service';
 })
 export class UploadDirective implements OnDestroy {
   @Output() onUpload = new EventEmitter<string>();
+  @Output() isUploading = new EventEmitter<boolean>(false);
   private destroy$ = new Subject<void>();
 
   constructor(private readonly uploadService: UploadService) {}
@@ -25,10 +26,14 @@ export class UploadDirective implements OnDestroy {
     const element = event.target as HTMLInputElement;
     const file = element.files && element.files[0];
     if (!file || !allowedTypes.includes(file.type)) return;
+    this.isUploading.emit(true);
     this.uploadService
       .uploadImage(file)
       .pipe(takeUntil(this.destroy$))
-      .subscribe((imageUrl) => this.onUpload.emit(imageUrl));
+      .subscribe((imageUrl) => {
+        this.onUpload.emit(imageUrl);
+        this.isUploading.emit(false);
+      });
   }
 
   ngOnDestroy(): void {

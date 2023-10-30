@@ -14,3 +14,9 @@ export interface CreateStoreOpts {
   storeName: string;
   coverImage: string | undefined;
 }
+
+export interface UpdateStoreOpts extends CreateStoreOpts {
+  id: string;
+  logo: string | undefined;
+  favicon: string | undefined;
+}

@@ -40,6 +40,7 @@ export class CreateStoreComponent implements OnInit, OnDestroy {
   createStoreForm!: FormGroup<CreateStoreForm>;
   storeNamePlaceholder = 'BuyAt.store';
   showcaseCover = '/assets/images/background-1.png';
+  isLoading = false;
   private destroy$ = new Subject<void>();
 
   constructor(
@@ -68,6 +69,10 @@ export class CreateStoreComponent implements OnInit, OnDestroy {
   handleUpload(imageUrl: string): void {
     this.showcaseCover = imageUrl;
     this.createStoreForm.controls.coverImage.setValue(imageUrl);
+  }
+
+  handleLoading(value: boolean): void {
+    this.isLoading = value;
   }
 
   ngOnInit(): void {

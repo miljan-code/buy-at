@@ -3,7 +3,11 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 import { siteConfig } from '~config/site';
-import type { CreateStoreOpts, Store } from '../models/store.model';
+import type {
+  CreateStoreOpts,
+  Store,
+  UpdateStoreOpts,
+} from '../models/store.model';
 
 @Injectable({
   providedIn: 'root',
@@ -17,6 +21,10 @@ export class StoreService {
 
   createStore(storeOpts: CreateStoreOpts): Observable<Store> {
     return this.http.post<Store>(this.apiUrl, storeOpts);
+  }
+
+  updateStore(storeOpts: UpdateStoreOpts): Observable<Store> {
+    return this.http.patch<Store>(`${this.apiUrl}/${storeOpts.id}`, storeOpts);
   }
 
   getStore(slug: string): Observable<Store> {

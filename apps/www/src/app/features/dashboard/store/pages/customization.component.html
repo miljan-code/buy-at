@@ -32,6 +32,7 @@
               style="display: none"
               upload
               (onUpload)="handleImage($event, 'logo')"
+              (isUploading)="handleLoading($event)"
             />
           </div>
           <span
@@ -61,6 +62,7 @@
               style="display: none"
               upload
               (onUpload)="handleImage($event, 'favicon')"
+              (isUploading)="handleLoading($event)"
             />
           </div>
           <span
@@ -95,6 +97,7 @@
             style="display: none"
             upload
             (onUpload)="handleImage($event, 'coverImage')"
+            (isUploading)="handleLoading($event)"
           />
           <span
             *ngIf="store?.coverImage"
@@ -106,6 +109,8 @@
       </div>
       <button
         pButton
+        loadingIcon="pi pi-spin pi-sync"
+        [loading]="isLoading"
         type="submit"
         label="Save changes"
         class="section__form-button"
@@ -113,3 +118,5 @@
     </form>
   </section>
 </div>
+
+<p-toast></p-toast>

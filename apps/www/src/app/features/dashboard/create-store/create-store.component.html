@@ -17,6 +17,8 @@
       </div>
       <button
         pButton
+        loadingIcon="pi pi-spin pi-sync"
+        [loading]="isLoading"
         label="Create store"
         class="create-store__form-button"
         type="submit"
@@ -31,6 +33,7 @@
         style="display: none"
         upload
         (onUpload)="handleUpload($event)"
+        (isUploading)="handleLoading($event)"
       />
     </div>
   </form>
