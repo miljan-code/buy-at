@@ -1,0 +1,10 @@
+<div class="upload-image">
+  <p class="upload-image-label">Cover photo</p>
+  <label for="file-upload" pButton label="Upload"></label>
+  <input
+    id="file-upload"
+    type="file"
+    style="display: none"
+    (change)="uploadImage($event)"
+  />
+</div>

@@ -7,11 +7,12 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Subject, combineLatest, map, takeUntil } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 
+import { UploadImageComponent } from '~shared/components/upload-image/upload-image.component';
 import { StoreService } from '~core/services/store.service';
 import { AuthService } from '~core/services/auth.service';
 
@@ -23,7 +24,13 @@ interface CreateStoreForm {
 @Component({
   selector: 'app-create-store',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, InputTextModule, ButtonModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    InputTextModule,
+    ButtonModule,
+    UploadImageComponent,
+  ],
   templateUrl: './create-store.component.html',
   styleUrls: ['./create-store.component.scss'],
 })
@@ -38,23 +45,6 @@ export class CreateStoreComponent implements OnInit, OnDestroy {
     private readonly router: Router,
     private readonly authService: AuthService,
   ) {}
-
-  ngOnInit(): void {
-    this.createStoreForm = new FormGroup<CreateStoreForm>({
-      storeName: new FormControl('', {
-        validators: [Validators.required, Validators.minLength(4)],
-        nonNullable: true,
-      }),
-      coverImage: new FormControl(null, {
-        nonNullable: false,
-      }),
-    });
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
 
   createStore(): void {
     const { storeName } = this.createStoreForm.value;
@@ -71,5 +61,28 @@ export class CreateStoreComponent implements OnInit, OnDestroy {
         });
         this.router.navigateByUrl(`/dashboard/store/${store.slug}`);
       });
+  }
+
+  handleUpload(imageUrl: string | null): void {
+    if (!imageUrl) return;
+    this.showcaseCover = imageUrl;
+    this.createStoreForm.controls.coverImage.setValue(imageUrl);
+  }
+
+  ngOnInit(): void {
+    this.createStoreForm = new FormGroup<CreateStoreForm>({
+      storeName: new FormControl('', {
+        validators: [Validators.required, Validators.minLength(4)],
+        nonNullable: true,
+      }),
+      coverImage: new FormControl(null, {
+        nonNullable: false,
+      }),
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

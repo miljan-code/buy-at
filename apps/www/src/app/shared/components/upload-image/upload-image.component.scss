@@ -1,0 +1,19 @@
+@import 'variables';
+@import 'functions';
+@import 'mixins';
+
+.upload-image {
+  @include flex(center, center, column);
+
+  width: 100%;
+  height: 100%;
+  padding: rem(32px);
+  border: 2px dashed $color-border;
+  border-radius: rem(24px);
+
+  &-label {
+    font-size: rem(16px);
+    color: $color-muted;
+    margin-bottom: 8px;
+  }
+}

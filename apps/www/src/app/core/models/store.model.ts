@@ -3,6 +3,7 @@ export interface Store {
   name: string;
   slug: string;
   ownerId: string;
+  coverImage: string | null;
   createdAt: Date;
   updatedAt: Date;
 }

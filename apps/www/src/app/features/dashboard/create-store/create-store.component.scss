@@ -28,22 +28,9 @@
     &-button {
       margin-top: rem(12px);
     }
-  }
 
-  &__upload-cover {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-    width: 100%;
-    border: 2px dashed $color-border;
-    border-radius: rem(24px);
-
-    &-label {
-      font-size: rem(16px);
-      color: $color-muted;
-      margin-bottom: 8px;
+    & div:last-child {
+      flex: 1;
     }
   }
 }

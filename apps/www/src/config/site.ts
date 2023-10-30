@@ -3,6 +3,7 @@ export const siteConfig: SiteConfig = {
   apiUrls: {
     auth: 'http://localhost:5000/api/auth',
     store: 'http://localhost:5000/api/store',
+    upload: 'http://localhost:5000/api/upload',
   },
   environment: 'development',
 };
@@ -16,6 +17,7 @@ export interface SiteConfig {
 interface ApiUrls {
   auth: string;
   store: string;
+  upload: string;
 }
 
 export interface NavLink {

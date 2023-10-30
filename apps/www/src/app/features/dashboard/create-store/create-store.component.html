@@ -23,9 +23,8 @@
         type="submit"
       ></button>
     </div>
-    <div class="create-store__upload-cover">
-      <p class="create-store__upload-cover-label">Cover photo</p>
-      <span pButton label="Upload" class="p-button-secondary"></span>
+    <div>
+      <app-upload-image (onUpload)="handleUpload($event)" />
     </div>
   </form>
   <div class="store-showcase">
