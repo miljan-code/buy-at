@@ -2,7 +2,10 @@ import type { Request, Response } from 'express';
 import asyncHandler from 'express-async-handler';
 import { createId } from '@paralleldrive/cuid2';
 
-import { createStoreSchema } from '../lib/validations/store.js';
+import {
+  createStoreSchema,
+  updateStoreSchema,
+} from '../lib/validations/store.js';
 import { CustomError } from '../lib/exceptions.js';
 import { db } from '../lib/db.js';
 
@@ -23,6 +26,28 @@ const createStore = asyncHandler(async (req: Request, res: Response) => {
   });
 
   res.status(201).json(store);
+});
+
+const updateStore = asyncHandler(async (req: Request, res: Response) => {
+  const storeData = updateStoreSchema.parse(req.body);
+  const user = req.res?.locals.user;
+  if (!user) throw new CustomError('Unauthorized', 401);
+  const { storeId } = req.params;
+
+  const store = await db.store.update({
+    where: {
+      id: storeId,
+      ownerId: user.id,
+    },
+    data: {
+      name: storeData.storeName,
+      coverImage: storeData.coverImage || null,
+      logo: storeData.logo || null,
+      favicon: storeData.favicon || null,
+    },
+  });
+
+  res.status(200).json(store);
 });
 
 const getStore = asyncHandler(async (req: Request, res: Response) => {
@@ -60,4 +85,4 @@ const getStoresByUserId = asyncHandler(async (req: Request, res: Response) => {
   res.status(200).json(stores);
 });
 
-export { createStore, getStore, getStoresByUserId };
+export { createStore, getStore, updateStore, getStoresByUserId };
