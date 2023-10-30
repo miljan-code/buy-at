@@ -12,9 +12,10 @@ import { Subject, takeUntil } from 'rxjs';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 
-import { UploadImageComponent } from '~shared/components/upload-image/upload-image.component';
 import { StoreService } from '~core/services/store.service';
 import { AuthService } from '~core/services/auth.service';
+import { AutofocusDirective } from '~shared/directives/autofocus.directive';
+import { UploadDirective } from '~shared/directives/upload.directive';
 
 interface CreateStoreForm {
   storeName: FormControl<string>;
@@ -29,7 +30,8 @@ interface CreateStoreForm {
     ReactiveFormsModule,
     InputTextModule,
     ButtonModule,
-    UploadImageComponent,
+    AutofocusDirective,
+    UploadDirective,
   ],
   templateUrl: './create-store.component.html',
   styleUrls: ['./create-store.component.scss'],

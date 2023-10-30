@@ -33,7 +33,24 @@
           <span class="pi pi-image section__form-image--icon"></span>
         </div>
       </div>
-      <app-upload-image (onUpload)="handleUploadCover($event)" />
+      <div class="section__form-group">
+        <label for="cover">Cover image</label>
+        <div class="section__upload-cover">
+          <label
+            for="file-upload"
+            pButton
+            label="Upload"
+            class="p-button-secondary"
+          ></label>
+          <input
+            id="file-upload"
+            type="file"
+            style="display: none"
+            upload
+            (onUpload)="handleUploadCover($event)"
+          />
+        </div>
+      </div>
       <button
         pButton
         type="submit"

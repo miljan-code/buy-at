@@ -1,25 +1,25 @@
-import { Component, EventEmitter, OnDestroy, Output } from '@angular/core';
-import { CommonModule } from '@angular/common';
-
-import { ButtonModule } from 'primeng/button';
-
-import { UploadService } from '~core/services/upload.service';
+import {
+  Directive,
+  EventEmitter,
+  HostListener,
+  OnDestroy,
+  Output,
+} from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 
-@Component({
-  selector: 'app-upload-image',
+import { UploadService } from '~core/services/upload.service';
+
+@Directive({
+  selector: '[upload]',
   standalone: true,
-  imports: [CommonModule, ButtonModule],
-  templateUrl: './upload-image.component.html',
-  styleUrls: ['./upload-image.component.scss'],
 })
-export class UploadImageComponent implements OnDestroy {
+export class UploadDirective implements OnDestroy {
   @Output() onUpload = new EventEmitter<string | null>();
   private destroy$ = new Subject<void>();
 
   constructor(private readonly uploadService: UploadService) {}
 
-  uploadImage(event: Event): void {
+  @HostListener('change', ['$event']) onChange(event: Event): void {
     const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
     const element = event.target as HTMLInputElement;
     const file = element.files && element.files[0];

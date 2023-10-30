@@ -5,12 +5,12 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 
 import { StoreService } from '~core/services/store.service';
-import { UploadImageComponent } from '~shared/components/upload-image/upload-image.component';
+import { UploadDirective } from '~shared/directives/upload.directive';
 
 @Component({
   selector: 'app-customization',
   standalone: true,
-  imports: [CommonModule, InputTextModule, ButtonModule, UploadImageComponent],
+  imports: [CommonModule, InputTextModule, ButtonModule, UploadDirective],
   templateUrl: './customization.component.html',
   styleUrls: ['./customization.component.scss'],
 })

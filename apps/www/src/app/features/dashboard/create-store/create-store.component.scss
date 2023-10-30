@@ -28,9 +28,19 @@
     &-button {
       margin-top: rem(12px);
     }
+  }
 
-    & div:last-child {
-      flex: 1;
+  &__upload-cover {
+    @include flex(center, center, column);
+
+    width: 100%;
+    border: 2px dashed $color-border;
+    border-radius: rem(24px);
+
+    &-label {
+      font-size: rem(16px);
+      color: $color-muted;
+      margin-bottom: 8px;
     }
   }
 }

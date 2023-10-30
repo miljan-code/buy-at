@@ -13,7 +13,6 @@
           type="text"
           pInputText
           formControlName="storeName"
-          autofocus
         />
       </div>
       <button
@@ -23,8 +22,16 @@
         type="submit"
       ></button>
     </div>
-    <div>
-      <app-upload-image (onUpload)="handleUpload($event)" />
+    <div class="create-store__upload-cover">
+      <p class="create-store__upload-cover-label">Cover photo</p>
+      <label for="file-upload" pButton label="Upload"></label>
+      <input
+        id="file-upload"
+        type="file"
+        style="display: none"
+        upload
+        (onUpload)="handleUpload($event)"
+      />
     </div>
   </form>
   <div class="store-showcase">
