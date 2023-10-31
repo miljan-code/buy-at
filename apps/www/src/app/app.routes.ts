@@ -1,6 +1,6 @@
 import type { Routes } from '@angular/router';
 
-import { AuthGuard } from './shared/guards/auth.guard';
+import { authGuard } from '~shared/guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -18,7 +18,7 @@ export const routes: Routes = [
       import('./features/dashboard/dashboard.routes').then(
         (d) => d.DASHBOARD_ROUTES,
       ),
-    canActivate: [AuthGuard],
+    canActivate: [authGuard],
   },
   {
     path: 'auth',

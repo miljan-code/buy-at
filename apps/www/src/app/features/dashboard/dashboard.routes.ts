@@ -1,13 +1,13 @@
 import type { Routes } from '@angular/router';
 
-import { DashboardGuard } from '~shared/guards/dashboard.guard';
+import { dashboardGuard } from '~shared/guards/dashboard.guard';
 
 export const DASHBOARD_ROUTES: Routes = [
   {
     path: '',
     loadComponent: () =>
       import('./stores/stores.component').then((c) => c.StoresComponent),
-    canActivate: [DashboardGuard],
+    canActivate: [dashboardGuard],
   },
   {
     path: 'store/new',
