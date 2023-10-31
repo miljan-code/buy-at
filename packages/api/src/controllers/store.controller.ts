@@ -53,10 +53,7 @@ const updateStore = asyncHandler(async (req: Request, res: Response) => {
 const getStore = asyncHandler(async (req: Request, res: Response) => {
   const user = req.res?.locals.user;
   if (!user) throw new CustomError('Unauthorized', 401);
-  const slug = req.query.slug;
-  if (typeof slug !== 'string') {
-    throw new CustomError('Something went wrong', 500);
-  }
+  const { slug } = req.params;
 
   const store = await db.store.findUnique({
     where: {
@@ -67,6 +64,19 @@ const getStore = asyncHandler(async (req: Request, res: Response) => {
   if (!store) throw new CustomError('Store not found', 404);
 
   res.status(200).json(store);
+});
+
+const getStores = asyncHandler(async (req: Request, res: Response) => {
+  const user = req.res?.locals.user;
+  if (!user) throw new CustomError('Unauthorized', 401);
+
+  const stores = await db.store.findMany({
+    where: {
+      ownerId: user.id,
+    },
+  });
+
+  res.status(200).json(stores);
 });
 
 const getStoresByUserId = asyncHandler(async (req: Request, res: Response) => {
@@ -85,4 +95,4 @@ const getStoresByUserId = asyncHandler(async (req: Request, res: Response) => {
   res.status(200).json(stores);
 });
 
-export { createStore, getStore, updateStore, getStoresByUserId };
+export { createStore, getStore, getStores, updateStore, getStoresByUserId };
