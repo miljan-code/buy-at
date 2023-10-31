@@ -46,7 +46,6 @@ export class CreateStoreComponent implements OnInit, OnDestroy {
   constructor(
     private readonly storeService: StoreService,
     private readonly router: Router,
-    private readonly authService: AuthService,
   ) {}
 
   createStore(): void {
@@ -56,12 +55,6 @@ export class CreateStoreComponent implements OnInit, OnDestroy {
       .createStore({ storeName, coverImage })
       .pipe(takeUntil(this.destroy$))
       .subscribe((store) => {
-        const currentUser = this.authService.currentUser.value;
-        if (!currentUser) return;
-        this.authService.currentUser.next({
-          ...currentUser,
-          stores: [...currentUser.stores, store],
-        });
         this.router.navigateByUrl(`/dashboard/store/${store.slug}`);
       });
   }

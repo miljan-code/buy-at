@@ -34,7 +34,7 @@ export class StoreComponent implements OnInit, OnDestroy {
           return this.storeService.getStore(slug);
         }),
       )
-      .subscribe((store) => this.storeService.setStore(store));
+      .subscribe((store) => this.storeService.setActiveStore(store));
   }
 
   ngOnDestroy(): void {

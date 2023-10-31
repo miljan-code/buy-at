@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { map } from 'rxjs';
 
-import { AuthService } from '~core/services/auth.service';
 import { LinkifyPipe } from '~shared/pipes/linkify.pipe';
+import { StoreService } from '~core/services/store.service';
 
 @Component({
   selector: 'app-stores',
@@ -14,9 +13,7 @@ import { LinkifyPipe } from '~shared/pipes/linkify.pipe';
   styleUrls: ['./stores.component.scss'],
 })
 export class StoresComponent {
-  stores$ = this.authService.currentUser$.pipe(
-    map((user) => user && user.stores),
-  );
+  stores$ = this.storeService.stores$;
 
-  constructor(private readonly authService: AuthService) {}
+  constructor(private readonly storeService: StoreService) {}
 }

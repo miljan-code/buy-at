@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, map, mergeMap, of } from 'rxjs';
 
 import { siteConfig } from '~config/site';
 import type {
@@ -14,24 +14,50 @@ import type {
 })
 export class StoreService {
   private readonly apiUrl = siteConfig.apiUrls.store;
-  private store = new BehaviorSubject<Store | null>(null);
-  store$ = this.store.asObservable();
+  private activeStore = new BehaviorSubject<Store | null>(null);
+  private stores = new BehaviorSubject<Store[]>([]);
+  activeStore$ = this.activeStore.asObservable();
+  stores$ = this.stores.asObservable();
 
-  constructor(private readonly http: HttpClient) {}
+  constructor(private readonly http: HttpClient) {
+    this.getStores().subscribe((stores) => this.stores.next(stores));
+  }
+
+  getStores(): Observable<Store[]> {
+    return this.http.get<Store[]>(this.apiUrl);
+  }
 
   createStore(storeOpts: CreateStoreOpts): Observable<Store> {
-    return this.http.post<Store>(this.apiUrl, storeOpts);
+    return this.http.post<Store>(this.apiUrl, storeOpts).pipe(
+      mergeMap((newStore) => {
+        const stores = this.stores.value;
+        this.stores.next([...stores, newStore]);
+        return of(newStore);
+      }),
+    );
   }
 
   updateStore(storeOpts: UpdateStoreOpts): Observable<Store> {
-    return this.http.patch<Store>(`${this.apiUrl}/${storeOpts.id}`, storeOpts);
+    return this.http
+      .patch<Store>(`${this.apiUrl}/${storeOpts.id}`, storeOpts)
+      .pipe(
+        mergeMap((updatedStore) => {
+          const stores = this.stores.value.filter(
+            (item) => item.id !== updatedStore.id,
+          );
+          this.stores.next([...stores, updatedStore]);
+          return of(updatedStore);
+        }),
+      );
   }
 
-  getStore(slug: string): Observable<Store> {
-    return this.http.get<Store>(`${this.apiUrl}?slug=${slug}`);
+  getStore(slug: string): Observable<Store | null> {
+    return this.stores$.pipe(
+      map((stores) => stores.find((store) => store.slug === slug) || null),
+    );
   }
 
-  setStore(store: Store): void {
-    this.store.next(store);
+  setActiveStore(store: Store | null): void {
+    this.activeStore.next(store);
   }
 }

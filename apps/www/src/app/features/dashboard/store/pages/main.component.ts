@@ -11,7 +11,7 @@ import { StoreService } from '~core/services/store.service';
   styleUrls: ['./main.component.scss'],
 })
 export class MainComponent {
-  store$ = this.storeService.store$;
+  store$ = this.storeService.activeStore$;
 
   constructor(private readonly storeService: StoreService) {}
 }

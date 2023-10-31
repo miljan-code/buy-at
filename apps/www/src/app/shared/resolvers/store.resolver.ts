@@ -8,7 +8,7 @@ import {
 import { StoreService } from '~core/services/store.service';
 import type { Store } from '~core/models/store.model';
 
-export const storeResolver: ResolveFn<Store> = (
+export const storeResolver: ResolveFn<Store | null> = (
   route: ActivatedRouteSnapshot,
   state: RouterStateSnapshot,
 ) => {

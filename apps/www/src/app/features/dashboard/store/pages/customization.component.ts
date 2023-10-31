@@ -1,9 +1,4 @@
-import {
-  Component,
-  OnDestroy,
-  OnInit,
-  importProvidersFrom,
-} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   ReactiveFormsModule,
@@ -101,7 +96,7 @@ export class CustomizationComponent implements OnInit, OnDestroy {
       favicon: new FormControl(''),
     });
 
-    this.storeService.store$
+    this.storeService.activeStore$
       .pipe(takeUntil(this.destroy$))
       .subscribe((store) => {
         if (!store) return;
