@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormControl,
@@ -7,15 +7,15 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Subject, takeUntil } from 'rxjs';
+import { takeUntil } from 'rxjs';
 
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 
 import { StoreService } from '~core/services/store.service';
-import { AuthService } from '~core/services/auth.service';
 import { AutofocusDirective } from '~shared/directives/autofocus.directive';
 import { UploadDirective } from '~shared/directives/upload.directive';
+import { onDestroy } from '~shared/utils/destroy';
 
 interface CreateStoreForm {
   storeName: FormControl<string>;
@@ -36,12 +36,12 @@ interface CreateStoreForm {
   templateUrl: './create-store.component.html',
   styleUrls: ['./create-store.component.scss'],
 })
-export class CreateStoreComponent implements OnInit, OnDestroy {
+export class CreateStoreComponent implements OnInit {
   createStoreForm!: FormGroup<CreateStoreForm>;
   storeNamePlaceholder = 'BuyAt.store';
   showcaseCover = '/assets/images/background-1.png';
   isLoading = false;
-  private destroy$ = new Subject<void>();
+  private destroy$ = onDestroy();
 
   constructor(
     private readonly storeService: StoreService,
@@ -76,10 +76,5 @@ export class CreateStoreComponent implements OnInit, OnDestroy {
       }),
       coverImage: new FormControl(),
     });
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 }

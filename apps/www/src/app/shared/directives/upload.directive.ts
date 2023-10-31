@@ -1,22 +1,17 @@
-import {
-  Directive,
-  EventEmitter,
-  HostListener,
-  OnDestroy,
-  Output,
-} from '@angular/core';
-import { Subject, takeUntil } from 'rxjs';
+import { Directive, EventEmitter, HostListener, Output } from '@angular/core';
+import { takeUntil } from 'rxjs';
 
 import { UploadService } from '~core/services/upload.service';
+import { onDestroy } from '~shared/utils/destroy';
 
 @Directive({
   selector: '[upload]',
   standalone: true,
 })
-export class UploadDirective implements OnDestroy {
+export class UploadDirective {
   @Output() onUpload = new EventEmitter<string>();
   @Output() isUploading = new EventEmitter<boolean>(false);
-  private destroy$ = new Subject<void>();
+  private destroy$ = onDestroy();
 
   constructor(private readonly uploadService: UploadService) {}
 
@@ -34,10 +29,5 @@ export class UploadDirective implements OnDestroy {
         this.onUpload.emit(imageUrl);
         this.isUploading.emit(false);
       });
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 }

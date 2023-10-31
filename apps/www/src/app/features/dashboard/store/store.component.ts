@@ -1,11 +1,12 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { Subject, switchMap, takeUntil } from 'rxjs';
+import { switchMap, takeUntil } from 'rxjs';
 
 import { NavLinkComponent } from './components/nav-link.component';
 import { StoreService } from '~core/services/store.service';
 import { dashboardConfig } from '~config/dashboard';
+import { onDestroy } from '~shared/utils/destroy';
 
 @Component({
   selector: 'app-store',
@@ -14,10 +15,10 @@ import { dashboardConfig } from '~config/dashboard';
   templateUrl: './store.component.html',
   styleUrls: ['./store.component.scss'],
 })
-export class StoreComponent implements OnInit, OnDestroy {
+export class StoreComponent implements OnInit {
   currentURL = '';
   navLinks = dashboardConfig.navLinks;
-  private destroy$ = new Subject<void>();
+  private destroy$ = onDestroy();
 
   constructor(
     private readonly activatedRoute: ActivatedRoute,
@@ -35,10 +36,5 @@ export class StoreComponent implements OnInit, OnDestroy {
         }),
       )
       .subscribe((store) => this.storeService.setActiveStore(store));
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 }

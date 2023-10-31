@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   ReactiveFormsModule,
@@ -15,6 +15,7 @@ import { MessageService } from 'primeng/api';
 
 import { StoreService } from '~core/services/store.service';
 import { UploadDirective } from '~shared/directives/upload.directive';
+import { onDestroy } from '~shared/utils/destroy';
 import type { Store } from '~core/models/store.model';
 
 interface CustomizationForm {
@@ -40,12 +41,12 @@ type UploadType = 'coverImage' | 'favicon' | 'logo';
   templateUrl: './customization.component.html',
   styleUrls: ['./customization.component.scss'],
 })
-export class CustomizationComponent implements OnInit, OnDestroy {
+export class CustomizationComponent implements OnInit {
   customizationForm!: FormGroup<CustomizationForm>;
   store: Store | null = null;
   picPlaceholder = '/assets/images/img-placeholder.png';
   isLoading = false;
-  private destroy$ = new Subject<void>();
+  private destroy$ = onDestroy();
 
   constructor(
     private readonly storeService: StoreService,
@@ -108,10 +109,5 @@ export class CustomizationComponent implements OnInit, OnDestroy {
           );
         });
       });
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 }
