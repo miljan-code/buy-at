@@ -10,11 +10,11 @@ export const dashboardConfig = {
       path: '/customization',
       icon: 'pi pi-table',
     },
-    // {
-    //   label: 'Products',
-    //   path: '/products',
-    //   icon: 'pi pi-box',
-    // },
+    {
+      label: 'Products',
+      path: '/products',
+      icon: 'pi pi-box',
+    },
   ],
 } satisfies DashboardConfig;
 

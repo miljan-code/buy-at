@@ -1,0 +1,47 @@
+@import 'variables';
+@import 'functions';
+@import 'mixins';
+
+:host ::ng-deep {
+  .p-datatable-header {
+    background-color: transparent;
+  }
+
+  .p-datatable-footer {
+    background-color: transparent;
+    border: none;
+  }
+
+  .p-datatable-thead tr th {
+    background-color: transparent;
+  }
+
+  .p-datatable-tbody tr {
+    background-color: transparent;
+  }
+}
+
+.products {
+  &__button {
+    width: fit-content;
+  }
+}
+
+.form {
+  @include flex($direction: column);
+  gap: rem(24px);
+  width: rem(400px);
+
+  &__group {
+    @include form-group;
+
+    & input {
+      width: 100%;
+    }
+
+    &--sided {
+      @include flex;
+      gap: rem(32px);
+    }
+  }
+}

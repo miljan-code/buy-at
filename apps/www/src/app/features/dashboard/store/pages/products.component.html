@@ -1,0 +1,82 @@
+<app-section
+  *ngIf="products$ | async as products"
+  [heading]="'Products (' + products.length + ')'"
+  subheading="Manage your products"
+>
+  <p-table [value]="products" [tableStyle]="{ 'min-width': '4rem' }">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Name</th>
+        <th>Image</th>
+        <th>Featured</th>
+        <th>Price</th>
+        <th>Category</th>
+        <th>Actions</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-product>
+      <tr>
+        <td>{{ product.name }}</td>
+        <td>
+          <img [src]="product.image" [alt]="product.name" width="100" />
+        </td>
+        <td>Yes</td>
+        <td>{{ product.price | currency: 'USD' }}</td>
+        <td>{{ product.category }}</td>
+        <td>Actions</td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="summary">
+      <div class="flex align-items-center justify-content-between">
+        In total there are {{ products ? products.length : 0 }} products.
+      </div>
+    </ng-template>
+  </p-table>
+
+  <button
+    pButton
+    label="Add new product"
+    class="products__button"
+    (click)="handleDialog()"
+  ></button>
+</app-section>
+
+<p-dialog header="Add product" [(visible)]="dialogVisible">
+  <form class="form">
+    <div class="form__group">
+      <label for="name">Product name</label>
+      <input id="name" type="text" pInputText />
+    </div>
+    <div class="form__group">
+      <label for="description">Description</label>
+      <textarea id="description" pInputTextarea rows="4"></textarea>
+    </div>
+    <div class="form__group">
+      <label for="price">Price</label>
+      <input id="price" type="number" pInputText />
+    </div>
+    <div class="form__group">
+      <label for="category">Category</label>
+      <p-treeSelect
+        id="category"
+        [options]="selectOptions"
+        placeholder="Select Item"
+      ></p-treeSelect>
+    </div>
+    <div class="form__group--sided">
+      <div class="form__group">
+        <label for="quantity">Quantity</label>
+        <input id="quantity" type="number" pInputText />
+      </div>
+      <div class="form__group">
+        <label for="featured">Featured</label>
+        <p-selectButton
+          [options]="featuredOptions"
+          formControlName="value"
+          optionLabel="label"
+          optionValue="value"
+        ></p-selectButton>
+      </div>
+    </div>
+  </form>
+</p-dialog>
