@@ -32,8 +32,27 @@ model Store {
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 
-  owner User @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  owner    User      @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  products Product[]
 
   @@index([slug])
   @@map(name: "stores")
+}
+
+model Product {
+  id          String   @id @unique
+  name        String
+  description String?
+  image       String?
+  featured    Boolean  @default(false)
+  price       Int
+  category    String
+  quantity    Int      @default(1)
+  storeId     String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  store Store @relation(fields: [storeId], references: [id], onDelete: Cascade)
+
+  @@map(name: "products")
 }

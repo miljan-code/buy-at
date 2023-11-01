@@ -9,7 +9,7 @@
     "start": "nodemon dist/index.js",
     "dev": "concurrently \"tsup --watch\" \"nodemon -q dist/index.js\"",
     "db:migrate": "npx prisma migrate dev --schema=src/prisma/schema.prisma",
-    "prisma:client": "npx prisma generate"
+    "prisma:client": "npx prisma generate --schema=src/prisma/schema.prisma"
   },
   "license": "ISC",
   "dependencies": {
