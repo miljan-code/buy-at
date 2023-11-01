@@ -9,19 +9,10 @@
   cursor: pointer;
 }
 
-.section {
+.customization {
   @include flex($direction: column);
-  gap: rem(32px);
-
-  &__label {
-    font-family: $font-heading;
-    font-size: rem(32px);
-    margin-bottom: rem(4px);
-  }
-
-  &__sublabel {
-    color: $color-muted;
-  }
+  gap: rem(64px);
+  padding-bottom: rem(64px);
 
   &__form {
     @include flex($direction: column);

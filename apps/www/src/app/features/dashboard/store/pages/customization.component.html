@@ -1,29 +1,25 @@
 <div class="customization">
-  <section class="section">
-    <div class="section__heading">
-      <h2 class="section__label">Branding</h2>
-      <p class="section__sublabel">Customize branding of your store</p>
-    </div>
+  <app-section heading="Branding" subheading="Customize branding of your store">
     <form
       [formGroup]="customizationForm"
       (ngSubmit)="submitForm()"
-      class="section__form"
+      class="customization__form"
     >
-      <div class="section__form-group">
+      <div class="customization__form-group">
         <label for="storeName">Store name</label>
         <input
           id="storeName"
           type="text"
           pInputText
           formControlName="name"
-          class="section__form-input"
+          class="customization__form-input"
         />
       </div>
-      <div class="section__form-group--sided">
+      <div class="customization__form-group--sided">
         <div>
           <div>
             <label>Logo</label>
-            <label for="logo" class="section__form-input--upload"
+            <label for="logo" class="customization__form-input--upload"
               >Upload logo</label
             >
             <input
@@ -37,23 +33,23 @@
           </div>
           <span
             *ngIf="store?.logo"
-            class="section__form-input--remove"
-            (click)="handleImage(null, 'logo')"
+            class="customization__form-input--remove"
+            (click)="handleImage('', 'logo')"
             >Remove logo</span
           >
         </div>
-        <div class="section__form-image">
+        <div class="customization__form-image">
           <img
             [src]="store?.logo || picPlaceholder"
-            class="section__form-image--logo"
+            class="customization__form-image--logo"
           />
         </div>
       </div>
-      <div class="section__form-group--sided">
+      <div class="customization__form-group--sided">
         <div>
           <div>
             <label>Favicon</label>
-            <label for="favicon" class="section__form-input--upload"
+            <label for="favicon" class="customization__form-input--upload"
               >Upload favicon</label
             >
             <input
@@ -67,22 +63,22 @@
           </div>
           <span
             *ngIf="store?.favicon"
-            class="section__form-input--remove"
-            (click)="handleImage(null, 'favicon')"
+            class="customization__form-input--remove"
+            (click)="handleImage('', 'favicon')"
             >Remove favicon</span
           >
         </div>
-        <div class="section__form-image">
+        <div class="customization__form-image">
           <img
             [src]="store?.favicon || picPlaceholder"
-            class="section__form-image--icon"
+            class="customization__form-image--icon"
           />
         </div>
       </div>
-      <div class="section__form-group">
+      <div class="customization__form-group">
         <label for="cover">Cover image</label>
-        <div class="section__upload-cover">
-          <div class="section__upload-cover-bg" *ngIf="store?.coverImage">
+        <div class="customization__upload-cover">
+          <div class="customization__upload-cover-bg" *ngIf="store?.coverImage">
             <img [src]="store?.coverImage" />
           </div>
           <label
@@ -101,8 +97,8 @@
           />
           <span
             *ngIf="store?.coverImage"
-            class="section__form-input--remove"
-            (click)="handleImage(null, 'coverImage')"
+            class="customization__form-input--remove"
+            (click)="handleImage('', 'coverImage')"
             >Remove cover</span
           >
         </div>
@@ -113,10 +109,37 @@
         [loading]="isLoading"
         type="submit"
         label="Save changes"
-        class="section__form-button"
+        class="customization__form-button"
       ></button>
     </form>
-  </section>
+  </app-section>
+
+  <app-section heading="Settings" subheading="Modify your store details">
+    <form
+      [formGroup]="customizationForm"
+      (ngSubmit)="submitForm()"
+      class="customization__form"
+    >
+      <div class="customization__form-group">
+        <label for="slug">Store url</label>
+        <input
+          id="slug"
+          type="text"
+          pInputText
+          formControlName="slug"
+          class="customization__form-input"
+        />
+      </div>
+      <button
+        pButton
+        loadingIcon="pi pi-spin pi-sync"
+        [loading]="isLoading"
+        type="submit"
+        label="Save changes"
+        class="customization__form-button"
+      ></button>
+    </form>
+  </app-section>
 </div>
 
 <p-toast></p-toast>

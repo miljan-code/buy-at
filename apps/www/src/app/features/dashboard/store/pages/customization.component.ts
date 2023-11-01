@@ -6,7 +6,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { Subject, takeUntil } from 'rxjs';
+import { takeUntil } from 'rxjs';
 
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
@@ -16,13 +16,16 @@ import { MessageService } from 'primeng/api';
 import { StoreService } from '~core/services/store.service';
 import { UploadDirective } from '~shared/directives/upload.directive';
 import { onDestroy } from '~shared/utils/destroy';
+import { hydrateFormFields } from '~shared/utils/helpers';
+import { SectionComponent } from '~shared/components/section.component';
 import type { Store } from '~core/models/store.model';
 
 interface CustomizationForm {
-  name: FormControl<string | null>;
-  logo: FormControl<string | null>;
-  favicon: FormControl<string | null>;
-  coverImage: FormControl<string | null>;
+  name: FormControl<string>;
+  logo: FormControl<string>;
+  favicon: FormControl<string>;
+  coverImage: FormControl<string>;
+  slug: FormControl<string>;
 }
 
 type UploadType = 'coverImage' | 'favicon' | 'logo';
@@ -37,6 +40,7 @@ type UploadType = 'coverImage' | 'favicon' | 'logo';
     UploadDirective,
     ReactiveFormsModule,
     ToastModule,
+    SectionComponent,
   ],
   templateUrl: './customization.component.html',
   styleUrls: ['./customization.component.scss'],
@@ -59,10 +63,11 @@ export class CustomizationComponent implements OnInit {
     this.storeService
       .updateStore({
         id: this.store?.id || '',
-        coverImage: formData.coverImage || undefined,
-        favicon: formData.favicon || undefined,
-        logo: formData.logo || undefined,
-        storeName: formData.name || '',
+        coverImage: formData.coverImage,
+        favicon: formData.favicon,
+        logo: formData.logo,
+        storeName: formData.name,
+        slug: formData.slug,
       })
       .pipe(takeUntil(this.destroy$))
       .subscribe((store) => {
@@ -76,7 +81,7 @@ export class CustomizationComponent implements OnInit {
       });
   }
 
-  handleImage(value: string | null, type: UploadType): void {
+  handleImage(value: string, type: UploadType): void {
     if (!this.store) return;
     this.customizationForm.controls[type].setValue(value);
     this.store[type] = value;
@@ -92,9 +97,13 @@ export class CustomizationComponent implements OnInit {
         validators: [Validators.required],
         nonNullable: true,
       }),
-      coverImage: new FormControl(''),
-      logo: new FormControl(''),
-      favicon: new FormControl(''),
+      coverImage: new FormControl('', { nonNullable: true }),
+      logo: new FormControl('', { nonNullable: true }),
+      favicon: new FormControl('', { nonNullable: true }),
+      slug: new FormControl('', {
+        validators: [Validators.required],
+        nonNullable: true,
+      }),
     });
 
     this.storeService.activeStore$
@@ -102,12 +111,7 @@ export class CustomizationComponent implements OnInit {
       .subscribe((store) => {
         if (!store) return;
         this.store = store;
-        const { controls } = this.customizationForm;
-        Object.keys(controls).forEach((key) => {
-          controls[key as keyof typeof controls].setValue(
-            store[key as keyof typeof controls],
-          );
-        });
+        hydrateFormFields([this.customizationForm], store);
       });
   }
 }
