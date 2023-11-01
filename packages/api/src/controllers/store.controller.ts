@@ -44,6 +44,8 @@ const updateStore = asyncHandler(async (req: Request, res: Response) => {
       coverImage: storeData.coverImage || null,
       logo: storeData.logo || null,
       favicon: storeData.favicon || null,
+      // TODO: Handle this better
+      slug: storeData.slug.toLowerCase().split(' ').join('-'),
     },
   });
 
