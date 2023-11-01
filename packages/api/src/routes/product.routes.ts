@@ -8,6 +8,6 @@ import {
 const productRoutes = express.Router();
 
 productRoutes.post('/', createProduct);
-productRoutes.get('/:storeId', getProducts);
+productRoutes.get('/:slug', getProducts);
 
 export { productRoutes };

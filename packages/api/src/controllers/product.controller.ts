@@ -12,7 +12,7 @@ const createProduct = asyncHandler(async (req: Request, res: Response) => {
 
   const productData = createProductSchema.parse(req.body);
 
-  const product = db.product.create({
+  const product = await db.product.create({
     data: {
       id: createId(),
       ...productData,
@@ -25,10 +25,10 @@ const createProduct = asyncHandler(async (req: Request, res: Response) => {
 const getProducts = asyncHandler(async (req: Request, res: Response) => {
   const user = req.res?.locals.user;
   if (!user) throw new CustomError('Unauthorized', 401);
-  const { storeId } = req.params;
+  const { slug } = req.params;
 
   const products = await db.product.findMany({
-    where: { storeId },
+    where: { storeSlug: slug },
   });
 
   res.status(200).json(products);
