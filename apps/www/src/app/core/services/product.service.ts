@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, mergeMap, of } from 'rxjs';
 
 import { siteConfig } from '~config/site';
-import type { Product } from '~core/models/product.model';
+import type { CreateProductOpts, Product } from '~core/models/product.model';
 
 @Injectable({
   providedIn: 'root',
@@ -15,8 +15,8 @@ export class ProductService {
 
   constructor(private readonly http: HttpClient) {}
 
-  getProducts(storeId: string): Observable<Product[]> {
-    return this.http.get<Product[]>(`${this.apiUrl}/${storeId}`).pipe(
+  getProducts(storeSlug: string): Observable<Product[]> {
+    return this.http.get<Product[]>(`${this.apiUrl}/${storeSlug}`).pipe(
       mergeMap((products) => {
         this.products.next(products);
         return of(products);
@@ -24,13 +24,13 @@ export class ProductService {
     );
   }
 
-  // createStore(storeOpts: CreateStoreOpts): Observable<Store> {
-  //   return this.http.post<Store>(this.apiUrl, storeOpts).pipe(
-  //     mergeMap((newStore) => {
-  //       const stores = this.stores.value;
-  //       this.stores.next([...stores, newStore]);
-  //       return of(newStore);
-  //     }),
-  //   );
-  // }
+  createProduct(productOpts: CreateProductOpts): Observable<Product> {
+    return this.http.post<Product>(this.apiUrl, productOpts).pipe(
+      mergeMap((newProduct) => {
+        const products = this.products.value;
+        this.products.next([...products, newProduct]);
+        return of(newProduct);
+      }),
+    );
+  }
 }

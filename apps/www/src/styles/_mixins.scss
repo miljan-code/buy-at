@@ -29,3 +29,10 @@
 @mixin gradient-primary {
   background: linear-gradient(to right, var(--indigo-500), var(--primary-700));
 }
+
+@mixin upload-link {
+  font-size: rem(15px);
+  text-decoration: underline;
+  text-underline-offset: rem(4px);
+  cursor: pointer;
+}

@@ -3,7 +3,7 @@
   [heading]="'Products (' + products.length + ')'"
   subheading="Manage your products"
 >
-  <p-table [value]="products" [tableStyle]="{ 'min-width': '4rem' }">
+  <p-table [value]="products">
     <ng-template pTemplate="header">
       <tr>
         <th>Name</th>
@@ -27,9 +27,9 @@
       </tr>
     </ng-template>
     <ng-template pTemplate="summary">
-      <div class="flex align-items-center justify-content-between">
+      <span>
         In total there are {{ products ? products.length : 0 }} products.
-      </div>
+      </span>
     </ng-template>
   </p-table>
 
@@ -42,41 +42,83 @@
 </app-section>
 
 <p-dialog header="Add product" [(visible)]="dialogVisible">
-  <form class="form">
+  <form [formGroup]="productForm" (ngSubmit)="submitForm()" class="form">
     <div class="form__group">
       <label for="name">Product name</label>
-      <input id="name" type="text" pInputText />
+      <input id="name" type="text" pInputText formControlName="name" />
     </div>
     <div class="form__group">
       <label for="description">Description</label>
-      <textarea id="description" pInputTextarea rows="4"></textarea>
+      <textarea
+        id="description"
+        pInputTextarea
+        rows="4"
+        formControlName="description"
+      ></textarea>
     </div>
     <div class="form__group">
       <label for="price">Price</label>
-      <input id="price" type="number" pInputText />
+      <input id="price" type="number" pInputText formControlName="price" />
     </div>
     <div class="form__group">
       <label for="category">Category</label>
-      <p-treeSelect
+      <p-dropdown
         id="category"
-        [options]="selectOptions"
-        placeholder="Select Item"
-      ></p-treeSelect>
+        [options]="categories"
+        formControlName="category"
+      ></p-dropdown>
     </div>
     <div class="form__group--sided">
       <div class="form__group">
         <label for="quantity">Quantity</label>
-        <input id="quantity" type="number" pInputText />
+        <input
+          id="quantity"
+          type="number"
+          pInputText
+          formControlName="quantity"
+        />
       </div>
       <div class="form__group">
         <label for="featured">Featured</label>
         <p-selectButton
-          [options]="featuredOptions"
-          formControlName="value"
-          optionLabel="label"
-          optionValue="value"
+          [options]="isFeatured"
+          formControlName="featured"
         ></p-selectButton>
       </div>
     </div>
+    <div class="form__group--sided">
+      <div class="form__group">
+        <label>Product image</label>
+        <div class="form__upload-wrapper">
+          <label for="image" class="form__upload form__upload--primary"
+            >Upload image</label
+          >
+          <label
+            class="form__upload form__upload--destructive"
+            (click)="handleUpload('')"
+            *ngIf="image"
+            >Remove image</label
+          >
+          <input
+            id="image"
+            type="file"
+            style="display: none"
+            upload
+            (onUpload)="handleUpload($event)"
+            (isUploading)="handleLoading($event)"
+          />
+        </div>
+      </div>
+      <div class="form__image">
+        <img [src]="image || 'assets/images/img-placeholder.png'" />
+      </div>
+    </div>
+    <button
+      pButton
+      label="Add product"
+      type="submit"
+      loadingIcon="pi pi-spin pi-sync"
+      [loading]="isLoading"
+    ></button>
   </form>
 </p-dialog>

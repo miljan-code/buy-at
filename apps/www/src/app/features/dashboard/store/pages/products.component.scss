@@ -19,6 +19,10 @@
   .p-datatable-tbody tr {
     background-color: transparent;
   }
+
+  .p-dropdown {
+    width: 100%;
+  }
 }
 
 .products {
@@ -42,6 +46,34 @@
     &--sided {
       @include flex;
       gap: rem(32px);
+    }
+  }
+
+  &__upload {
+    @include upload-link;
+
+    &-wrapper {
+      @include flex();
+      gap: rem(12px);
+    }
+
+    &--primary {
+      color: $color-primary;
+    }
+
+    &--destructive {
+      color: $color-destructive;
+    }
+  }
+
+  &__image {
+    margin-left: auto;
+    width: rem(64px);
+    height: rem(64px);
+
+    & img {
+      width: 100%;
+      height: 100%;
     }
   }
 }

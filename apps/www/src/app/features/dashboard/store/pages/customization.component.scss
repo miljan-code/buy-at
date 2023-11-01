@@ -2,13 +2,6 @@
 @import 'mixins';
 @import 'functions';
 
-%form-input-link {
-  font-size: rem(15px);
-  text-decoration: underline;
-  text-underline-offset: rem(4px);
-  cursor: pointer;
-}
-
 .customization {
   @include flex($direction: column);
   gap: rem(64px);
@@ -47,13 +40,13 @@
       width: 50%;
 
       &--upload {
-        @extend %form-input-link;
+        @include upload-link;
         color: $color-primary;
       }
 
       &--remove {
+        @include upload-link;
         position: relative;
-        @extend %form-input-link;
         color: $color-destructive;
         z-index: 10;
       }

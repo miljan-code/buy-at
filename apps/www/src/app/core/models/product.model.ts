@@ -7,7 +7,19 @@ export interface Product {
   price: number;
   category: string;
   quantity: number;
-  storeId: string;
+  storeSlug: string;
   createdAt: Date;
   updatedAt: Date;
 }
+
+export type CreateProductOpts = Pick<
+  Product,
+  | 'name'
+  | 'category'
+  | 'description'
+  | 'featured'
+  | 'image'
+  | 'price'
+  | 'quantity'
+  | 'storeSlug'
+>;
