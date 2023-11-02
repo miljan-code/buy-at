@@ -12,12 +12,12 @@ export interface Store {
 
 export interface CreateStoreOpts {
   storeName?: string;
-  coverImage?: string | undefined;
+  coverImage?: string;
 }
 
 export interface UpdateStoreOpts extends CreateStoreOpts {
   id: string;
-  logo?: string | undefined;
-  favicon?: string | undefined;
+  logo?: string;
+  favicon?: string;
   slug?: string;
 }

@@ -49,10 +49,9 @@ export class CreateStoreComponent implements OnInit {
   ) {}
 
   createStore(): void {
-    const { storeName, coverImage } = this.createStoreForm.value;
-    if (!storeName) return;
+    const formData = this.createStoreForm.getRawValue();
     this.storeService
-      .createStore({ storeName, coverImage })
+      .createStore(formData)
       .pipe(takeUntil(this.destroy$))
       .subscribe((store) => {
         this.router.navigateByUrl(`/dashboard/store/${store.slug}`);
@@ -74,7 +73,9 @@ export class CreateStoreComponent implements OnInit {
         validators: [Validators.required, Validators.minLength(4)],
         nonNullable: true,
       }),
-      coverImage: new FormControl(),
+      coverImage: new FormControl('', {
+        nonNullable: true,
+      }),
     });
   }
 }

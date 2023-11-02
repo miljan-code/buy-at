@@ -8,7 +8,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { Observable, switchMap, takeUntil } from 'rxjs';
+import { switchMap, takeUntil } from 'rxjs';
 
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
@@ -56,7 +56,7 @@ interface ProductForm {
   styleUrls: ['./products.component.scss'],
 })
 export class ProductsComponent implements OnInit {
-  products$ = new Observable<Product[]>();
+  products: Product[] = [];
   productForm!: FormGroup<ProductForm>;
   categories = [
     { label: 'Shoes', value: 'shoes' },
@@ -87,10 +87,13 @@ export class ProductsComponent implements OnInit {
       })
       .pipe(takeUntil(this.destroy$))
       .subscribe({
-        next: () => {
+        next: (newProduct) => {
           this.dialogVisible = false;
+          this.products.push(newProduct);
         },
-        complete: () => (this.isLoading = false),
+        complete: () => {
+          this.isLoading = false;
+        },
       });
   }
 
@@ -108,13 +111,15 @@ export class ProductsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.products$ = this.activatedRoute.parent!.paramMap.pipe(
-      switchMap((params) => {
-        const slug = params.get('slug') || '';
-        this.activeStore = slug;
-        return this.productService.getProducts(slug);
-      }),
-    );
+    this.activatedRoute
+      .parent!.paramMap.pipe(
+        switchMap((params) => {
+          const slug = params.get('slug') || '';
+          this.activeStore = slug;
+          return this.productService.getProducts(slug);
+        }),
+      )
+      .subscribe((products) => (this.products = products));
 
     this.productForm = new FormGroup<ProductForm>({
       name: new FormControl('', {

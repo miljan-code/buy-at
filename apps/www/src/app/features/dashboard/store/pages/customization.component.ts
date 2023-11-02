@@ -62,22 +62,21 @@ export class CustomizationComponent implements OnInit {
     this.isLoading = true;
     this.storeService
       .updateStore({
+        ...formData,
         id: this.store?.id || '',
-        coverImage: formData.coverImage,
-        favicon: formData.favicon,
-        logo: formData.logo,
         storeName: formData.name,
-        slug: formData.slug,
       })
       .pipe(takeUntil(this.destroy$))
-      .subscribe((store) => {
-        this.store = store;
-        this.isLoading = false;
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Saved',
-          detail: 'Store is successfully updated',
-        });
+      .subscribe({
+        next: (store) => {
+          this.store = store;
+          this.isLoading = false;
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Saved',
+            detail: 'Store is successfully updated',
+          });
+        },
       });
   }
 

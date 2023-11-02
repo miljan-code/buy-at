@@ -25,12 +25,6 @@ export class ProductService {
   }
 
   createProduct(productOpts: CreateProductOpts): Observable<Product> {
-    return this.http.post<Product>(this.apiUrl, productOpts).pipe(
-      mergeMap((newProduct) => {
-        const products = this.products.value;
-        this.products.next([...products, newProduct]);
-        return of(newProduct);
-      }),
-    );
+    return this.http.post<Product>(this.apiUrl, productOpts);
   }
 }
