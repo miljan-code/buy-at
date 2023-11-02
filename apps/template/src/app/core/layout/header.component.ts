@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { Subject, takeUntil } from 'rxjs';
 
-import { siteConfig } from 'src/config/site';
 import { ConfigService } from '../services/config.service';
 
 @Component({
@@ -14,24 +12,7 @@ import { ConfigService } from '../services/config.service';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
-  title = siteConfig.title;
-  categories = siteConfig.categories;
-  private destroy$ = new Subject<void>();
+  config$ = this.configService.config$;
 
   constructor(private readonly configService: ConfigService) {}
-
-  ngOnInit(): void {
-    this.configService.config$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((config) => {
-        if (!config) return;
-        this.title = config.title;
-        this.categories = config.categories;
-      });
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
 }

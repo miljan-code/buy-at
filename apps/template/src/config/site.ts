@@ -1,4 +1,4 @@
-import type { Product } from 'src/app/core/models/product.model';
+import type { Product } from '~core/models/product.model';
 
 export const siteConfig: SiteConfig = {
   title: 'BuyAt.store',

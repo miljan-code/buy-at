@@ -1,5 +1,6 @@
-@import '../../../styles/mixins';
-@import '../../../styles/variables';
+@import 'mixins';
+@import 'variables';
+@import 'functions';
 
 .home {
   &__hero {
@@ -7,21 +8,21 @@
 
     max-width: $bp-largest;
     margin: 0 auto;
-    padding: 12px 0;
+    padding: rem(12px) 0;
 
     &-img {
       width: 100%;
-      height: 350px;
+      height: rem(400px);
 
       object-fit: cover;
-      border-radius: 12px;
+      border-radius: rem(12px);
     }
 
     &-title {
       @include center-absolute;
 
       font-family: $font-heading;
-      font-size: 48px;
+      font-size: rem(64px);
     }
   }
 }

@@ -1,11 +1,11 @@
 <header class="header">
   <div class="header__container">
-    <div class="header__left">
-      <a class="header__logo" [routerLink]="'/'">{{ title }}</a>
-      <nav class="header__nav" *ngIf="categories.length">
+    <div class="header__left" *ngIf="config$ | async as config">
+      <a class="header__logo" [routerLink]="'/'">{{ config.title }}</a>
+      <nav class="header__nav" *ngIf="config.categories.length">
         <a
           class="header__nav-link"
-          *ngFor="let category of categories"
+          *ngFor="let category of config.categories"
           [routerLink]="'/category' + category.path"
           >{{ category.label }}</a
         >

@@ -2,23 +2,25 @@
   margin: 0;
   padding: 0;
   box-sizing: inherit;
+
+  font-family: $font-primary;
 }
 
 html {
   box-sizing: border-box;
-  font-size: 12px;
+  font-size: rem(14px);
 
   height: 100%;
-}
-
-body {
-  font-family: $font-primary;
-  font-size: 14px;
 }
 
 a {
   text-decoration: none;
   color: inherit;
+}
+
+li {
+  text-indent: 0;
+  list-style-type: none;
 }
 
 .main {

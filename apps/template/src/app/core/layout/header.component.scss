@@ -1,4 +1,5 @@
-@import "../../../styles/variables";
+@import 'variables';
+@import 'functions';
 
 .header {
   border-bottom: 1px solid $color-border;
@@ -17,18 +18,18 @@
   &__left {
     display: flex;
     align-items: center;
-    gap: 32px;
+    gap: rem(32px);
   }
 
   &__logo {
     font-family: $font-primary;
     font-weight: 600;
-    font-size: 1.6rem;
+    font-size: rem(22px);
   }
 
   &__nav {
     display: flex;
-    gap: 12px;
+    gap: rem(12px);
 
     &-link {
       color: $color-white-hover;
@@ -41,7 +42,7 @@
   }
 
   &__cart-button {
-    font-size: 16px;
+    font-size: rem(18px);
     color: $color-black;
 
     display: flex;
@@ -49,7 +50,7 @@
     gap: 4px;
 
     background-color: $color-white;
-    padding: 8px 16px;
+    padding: rem(10px) rem(20px);
     border-radius: $rounded-full;
     transition: 0.3s;
     cursor: pointer;

@@ -2,16 +2,16 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 
-import { siteConfig, type SiteConfig } from 'src/config/site';
+import { siteConfig, type SiteConfig } from '~config/site';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ConfigService {
-  apiUrl = 'http://localhost:5000/api/template';
-  config = new BehaviorSubject<SiteConfig | null>(siteConfig);
-  config$ = this.config.asObservable();
   private mainAppUrl = 'http://localhost:4200/';
+  private config = new BehaviorSubject<SiteConfig | null>(siteConfig);
+  apiUrl = 'http://localhost:5000/api/template';
+  config$ = this.config.asObservable();
 
   constructor(private readonly http: HttpClient) {}
 

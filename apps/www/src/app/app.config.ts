@@ -7,11 +7,12 @@ import {
 } from '@angular/common/http';
 import { provideAnimations } from '@angular/platform-browser/animations';
 
+import { MessageService } from 'primeng/api';
+
 import { routes } from './app.routes';
 import { AuthService } from '~core/services/auth.service';
 import { ErrorInterceptor } from '~core/interceptors/error.interceptor';
 import { AuthInterceptor } from '~core/interceptors/auth.interceptor';
-import { MessageService } from 'primeng/api';
 
 export function initAuth(authService: AuthService) {
   return () => authService.getCurrentUser();
