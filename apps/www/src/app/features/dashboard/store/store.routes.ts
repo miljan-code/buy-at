@@ -18,4 +18,9 @@ export const STORE_ROUTES: Routes = [
     loadComponent: () =>
       import('./pages/products.component').then((c) => c.ProductsComponent),
   },
+  {
+    path: 'categories',
+    loadComponent: () =>
+      import('./pages/categories.component').then((c) => c.CategoriesComponent),
+  },
 ];

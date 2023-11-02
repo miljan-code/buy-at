@@ -1,0 +1,46 @@
+<app-section heading="Categories" subheading="Manage your store categories">
+  <p-table [value]="categories">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Name</th>
+        <th>Bilboard</th>
+        <th>Date</th>
+        <th>Actions</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-category>
+      <tr>
+        <td>{{ category.name }}</td>
+        <td>Yes</td>
+        <td>Actions</td>
+        <td>Actions</td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="summary">
+      <span>
+        In total there are {{ categories ? categories.length : 0 }} categories.
+      </span>
+    </ng-template>
+  </p-table>
+
+  <button
+    pButton
+    label="New category"
+    class="categories__button"
+    (click)="handleDialog()"
+  ></button>
+</app-section>
+
+<p-dialog header="Add category" [(visible)]="dialogVisible">
+  <form [formGroup]="categoryForm" (ngSubmit)="submitForm()" class="form">
+    <div class="form__group">
+      <label for="name">Category name</label>
+      <input id="name" type="text" pInputText formControlName="name" />
+    </div>
+    <div class="form__group">
+      <label for="bilboard">Bilboard</label>
+      <input id="bilboard" type="text" pInputText formControlName="bilboard" />
+    </div>
+    <button pButton label="Add category" type="submit"></button>
+  </form>
+</p-dialog>
