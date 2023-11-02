@@ -1,16 +1,24 @@
+import type { Product } from 'src/app/core/models/product.model';
+
 export const siteConfig: SiteConfig = {
   title: 'BuyAt.store',
-  navLinks: [],
+  categories: [],
   coverImage: 'src/assets/images/background-1.png',
+  logo: '',
+  favicon: '',
+  products: [],
 };
 
 export interface SiteConfig {
   title: string;
-  navLinks: Array<NavLink>;
+  categories: Category[];
   coverImage: string;
+  logo: string;
+  favicon: string;
+  products: Product[];
 }
 
-interface NavLink {
+interface Category {
   label: string;
   path: string;
 }

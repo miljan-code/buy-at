@@ -15,7 +15,7 @@ import { ConfigService } from '../services/config.service';
 })
 export class HeaderComponent {
   title = siteConfig.title;
-  navLinks = siteConfig.navLinks;
+  categories = siteConfig.categories;
   private destroy$ = new Subject<void>();
 
   constructor(private readonly configService: ConfigService) {}
@@ -26,7 +26,7 @@ export class HeaderComponent {
       .subscribe((config) => {
         if (!config) return;
         this.title = config.title;
-        this.navLinks = config.navLinks;
+        this.categories = config.categories;
       });
   }
 

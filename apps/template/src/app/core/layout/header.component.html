@@ -2,12 +2,12 @@
   <div class="header__container">
     <div class="header__left">
       <a class="header__logo" [routerLink]="'/'">{{ title }}</a>
-      <nav class="header__nav" *ngIf="navLinks.length">
+      <nav class="header__nav" *ngIf="categories.length">
         <a
           class="header__nav-link"
-          *ngFor="let navLink of navLinks"
-          [routerLink]="'/category' + navLink.path"
-          >{{ navLink.label }}</a
+          *ngFor="let category of categories"
+          [routerLink]="'/category' + category.path"
+          >{{ category.label }}</a
         >
       </nav>
     </div>
