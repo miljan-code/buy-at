@@ -8,6 +8,7 @@ import { authRoutes } from './routes/auth.routes.js';
 import { templateRoutes } from './routes/template.routes.js';
 import { uploadRotues } from './routes/upload.routes.js';
 import { productRoutes } from './routes/product.routes.js';
+import { categoryRoutes } from './routes/category.routes.js';
 import { authentication } from './middlewares/auth.middleware.js';
 import { errorHandler } from './middlewares/error.middleware.js';
 
@@ -38,6 +39,7 @@ app.use(cookieParser());
 app.use('/api/auth', authRoutes);
 app.use('/api/store', authentication, storeRoutes);
 app.use('/api/product', authentication, productRoutes);
+app.use('/api/category', authentication, categoryRoutes);
 app.use('/api/template', templateRoutes);
 app.use('/api/upload', authentication, uploadRotues);
 

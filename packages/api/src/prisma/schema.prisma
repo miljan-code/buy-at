@@ -32,8 +32,9 @@ model Store {
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 
-  owner    User      @relation(fields: [ownerId], references: [id], onDelete: Cascade)
-  products Product[]
+  owner      User       @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  products   Product[]
+  categories Category[]
 
   @@index([slug])
   @@map(name: "stores")
@@ -54,5 +55,21 @@ model Product {
 
   store Store @relation(fields: [storeSlug], references: [slug], onDelete: Cascade)
 
+  @@index([storeSlug])
   @@map(name: "products")
+}
+
+model Category {
+  id        String   @id @unique
+  name      String
+  bilboard  String
+  slug      String
+  storeSlug String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  store Store @relation(fields: [storeSlug], references: [slug], onDelete: Cascade)
+
+  @@index([storeSlug])
+  @@map(name: "categories")
 }

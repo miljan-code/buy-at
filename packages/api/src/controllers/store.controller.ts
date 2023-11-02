@@ -8,18 +8,18 @@ import {
 } from '../lib/validations/store.js';
 import { CustomError } from '../lib/exceptions.js';
 import { db } from '../lib/db.js';
+import { slugify } from '../lib/utils.js';
 
 const createStore = asyncHandler(async (req: Request, res: Response) => {
   const storeData = createStoreSchema.parse(req.body);
   const user = req.res?.locals.user;
   if (!user) throw new CustomError('Unauthorized', 401);
-  const slug = storeData.storeName.toLowerCase().split(' ').join('-');
 
   const store = await db.store.create({
     data: {
       id: createId(),
       name: storeData.storeName,
-      slug,
+      slug: slugify(storeData.storeName),
       ownerId: user.id,
       coverImage: storeData.coverImage || null,
     },
@@ -44,8 +44,7 @@ const updateStore = asyncHandler(async (req: Request, res: Response) => {
       coverImage: storeData.coverImage || null,
       logo: storeData.logo || null,
       favicon: storeData.favicon || null,
-      // TODO: Handle this better
-      slug: storeData.slug.toLowerCase().split(' ').join('-'),
+      slug: slugify(storeData.slug),
     },
   });
 
