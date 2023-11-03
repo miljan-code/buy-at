@@ -6,6 +6,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
@@ -13,7 +14,7 @@ import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 
 import { SectionComponent } from '~shared/components/section.component';
-import { CategoryService } from '~core/services/category.service';
+import type { Category } from '~core/models/categories.model';
 
 interface CategoryForm {
   name: FormControl<string>;
@@ -36,11 +37,11 @@ interface CategoryForm {
   styleUrls: ['./categories.component.scss'],
 })
 export class CategoriesComponent implements OnInit {
-  categories = [];
+  categories: Category[] = this.activatedRoute.snapshot.data['categories'];
   dialogVisible = false;
   categoryForm!: FormGroup<CategoryForm>;
 
-  constructor(private readonly categoryService: CategoryService) {}
+  constructor(private readonly activatedRoute: ActivatedRoute) {}
 
   handleDialog(): void {
     this.dialogVisible = !this.dialogVisible;
