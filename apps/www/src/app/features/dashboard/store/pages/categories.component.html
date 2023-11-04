@@ -11,8 +11,8 @@
     <ng-template pTemplate="body" let-category>
       <tr>
         <td>{{ category.name }}</td>
-        <td>Yes</td>
-        <td>Actions</td>
+        <td>{{ category.bilboard }}</td>
+        <td>{{ category.createdAt | date }}</td>
         <td>Actions</td>
       </tr>
     </ng-template>

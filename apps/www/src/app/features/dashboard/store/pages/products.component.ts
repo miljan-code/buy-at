@@ -56,8 +56,12 @@ interface ProductForm {
   styleUrls: ['./products.component.scss'],
 })
 export class ProductsComponent implements OnInit {
-  products: Product[] = [];
+  products: Product[] = this.route.snapshot.data['products'];
   productForm!: FormGroup<ProductForm>;
+  image = '';
+  dialogVisible = false;
+  isLoading = false;
+  activeStore: string = this.route.snapshot.data['storeSlug'] || '';
   categories = [
     { label: 'Shoes', value: 'shoes' },
     { label: 'Computers', value: 'computers' },
@@ -66,14 +70,10 @@ export class ProductsComponent implements OnInit {
     { label: 'No', value: false },
     { label: 'Yes', value: true },
   ];
-  image = '';
-  dialogVisible = false;
-  isLoading = false;
-  activeStore = '';
   private destroy$ = onDestroy();
 
   constructor(
-    private readonly activatedRoute: ActivatedRoute,
+    private readonly route: ActivatedRoute,
     private readonly productService: ProductService,
   ) {}
 
@@ -88,11 +88,9 @@ export class ProductsComponent implements OnInit {
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (newProduct) => {
+          this.isLoading = false;
           this.dialogVisible = false;
           this.products.push(newProduct);
-        },
-        complete: () => {
-          this.isLoading = false;
         },
       });
   }
@@ -111,16 +109,6 @@ export class ProductsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.activatedRoute
-      .parent!.paramMap.pipe(
-        switchMap((params) => {
-          const slug = params.get('slug') || '';
-          this.activeStore = slug;
-          return this.productService.getProducts(slug);
-        }),
-      )
-      .subscribe((products) => (this.products = products));
-
     this.productForm = new FormGroup<ProductForm>({
       name: new FormControl('', {
         validators: [Validators.required],
