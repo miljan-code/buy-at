@@ -2,7 +2,10 @@ import type { Request, Response } from 'express';
 import asyncHandler from 'express-async-handler';
 import { createId } from '@paralleldrive/cuid2';
 
-import { createProductSchema } from '../lib/validations/product.js';
+import {
+  createProductSchema,
+  updateProductSchema,
+} from '../lib/validations/product.js';
 import { CustomError } from '../lib/exceptions.js';
 import { db } from '../lib/db.js';
 
@@ -48,4 +51,18 @@ const deleteProduct = asyncHandler(async (req: Request, res: Response) => {
   res.status(200).json(product);
 });
 
-export { createProduct, getProducts, deleteProduct };
+const updateProduct = asyncHandler(async (req: Request, res: Response) => {
+  const productData = updateProductSchema.parse(req.body);
+  const user = req.res?.locals.user;
+  if (!user) throw new CustomError('Unauthorized', 401);
+  const { id } = req.params;
+
+  const product = await db.product.update({
+    data: productData,
+    where: { id, store: { ownerId: user.id } },
+  });
+
+  res.status(200).json(product);
+});
+
+export { createProduct, getProducts, deleteProduct, updateProduct };
