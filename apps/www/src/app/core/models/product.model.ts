@@ -1,8 +1,8 @@
 export interface Product {
   id: string;
   name: string;
-  description: string | null;
-  image: string | null;
+  description: string;
+  image: string;
   featured: boolean;
   price: number;
   category: string;
@@ -12,14 +12,9 @@ export interface Product {
   updatedAt: Date;
 }
 
-export type CreateProductOpts = Pick<
+export type CreateProductOpts = Omit<Product, 'id' | 'createdAt' | 'updatedAt'>;
+
+export type EditProductOpts = Omit<
   Product,
-  | 'name'
-  | 'category'
-  | 'description'
-  | 'featured'
-  | 'image'
-  | 'price'
-  | 'quantity'
-  | 'storeSlug'
+  'createdAt' | 'updatedAt' | 'storeSlug'
 >;

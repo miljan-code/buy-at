@@ -43,6 +43,7 @@ export class CategoriesComponent implements OnInit {
   categories: Category[] = this.activatedRoute.snapshot.data['categories'];
   activeStore: string = this.activatedRoute.snapshot.data['storeSlug'] || '';
   dialogVisible = false;
+  editId = '';
   categoryForm!: FormGroup<CategoryForm>;
   private destroy$ = onDestroy();
 
@@ -51,11 +52,20 @@ export class CategoriesComponent implements OnInit {
     private readonly categoryService: CategoryService,
   ) {}
 
-  handleDialog(): void {
-    this.dialogVisible = !this.dialogVisible;
+  openDialog(categoryId: string | null = null): void {
+    if (categoryId) {
+      const category = this.categories.find((item) => item.id === categoryId);
+      if (!category) return;
+      this.categoryForm.patchValue(category);
+      this.editId = categoryId;
+    } else {
+      this.editId = '';
+      this.categoryForm.reset();
+    }
+    this.dialogVisible = true;
   }
 
-  submitForm(): void {
+  addCategory(): void {
     const formData = this.categoryForm.getRawValue();
 
     this.categoryService
@@ -65,13 +75,27 @@ export class CategoriesComponent implements OnInit {
       })
       .pipe(takeUntil(this.destroy$))
       .subscribe((category) => {
-        this.handleDialog();
+        this.dialogVisible = false;
         this.categories.push(category);
       });
   }
 
-  editCategory(categoryId: string): void {
-    this.handleDialog();
+  editCategory(): void {
+    const formData = this.categoryForm.getRawValue();
+
+    this.categoryService
+      .updateCategory({
+        id: this.editId,
+        ...formData,
+      })
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((updatedCategory) => {
+        const categories = this.categories.filter(
+          (item) => item.id !== updatedCategory.id,
+        );
+        this.categories = [...categories, updatedCategory];
+        this.dialogVisible = false;
+      });
   }
 
   deleteCategory(categoryId: string): void {

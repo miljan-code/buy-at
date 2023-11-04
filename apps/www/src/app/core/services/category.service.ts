@@ -6,6 +6,7 @@ import { siteConfig } from '~config/site';
 import type {
   Category,
   CreateCategoryOpts,
+  EditCategoryOpts,
 } from '~core/models/categories.model';
 
 @Injectable({
@@ -27,8 +28,12 @@ export class CategoryService {
     );
   }
 
-  createCategory(categoryOpts: CreateCategoryOpts): Observable<Category> {
-    return this.http.post<Category>(this.apiUrl, categoryOpts);
+  createCategory(createOpts: CreateCategoryOpts): Observable<Category> {
+    return this.http.post<Category>(this.apiUrl, createOpts);
+  }
+
+  updateCategory(editOpts: EditCategoryOpts): Observable<Category> {
+    return this.http.patch<Category>(`${this.apiUrl}/${editOpts.id}`, editOpts);
   }
 
   deleteCategory(categoryId: string): Observable<Category> {

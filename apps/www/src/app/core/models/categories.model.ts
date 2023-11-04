@@ -12,3 +12,5 @@ export type CreateCategoryOpts = Pick<
   Category,
   'name' | 'bilboard' | 'storeSlug'
 >;
+
+export type EditCategoryOpts = Pick<Category, 'id' | 'name' | 'bilboard'>;

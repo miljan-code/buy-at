@@ -18,7 +18,9 @@
         <td>{{ product.name }}</td>
         <td>
           <img
-            [src]="product.image || image"
+            [src]="
+              product.image || image || '/assets/images/img-placeholder.png'
+            "
             [alt]="product.name"
             width="50"
             height="50"
@@ -31,7 +33,7 @@
         <td>
           <div class="products__actions">
             <span
-              (click)="editProduct(product.id)"
+              (click)="openDialog(product.id)"
               class="pi pi-file-edit products__action-btn"
             ></span>
             <span
@@ -51,14 +53,21 @@
 
   <button
     pButton
-    label="Add new product"
+    label="Add product"
     class="products__button"
-    (click)="handleDialog()"
+    (click)="openDialog()"
   ></button>
 </app-section>
 
-<p-dialog header="Add product" [(visible)]="dialogVisible">
-  <form [formGroup]="productForm" (ngSubmit)="submitForm()" class="form">
+<p-dialog
+  header="{{ editId ? 'Edit' : 'Add' }} product"
+  [(visible)]="dialogVisible"
+>
+  <form
+    [formGroup]="productForm"
+    (ngSubmit)="editId ? editProduct() : addProduct()"
+    class="form"
+  >
     <div class="form__group">
       <label for="name">Product name</label>
       <input id="name" type="text" pInputText formControlName="name" />
@@ -131,7 +140,7 @@
     </div>
     <button
       pButton
-      label="Add product"
+      label="{{ editId ? 'Edit' : 'Add' }} product"
       type="submit"
       loadingIcon="pi pi-spin pi-sync"
       [loading]="isLoading"

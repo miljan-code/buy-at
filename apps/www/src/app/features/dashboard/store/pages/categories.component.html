@@ -16,7 +16,7 @@
         <td>
           <div class="categories__actions">
             <span
-              (click)="editCategory(category.id)"
+              (click)="openDialog(category.id)"
               class="pi pi-file-edit categories__action-btn"
             ></span>
             <span
@@ -38,12 +38,19 @@
     pButton
     label="New category"
     class="categories__button"
-    (click)="handleDialog()"
+    (click)="openDialog()"
   ></button>
 </app-section>
 
-<p-dialog header="Add category" [(visible)]="dialogVisible">
-  <form [formGroup]="categoryForm" (ngSubmit)="submitForm()" class="form">
+<p-dialog
+  header="{{ editId ? 'Edit' : 'Add' }} category"
+  [(visible)]="dialogVisible"
+>
+  <form
+    [formGroup]="categoryForm"
+    (ngSubmit)="editId ? editCategory() : addCategory()"
+    class="form"
+  >
     <div class="form__group">
       <label for="name">Category name</label>
       <input id="name" type="text" pInputText formControlName="name" />
@@ -52,6 +59,10 @@
       <label for="bilboard">Bilboard</label>
       <input id="bilboard" type="text" pInputText formControlName="bilboard" />
     </div>
-    <button pButton label="Add category" type="submit"></button>
+    <button
+      pButton
+      label="{{ editId ? 'Edit' : 'Add' }} category"
+      type="submit"
+    ></button>
   </form>
 </p-dialog>

@@ -3,7 +3,11 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, mergeMap, of } from 'rxjs';
 
 import { siteConfig } from '~config/site';
-import type { CreateProductOpts, Product } from '~core/models/product.model';
+import type {
+  CreateProductOpts,
+  EditProductOpts,
+  Product,
+} from '~core/models/product.model';
 
 @Injectable({
   providedIn: 'root',
@@ -26,6 +30,10 @@ export class ProductService {
 
   createProduct(productOpts: CreateProductOpts): Observable<Product> {
     return this.http.post<Product>(this.apiUrl, productOpts);
+  }
+
+  updateProduct(editOpts: EditProductOpts): Observable<Product> {
+    return this.http.patch<Product>(`${this.apiUrl}/${editOpts.id}`, editOpts);
   }
 
   deleteProduct(productId: string): Observable<Product> {

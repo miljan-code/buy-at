@@ -58,10 +58,11 @@ interface ProductForm {
 export class ProductsComponent implements OnInit {
   products: Product[] = this.route.snapshot.data['products'];
   productForm!: FormGroup<ProductForm>;
-  image = '/assets/images/img-placeholder.png';
   dialogVisible = false;
   isLoading = false;
   activeStore: string = this.route.snapshot.data['storeSlug'] || '';
+  image = '';
+  editId = '';
   categories = [
     { label: 'Shoes', value: 'shoes' },
     { label: 'Computers', value: 'computers' },
@@ -77,7 +78,7 @@ export class ProductsComponent implements OnInit {
     private readonly productService: ProductService,
   ) {}
 
-  submitForm(): void {
+  addProduct(): void {
     const formData = this.productForm.getRawValue();
     this.isLoading = true;
     this.productService
@@ -86,17 +87,31 @@ export class ProductsComponent implements OnInit {
         storeSlug: this.activeStore,
       })
       .pipe(takeUntil(this.destroy$))
-      .subscribe({
-        next: (newProduct) => {
-          this.isLoading = false;
-          this.dialogVisible = false;
-          this.products.push(newProduct);
-        },
+      .subscribe((newProduct) => {
+        this.isLoading = false;
+        this.dialogVisible = false;
+        this.products.push(newProduct);
       });
   }
 
-  editProduct(productId: string): void {
-    this.handleDialog();
+  editProduct(): void {
+    const formData = this.productForm.getRawValue();
+    this.isLoading = true;
+    this.productService
+      .updateProduct({
+        id: this.editId,
+        ...formData,
+      })
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((updatedProduct) => {
+        console.log(updatedProduct);
+        this.isLoading = false;
+        this.dialogVisible = false;
+        const products = this.products.filter(
+          (item) => item.id !== updatedProduct.id,
+        );
+        this.products = [...products, updatedProduct];
+      });
   }
 
   deleteProduct(productId: string): void {
@@ -111,8 +126,19 @@ export class ProductsComponent implements OnInit {
       });
   }
 
-  handleDialog(): void {
-    this.dialogVisible = !this.dialogVisible;
+  openDialog(productId: string | null = null): void {
+    if (productId) {
+      const product = this.products.find((item) => item.id === productId);
+      if (!product) return;
+      this.productForm.patchValue(product);
+      this.editId = productId;
+      this.image = product.image;
+    } else {
+      this.image = '';
+      this.editId = '';
+      this.productForm.reset();
+    }
+    this.dialogVisible = true;
   }
 
   handleUpload(value: string): void {
