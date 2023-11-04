@@ -34,4 +34,18 @@ const getProducts = asyncHandler(async (req: Request, res: Response) => {
   res.status(200).json(products);
 });
 
-export { createProduct, getProducts };
+const deleteProduct = asyncHandler(async (req: Request, res: Response) => {
+  const user = req.res?.locals.user;
+  if (!user) throw new CustomError('Unauthorized', 401);
+  const { id } = req.params;
+
+  const product = await db.product.delete({
+    where: {
+      id,
+    },
+  });
+
+  res.status(200).json(product);
+});
+
+export { createProduct, getProducts, deleteProduct };

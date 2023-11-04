@@ -36,4 +36,16 @@ const getCategories = asyncHandler(async (req: Request, res: Response) => {
   res.status(200).json(categories);
 });
 
-export { createCategory, getCategories };
+const deleteCategory = asyncHandler(async (req: Request, res: Response) => {
+  const user = req.res?.locals.user;
+  if (!user) throw new CustomError('Unauthorized', 401);
+  const { id } = req.params;
+
+  const category = await db.category.delete({
+    where: { id },
+  });
+
+  res.status(200).json(category);
+});
+
+export { createCategory, getCategories, deleteCategory };
