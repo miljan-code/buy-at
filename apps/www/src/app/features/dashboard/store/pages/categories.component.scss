@@ -28,6 +28,16 @@
   &__button {
     width: fit-content;
   }
+
+  &__actions {
+    display: flex;
+    gap: rem(12px);
+  }
+
+  &__action-btn {
+    font-size: rem(18px);
+    cursor: pointer;
+  }
 }
 
 .form {

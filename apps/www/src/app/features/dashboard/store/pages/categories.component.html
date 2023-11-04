@@ -13,7 +13,18 @@
         <td>{{ category.name }}</td>
         <td>{{ category.bilboard }}</td>
         <td>{{ category.createdAt | date }}</td>
-        <td>Actions</td>
+        <td>
+          <div class="categories__actions">
+            <span
+              (click)="editCategory(category.id)"
+              class="pi pi-file-edit categories__action-btn"
+            ></span>
+            <span
+              (click)="deleteCategory(category.id)"
+              class="pi pi-trash categories__action-btn"
+            ></span>
+          </div>
+        </td>
       </tr>
     </ng-template>
     <ng-template pTemplate="summary">

@@ -70,6 +70,22 @@ export class CategoriesComponent implements OnInit {
       });
   }
 
+  editCategory(categoryId: string): void {
+    this.handleDialog();
+  }
+
+  deleteCategory(categoryId: string): void {
+    this.categoryService
+      .deleteCategory(categoryId)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((category) => {
+        const newCategories = this.categories.filter(
+          (item) => item.id !== category.id,
+        );
+        this.categories = newCategories;
+      });
+  }
+
   ngOnInit(): void {
     this.categoryForm = new FormGroup<CategoryForm>({
       name: new FormControl('', {

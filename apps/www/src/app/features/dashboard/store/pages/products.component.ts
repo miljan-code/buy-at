@@ -8,7 +8,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { switchMap, takeUntil } from 'rxjs';
+import { takeUntil } from 'rxjs';
 
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
@@ -58,7 +58,7 @@ interface ProductForm {
 export class ProductsComponent implements OnInit {
   products: Product[] = this.route.snapshot.data['products'];
   productForm!: FormGroup<ProductForm>;
-  image = '';
+  image = '/assets/images/img-placeholder.png';
   dialogVisible = false;
   isLoading = false;
   activeStore: string = this.route.snapshot.data['storeSlug'] || '';
@@ -92,6 +92,22 @@ export class ProductsComponent implements OnInit {
           this.dialogVisible = false;
           this.products.push(newProduct);
         },
+      });
+  }
+
+  editProduct(productId: string): void {
+    this.handleDialog();
+  }
+
+  deleteProduct(productId: string): void {
+    this.productService
+      .deleteProduct(productId)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((product) => {
+        const newProducts = this.products.filter(
+          (item) => item.id !== product.id,
+        );
+        this.products = newProducts;
       });
   }
 

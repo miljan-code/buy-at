@@ -17,12 +17,29 @@
       <tr>
         <td>{{ product.name }}</td>
         <td>
-          <img [src]="product.image" [alt]="product.name" width="100" />
+          <img
+            [src]="product.image || image"
+            [alt]="product.name"
+            width="50"
+            height="50"
+            style="object-fit: cover; border-radius: 6px"
+          />
         </td>
-        <td>Yes</td>
+        <td>{{ product.featured ? 'Yes' : 'No' }}</td>
         <td>{{ product.price | currency: 'USD' }}</td>
         <td>{{ product.category }}</td>
-        <td>Actions</td>
+        <td>
+          <div class="products__actions">
+            <span
+              (click)="editProduct(product.id)"
+              class="pi pi-file-edit products__action-btn"
+            ></span>
+            <span
+              (click)="deleteProduct(product.id)"
+              class="pi pi-trash products__action-btn"
+            ></span>
+          </div>
+        </td>
       </tr>
     </ng-template>
     <ng-template pTemplate="summary">
