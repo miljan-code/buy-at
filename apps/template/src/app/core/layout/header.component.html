@@ -6,8 +6,8 @@
         <a
           class="header__nav-link"
           *ngFor="let category of config.categories"
-          [routerLink]="'/category' + category.path"
-          >{{ category.label }}</a
+          [routerLink]="'/category/' + category.slug"
+          >{{ category.name }}</a
         >
       </nav>
     </div>

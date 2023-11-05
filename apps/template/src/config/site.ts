@@ -1,4 +1,5 @@
 import type { Product } from '~core/models/product.model';
+import type { Category } from '~core/models/category.model';
 
 export const siteConfig: SiteConfig = {
   title: 'BuyAt.store',
@@ -16,9 +17,4 @@ export interface SiteConfig {
   logo: string;
   favicon: string;
   products: Product[];
-}
-
-interface Category {
-  label: string;
-  path: string;
 }

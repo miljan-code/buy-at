@@ -13,13 +13,14 @@ const getTemplate = asyncHandler(async (req: Request, res: Response) => {
     },
     include: {
       products: true,
+      categories: true,
     },
   });
   if (!store) throw new CustomError('Store not found', 404);
 
   const template = {
     title: store.name,
-    categories: [],
+    categories: store.categories,
     coverImage: store.coverImage || 'src/assets/images/background-2.png',
     logo: store.logo,
     favicon: store.favicon,

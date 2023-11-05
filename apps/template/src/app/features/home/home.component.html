@@ -1,6 +1,24 @@
 <section class="home">
-  <div class="home__hero" *ngIf="config$ | async as config">
-    <img [src]="config.coverImage" alt="Cover image" class="home__hero-img" />
-    <h1 class="home__hero-title">{{ config.title }}</h1>
+  <div class="hero" *ngIf="config$ | async as config">
+    <img [src]="config.coverImage" alt="Cover image" class="hero__img" />
+    <h1 class="hero__title">{{ config.title }}</h1>
+  </div>
+
+  <div class="featured" *ngIf="featured$ | async as featured">
+    <h2 class="featured__label">Featured products</h2>
+    <div class="featured__products">
+      <div class="product" *ngFor="let product of featured">
+        <img
+          [src]="product.image"
+          [alt]="product.name"
+          class="product__image"
+        />
+        <div class="product__info">
+          <p>{{ product.name }}</p>
+          <p>{{ product.category }}</p>
+        </div>
+        <span class="product__price">{{ product.price | currency }}</span>
+      </div>
+    </div>
   </div>
 </section>
