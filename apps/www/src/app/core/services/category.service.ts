@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, mergeMap, of } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 
 import { siteConfig } from '~config/site';
 import type {
@@ -20,12 +20,9 @@ export class CategoryService {
   constructor(private readonly http: HttpClient) {}
 
   getCategories(storeSlug: string): Observable<Category[]> {
-    return this.http.get<Category[]>(`${this.apiUrl}/${storeSlug}`).pipe(
-      mergeMap((products) => {
-        this.categories.next(products);
-        return of(products);
-      }),
-    );
+    return this.http
+      .get<Category[]>(`${this.apiUrl}/${storeSlug}`)
+      .pipe(tap((products) => this.categories.next(products)));
   }
 
   createCategory(createOpts: CreateCategoryOpts): Observable<Category> {

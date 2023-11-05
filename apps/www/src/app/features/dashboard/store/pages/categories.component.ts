@@ -40,15 +40,15 @@ interface CategoryForm {
   styleUrls: ['./categories.component.scss'],
 })
 export class CategoriesComponent implements OnInit {
-  categories: Category[] = this.activatedRoute.snapshot.data['categories'];
-  activeStore: string = this.activatedRoute.snapshot.data['storeSlug'] || '';
+  categories: Category[] = this.route.snapshot.data['categories'];
   dialogVisible = false;
+  activeStore = '';
   editId = '';
   categoryForm!: FormGroup<CategoryForm>;
   private destroy$ = onDestroy();
 
   constructor(
-    private readonly activatedRoute: ActivatedRoute,
+    private readonly route: ActivatedRoute,
     private readonly categoryService: CategoryService,
   ) {}
 
@@ -111,6 +111,10 @@ export class CategoriesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.route.parent?.paramMap
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((params) => (this.activeStore = params.get('slug') || ''));
+
     this.categoryForm = new FormGroup<CategoryForm>({
       name: new FormControl('', {
         validators: [Validators.required],

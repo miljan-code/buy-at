@@ -1,7 +1,6 @@
 import type { Routes } from '@angular/router';
 
 import { dashboardGuard } from '~shared/guards/dashboard.guard';
-import { storeSlugResolver } from '~shared/resolvers/store-slug.resolver';
 
 export const DASHBOARD_ROUTES: Routes = [
   {
@@ -23,8 +22,5 @@ export const DASHBOARD_ROUTES: Routes = [
       import('./store/store.component').then((c) => c.StoreComponent),
     loadChildren: () =>
       import('./store/store.routes').then((s) => s.STORE_ROUTES),
-    resolve: {
-      storeSlug: storeSlugResolver,
-    },
   },
 ];

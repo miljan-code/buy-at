@@ -22,6 +22,7 @@ export const STORE_ROUTES: Routes = [
       import('./pages/products.component').then((c) => c.ProductsComponent),
     resolve: {
       products: productsResolver,
+      categories: categoryResolver,
     },
   },
   {

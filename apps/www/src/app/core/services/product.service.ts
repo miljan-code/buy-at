@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, mergeMap, of } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 
 import { siteConfig } from '~config/site';
 import type {
@@ -20,12 +20,9 @@ export class ProductService {
   constructor(private readonly http: HttpClient) {}
 
   getProducts(storeSlug: string): Observable<Product[]> {
-    return this.http.get<Product[]>(`${this.apiUrl}/${storeSlug}`).pipe(
-      mergeMap((products) => {
-        this.products.next(products);
-        return of(products);
-      }),
-    );
+    return this.http
+      .get<Product[]>(`${this.apiUrl}/${storeSlug}`)
+      .pipe(tap((products) => this.products.next(products)));
   }
 
   createProduct(productOpts: CreateProductOpts): Observable<Product> {

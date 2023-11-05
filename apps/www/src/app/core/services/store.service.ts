@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, map, mergeMap, of } from 'rxjs';
+import { BehaviorSubject, Observable, map, tap } from 'rxjs';
 
 import { siteConfig } from '~config/site';
 import type {
@@ -29,10 +29,9 @@ export class StoreService {
 
   createStore(storeOpts: CreateStoreOpts): Observable<Store> {
     return this.http.post<Store>(this.apiUrl, storeOpts).pipe(
-      mergeMap((newStore) => {
+      tap((newStore) => {
         const stores = this.stores.value;
         this.stores.next([...stores, newStore]);
-        return of(newStore);
       }),
     );
   }
@@ -41,12 +40,11 @@ export class StoreService {
     return this.http
       .patch<Store>(`${this.apiUrl}/${storeOpts.id}`, storeOpts)
       .pipe(
-        mergeMap((updatedStore) => {
+        tap((updatedStore) => {
           const stores = this.stores.value.filter(
             (item) => item.id !== updatedStore.id,
           );
           this.stores.next([...stores, updatedStore]);
-          return of(updatedStore);
         }),
       );
   }

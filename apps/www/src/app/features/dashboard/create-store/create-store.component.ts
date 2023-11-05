@@ -13,7 +13,6 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 
 import { StoreService } from '~core/services/store.service';
-import { AutofocusDirective } from '~shared/directives/autofocus.directive';
 import { UploadDirective } from '~shared/directives/upload.directive';
 import { onDestroy } from '~shared/utils/destroy';
 
@@ -30,7 +29,6 @@ interface CreateStoreForm {
     ReactiveFormsModule,
     InputTextModule,
     ButtonModule,
-    AutofocusDirective,
     UploadDirective,
   ],
   templateUrl: './create-store.component.html',

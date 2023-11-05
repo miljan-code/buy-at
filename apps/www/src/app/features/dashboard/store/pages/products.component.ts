@@ -23,6 +23,7 @@ import { SectionComponent } from '~shared/components/section.component';
 import { ProductService } from '~core/services/product.service';
 import { onDestroy } from '~shared/utils/destroy';
 import type { Product } from '~core/models/product.model';
+import type { Category } from '~core/models/categories.model';
 
 interface ProductForm {
   name: FormControl<string>;
@@ -32,6 +33,11 @@ interface ProductForm {
   quantity: FormControl<number>;
   featured: FormControl<boolean>;
   image: FormControl<string>;
+}
+
+interface CategoryOptions {
+  label: string;
+  value: string;
 }
 
 @Component({
@@ -60,13 +66,10 @@ export class ProductsComponent implements OnInit {
   productForm!: FormGroup<ProductForm>;
   dialogVisible = false;
   isLoading = false;
-  activeStore: string = this.route.snapshot.data['storeSlug'] || '';
+  activeStore = '';
   image = '';
   editId = '';
-  categories = [
-    { label: 'Shoes', value: 'shoes' },
-    { label: 'Computers', value: 'computers' },
-  ];
+  categories: CategoryOptions[] = [];
   isFeatured = [
     { label: 'No', value: false },
     { label: 'Yes', value: true },
@@ -87,10 +90,15 @@ export class ProductsComponent implements OnInit {
         storeSlug: this.activeStore,
       })
       .pipe(takeUntil(this.destroy$))
-      .subscribe((newProduct) => {
-        this.isLoading = false;
-        this.dialogVisible = false;
-        this.products.push(newProduct);
+      .subscribe({
+        next: (newProduct) => {
+          this.isLoading = false;
+          this.dialogVisible = false;
+          this.products.push(newProduct);
+        },
+        error: (err) => {
+          this.isLoading = false;
+        },
       });
   }
 
@@ -151,6 +159,12 @@ export class ProductsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.route.parent?.paramMap
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((params) => (this.activeStore = params.get('slug') || ''));
+
+    this.loadCategories();
+
     this.productForm = new FormGroup<ProductForm>({
       name: new FormControl('', {
         validators: [Validators.required],
@@ -163,7 +177,7 @@ export class ProductsComponent implements OnInit {
         validators: [Validators.required],
         nonNullable: true,
       }),
-      category: new FormControl(this.categories[0].value, {
+      category: new FormControl('', {
         validators: [Validators.required],
         nonNullable: true,
       }),
@@ -178,5 +192,14 @@ export class ProductsComponent implements OnInit {
         nonNullable: true,
       }),
     });
+  }
+
+  private loadCategories() {
+    const categories: Category[] = this.route.snapshot.data['categories'];
+    const mappedCategories = categories.map((category) => ({
+      label: category.name,
+      value: category.name,
+    }));
+    this.categories = mappedCategories;
   }
 }
