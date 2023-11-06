@@ -8,7 +8,7 @@ import { siteConfig, type SiteConfig } from '~config/site';
   providedIn: 'root',
 })
 export class ConfigService {
-  private mainAppUrl = 'http://localhost:4200/';
+  private mainAppUrl = 'http://localhost:4201/';
   private config = new BehaviorSubject<SiteConfig | null>(siteConfig);
   apiUrl = 'http://localhost:5000/api/template';
   config$ = this.config.asObservable();
