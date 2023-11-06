@@ -1,12 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, RouterModule } from '@angular/router';
-import { switchMap, takeUntil } from 'rxjs';
+import { RouterModule } from '@angular/router';
+import { map } from 'rxjs';
 
 import { NavLinkComponent } from './components/nav-link.component';
 import { StoreService } from '~core/services/store.service';
 import { dashboardConfig } from '~config/dashboard';
-import { onDestroy } from '~shared/utils/destroy';
 
 @Component({
   selector: 'app-store',
@@ -15,29 +14,9 @@ import { onDestroy } from '~shared/utils/destroy';
   templateUrl: './store.component.html',
   styleUrls: ['./store.component.scss'],
 })
-export class StoreComponent implements OnInit {
-  currentURL = '';
+export class StoreComponent {
+  slug$ = this.storeService.activeStore$.pipe(map((store) => store.slug));
   navLinks = dashboardConfig.navLinks;
-  private destroy$ = onDestroy();
 
-  constructor(
-    private readonly activatedRoute: ActivatedRoute,
-    private readonly storeService: StoreService,
-  ) {}
-
-  ngOnInit(): void {
-    this.activatedRoute.paramMap
-      .pipe(
-        takeUntil(this.destroy$),
-        switchMap((params) => {
-          const slug = params.get('slug') || '';
-          this.currentURL = `/dashboard/store/${slug}`;
-          return this.storeService.getStore(slug);
-        }),
-      )
-      .subscribe((store) => {
-        if (!store) return;
-        this.storeService.setActiveStore(store);
-      });
-  }
+  constructor(private readonly storeService: StoreService) {}
 }

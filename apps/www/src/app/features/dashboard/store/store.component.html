@@ -1,10 +1,10 @@
 <div class="store">
   <aside class="store__menu">
-    <ul class="store__menu-group">
+    <ul class="store__menu-group" *ngIf="slug$ | async as slug">
       <app-nav-link
         *ngFor="let navLink of navLinks"
         [label]="navLink.label"
-        [url]="currentURL + navLink.path"
+        [url]="'/dashboard/store/' + slug + '/' + navLink.path"
         [icon]="navLink.icon"
       />
     </ul>
