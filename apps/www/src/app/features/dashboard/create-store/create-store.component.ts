@@ -1,11 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  FormControl,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { takeUntil } from 'rxjs';
 
@@ -15,11 +10,7 @@ import { ButtonModule } from 'primeng/button';
 import { StoreService } from '~core/services/store.service';
 import { UploadDirective } from '~shared/directives/upload.directive';
 import { onDestroy } from '~shared/utils/destroy';
-
-interface CreateStoreForm {
-  storeName: FormControl<string>;
-  coverImage: FormControl<string>;
-}
+import { createStoreForm } from '~shared/forms/create-store.form';
 
 @Component({
   selector: 'app-create-store',
@@ -34,8 +25,8 @@ interface CreateStoreForm {
   templateUrl: './create-store.component.html',
   styleUrls: ['./create-store.component.scss'],
 })
-export class CreateStoreComponent implements OnInit {
-  createStoreForm!: FormGroup<CreateStoreForm>;
+export class CreateStoreComponent {
+  createStoreForm = createStoreForm;
   storeNamePlaceholder = 'BuyAt.store';
   showcaseCover = '/assets/images/background-1.png';
   isLoading = false;
@@ -63,17 +54,5 @@ export class CreateStoreComponent implements OnInit {
 
   handleLoading(value: boolean): void {
     this.isLoading = value;
-  }
-
-  ngOnInit(): void {
-    this.createStoreForm = new FormGroup<CreateStoreForm>({
-      storeName: new FormControl('', {
-        validators: [Validators.required, Validators.minLength(4)],
-        nonNullable: true,
-      }),
-      coverImage: new FormControl('', {
-        nonNullable: true,
-      }),
-    });
   }
 }

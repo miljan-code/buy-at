@@ -1,11 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  ReactiveFormsModule,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { takeUntil } from 'rxjs';
 
 import { InputTextModule } from 'primeng/inputtext';
@@ -19,14 +14,7 @@ import { onDestroy } from '~shared/utils/destroy';
 import { hydrateFormFields } from '~shared/utils/helpers';
 import { SectionComponent } from '~shared/components/section.component';
 import type { Store } from '~core/models/store.model';
-
-interface CustomizationForm {
-  name: FormControl<string>;
-  logo: FormControl<string>;
-  favicon: FormControl<string>;
-  coverImage: FormControl<string>;
-  slug: FormControl<string>;
-}
+import { customizationForm } from '~shared/forms/customization.form';
 
 type UploadType = 'coverImage' | 'favicon' | 'logo';
 
@@ -46,7 +34,7 @@ type UploadType = 'coverImage' | 'favicon' | 'logo';
   styleUrls: ['./customization.component.scss'],
 })
 export class CustomizationComponent implements OnInit {
-  customizationForm!: FormGroup<CustomizationForm>;
+  customizationForm = customizationForm;
   store: Store | null = null;
   picPlaceholder = '/assets/images/img-placeholder.png';
   isLoading = false;
@@ -91,20 +79,6 @@ export class CustomizationComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.customizationForm = new FormGroup<CustomizationForm>({
-      name: new FormControl('', {
-        validators: [Validators.required],
-        nonNullable: true,
-      }),
-      coverImage: new FormControl('', { nonNullable: true }),
-      logo: new FormControl('', { nonNullable: true }),
-      favicon: new FormControl('', { nonNullable: true }),
-      slug: new FormControl('', {
-        validators: [Validators.required],
-        nonNullable: true,
-      }),
-    });
-
     this.storeService.activeStore$
       .pipe(takeUntil(this.destroy$))
       .subscribe((store) => {

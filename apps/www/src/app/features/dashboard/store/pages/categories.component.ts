@@ -1,13 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  FormControl,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { takeUntil } from 'rxjs';
+import { switchMap, takeUntil } from 'rxjs';
 
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
@@ -16,13 +11,10 @@ import { InputTextModule } from 'primeng/inputtext';
 
 import { SectionComponent } from '~shared/components/section.component';
 import { CategoryService } from '~core/services/category.service';
+import { StoreService } from '~core/services/store.service';
 import { onDestroy } from '~shared/utils/destroy';
 import type { Category } from '~core/models/categories.model';
-
-interface CategoryForm {
-  name: FormControl<string>;
-  bilboard: FormControl<string>;
-}
+import { categoryForm } from '~shared/forms/category.form';
 
 @Component({
   selector: 'app-categories',
@@ -39,16 +31,16 @@ interface CategoryForm {
   templateUrl: './categories.component.html',
   styleUrls: ['./categories.component.scss'],
 })
-export class CategoriesComponent implements OnInit {
+export class CategoriesComponent {
   categories: Category[] = this.route.snapshot.data['categories'];
+  categoryForm = categoryForm;
   dialogVisible = false;
-  activeStore = '';
   editId = '';
-  categoryForm!: FormGroup<CategoryForm>;
   private destroy$ = onDestroy();
 
   constructor(
     private readonly route: ActivatedRoute,
+    private readonly storeService: StoreService,
     private readonly categoryService: CategoryService,
   ) {}
 
@@ -59,8 +51,8 @@ export class CategoriesComponent implements OnInit {
       this.categoryForm.patchValue(category);
       this.editId = categoryId;
     } else {
-      this.editId = '';
       this.categoryForm.reset();
+      this.editId = '';
     }
     this.dialogVisible = true;
   }
@@ -68,15 +60,19 @@ export class CategoriesComponent implements OnInit {
   addCategory(): void {
     const formData = this.categoryForm.getRawValue();
 
-    this.categoryService
-      .createCategory({
-        ...formData,
-        storeSlug: this.activeStore,
-      })
-      .pipe(takeUntil(this.destroy$))
+    this.storeService.activeStore$
+      .pipe(
+        takeUntil(this.destroy$),
+        switchMap((store) => {
+          return this.categoryService.createCategory({
+            ...formData,
+            storeSlug: store?.slug,
+          });
+        }),
+      )
       .subscribe((category) => {
-        this.dialogVisible = false;
         this.categories.push(category);
+        this.dialogVisible = false;
       });
   }
 
@@ -103,27 +99,9 @@ export class CategoriesComponent implements OnInit {
       .deleteCategory(categoryId)
       .pipe(takeUntil(this.destroy$))
       .subscribe((category) => {
-        const newCategories = this.categories.filter(
+        this.categories = this.categories.filter(
           (item) => item.id !== category.id,
         );
-        this.categories = newCategories;
       });
-  }
-
-  ngOnInit(): void {
-    this.route.parent?.paramMap
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((params) => (this.activeStore = params.get('slug') || ''));
-
-    this.categoryForm = new FormGroup<CategoryForm>({
-      name: new FormControl('', {
-        validators: [Validators.required],
-        nonNullable: true,
-      }),
-      bilboard: new FormControl('', {
-        validators: [Validators.required],
-        nonNullable: true,
-      }),
-    });
   }
 }

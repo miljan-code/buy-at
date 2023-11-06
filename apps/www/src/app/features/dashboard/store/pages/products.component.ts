@@ -1,14 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  FormControl,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { takeUntil } from 'rxjs';
+import { switchMap, takeUntil } from 'rxjs';
 
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
@@ -21,19 +15,11 @@ import { DropdownModule } from 'primeng/dropdown';
 import { UploadDirective } from '~shared/directives/upload.directive';
 import { SectionComponent } from '~shared/components/section.component';
 import { ProductService } from '~core/services/product.service';
+import { StoreService } from '~core/services/store.service';
 import { onDestroy } from '~shared/utils/destroy';
+import { productForm } from '~shared/forms/product.form';
 import type { Product } from '~core/models/product.model';
 import type { Category } from '~core/models/categories.model';
-
-interface ProductForm {
-  name: FormControl<string>;
-  description: FormControl<string>;
-  price: FormControl<number>;
-  category: FormControl<string>;
-  quantity: FormControl<number>;
-  featured: FormControl<boolean>;
-  image: FormControl<string>;
-}
 
 interface CategoryOptions {
   label: string;
@@ -48,7 +34,6 @@ interface CategoryOptions {
     SectionComponent,
     TableModule,
     ButtonModule,
-    FormsModule,
     ReactiveFormsModule,
     RouterModule,
     DialogModule,
@@ -63,10 +48,9 @@ interface CategoryOptions {
 })
 export class ProductsComponent implements OnInit {
   products: Product[] = this.route.snapshot.data['products'];
-  productForm!: FormGroup<ProductForm>;
+  productForm = productForm;
   dialogVisible = false;
   isLoading = false;
-  activeStore = '';
   image = '';
   editId = '';
   categories: CategoryOptions[] = [];
@@ -77,6 +61,7 @@ export class ProductsComponent implements OnInit {
   private destroy$ = onDestroy();
 
   constructor(
+    private readonly storeService: StoreService,
     private readonly route: ActivatedRoute,
     private readonly productService: ProductService,
   ) {}
@@ -84,19 +69,23 @@ export class ProductsComponent implements OnInit {
   addProduct(): void {
     const formData = this.productForm.getRawValue();
     this.isLoading = true;
-    this.productService
-      .createProduct({
-        ...formData,
-        storeSlug: this.activeStore,
-      })
-      .pipe(takeUntil(this.destroy$))
+    this.storeService.activeStore$
+      .pipe(
+        takeUntil(this.destroy$),
+        switchMap((store) => {
+          return this.productService.createProduct({
+            ...formData,
+            storeSlug: store.slug,
+          });
+        }),
+      )
       .subscribe({
         next: (newProduct) => {
+          this.products.push(newProduct);
           this.isLoading = false;
           this.dialogVisible = false;
-          this.products.push(newProduct);
         },
-        error: (err) => {
+        error: () => {
           this.isLoading = false;
         },
       });
@@ -112,13 +101,12 @@ export class ProductsComponent implements OnInit {
       })
       .pipe(takeUntil(this.destroy$))
       .subscribe((updatedProduct) => {
-        console.log(updatedProduct);
-        this.isLoading = false;
-        this.dialogVisible = false;
         const products = this.products.filter(
           (item) => item.id !== updatedProduct.id,
         );
         this.products = [...products, updatedProduct];
+        this.isLoading = false;
+        this.dialogVisible = false;
       });
   }
 
@@ -127,10 +115,7 @@ export class ProductsComponent implements OnInit {
       .deleteProduct(productId)
       .pipe(takeUntil(this.destroy$))
       .subscribe((product) => {
-        const newProducts = this.products.filter(
-          (item) => item.id !== product.id,
-        );
-        this.products = newProducts;
+        this.products = this.products.filter((item) => item.id !== product.id);
       });
   }
 
@@ -142,9 +127,9 @@ export class ProductsComponent implements OnInit {
       this.editId = productId;
       this.image = product.image;
     } else {
-      this.image = '';
-      this.editId = '';
       this.productForm.reset();
+      this.editId = '';
+      this.image = '';
     }
     this.dialogVisible = true;
   }
@@ -159,39 +144,7 @@ export class ProductsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.route.parent?.paramMap
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((params) => (this.activeStore = params.get('slug') || ''));
-
     this.loadCategories();
-
-    this.productForm = new FormGroup<ProductForm>({
-      name: new FormControl('', {
-        validators: [Validators.required],
-        nonNullable: true,
-      }),
-      description: new FormControl('', {
-        nonNullable: true,
-      }),
-      price: new FormControl(0, {
-        validators: [Validators.required],
-        nonNullable: true,
-      }),
-      category: new FormControl('', {
-        validators: [Validators.required],
-        nonNullable: true,
-      }),
-      quantity: new FormControl(1, {
-        nonNullable: true,
-      }),
-      featured: new FormControl(false, {
-        validators: [Validators.required],
-        nonNullable: true,
-      }),
-      image: new FormControl('', {
-        nonNullable: true,
-      }),
-    });
   }
 
   private loadCategories() {

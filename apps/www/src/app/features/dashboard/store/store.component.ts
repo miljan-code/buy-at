@@ -35,6 +35,9 @@ export class StoreComponent implements OnInit {
           return this.storeService.getStore(slug);
         }),
       )
-      .subscribe((store) => this.storeService.setActiveStore(store));
+      .subscribe((store) => {
+        if (!store) return;
+        this.storeService.setActiveStore(store);
+      });
   }
 }

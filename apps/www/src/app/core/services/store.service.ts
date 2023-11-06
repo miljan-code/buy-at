@@ -14,7 +14,7 @@ import type {
 })
 export class StoreService {
   private readonly apiUrl = siteConfig.apiUrls.store;
-  private activeStore = new BehaviorSubject<Store | null>(null);
+  private activeStore = new BehaviorSubject<Store>({} as Store);
   private stores = new BehaviorSubject<Store[]>([]);
   activeStore$ = this.activeStore.asObservable();
   stores$ = this.stores.asObservable();
@@ -55,7 +55,7 @@ export class StoreService {
     );
   }
 
-  setActiveStore(store: Store | null): void {
+  setActiveStore(store: Store): void {
     this.activeStore.next(store);
   }
 }
