@@ -8,6 +8,7 @@ export interface Product {
   category: string;
   quantity: number;
   storeSlug: string;
+  slug: string;
   createdAt: Date;
   updatedAt: Date;
 }

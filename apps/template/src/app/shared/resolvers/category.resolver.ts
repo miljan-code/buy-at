@@ -4,7 +4,7 @@ import { map } from 'rxjs';
 
 import { ConfigService } from '~core/services/config.service';
 import type { Product } from '~core/models/product.model';
-import { Category } from '~core/models/category.model';
+import type { Category } from '~core/models/category.model';
 
 export const categoryResolver: ResolveFn<{
   billboard: Category;

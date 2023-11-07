@@ -1,21 +1,26 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
-import { Product } from '~core/models/product.model';
+import type { Product } from '~core/models/product.model';
 
 @Component({
   selector: 'app-product',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div class="product">
+    <a
+      [routerLink]="['/category', product.category | lowercase, product.slug]"
+      class="product"
+    >
       <img [src]="product.image" [alt]="product.name" class="product__image" />
       <div class="product__info">
         <p>{{ product.name }}</p>
         <p>{{ product.category }}</p>
       </div>
       <span class="product__price">{{ product.price | currency }}</span>
-    </div>
+    </a>
   `,
   styles: [
     `

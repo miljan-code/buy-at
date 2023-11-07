@@ -3,6 +3,8 @@
   <app-billboard [data]="{ coverImage: '', title: data.billboard.bilboard }" />
 
   <div class="products">
-    <app-product *ngFor="let product of data.products" [product]="product" />
+    <div class="products__list">
+      <app-product *ngFor="let product of data.products" [product]="product" />
+    </div>
   </div>
 </section>

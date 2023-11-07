@@ -1,6 +1,14 @@
+@import 'variables';
 @import 'functions';
 
 .products {
-  display: flex;
-  gap: rem(12px);
+  max-width: $bp-largest;
+  margin: 0 auto;
+  padding: rem(24px) 0;
+
+  &__list {
+    display: flex;
+    gap: rem(12px);
+    flex-wrap: wrap;
+  }
 }

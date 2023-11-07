@@ -1,14 +1,17 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
+import { siteConfig } from '~config/site';
 
 @Component({
   selector: 'app-billboard',
   standalone: true,
   imports: [CommonModule],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="billboard">
       <img
-        [src]="data.coverImage || 'src/assets/images/background-1.png'"
+        [src]="data.coverImage || siteConfig.coverImage"
         alt="Cover image"
         class="billboard__img"
       />
@@ -48,4 +51,5 @@ import { CommonModule } from '@angular/common';
 })
 export class BillboardComponent {
   @Input({ required: true }) data!: { coverImage: string; title: string };
+  siteConfig = siteConfig;
 }
