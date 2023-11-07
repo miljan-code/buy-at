@@ -8,13 +8,17 @@ export interface Product {
   category: string;
   quantity: number;
   storeSlug: string;
+  slug: string;
   createdAt: Date;
   updatedAt: Date;
 }
 
-export type CreateProductOpts = Omit<Product, 'id' | 'createdAt' | 'updatedAt'>;
+export type CreateProductOpts = Omit<
+  Product,
+  'id' | 'createdAt' | 'updatedAt' | 'slug'
+>;
 
 export type EditProductOpts = Omit<
   Product,
-  'createdAt' | 'updatedAt' | 'storeSlug'
+  'createdAt' | 'updatedAt' | 'storeSlug' | 'slug'
 >;
