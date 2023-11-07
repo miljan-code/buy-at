@@ -8,6 +8,7 @@ import {
 } from '../lib/validations/product.js';
 import { CustomError } from '../lib/exceptions.js';
 import { db } from '../lib/db.js';
+import { slugify } from '../lib/utils.js';
 
 const createProduct = asyncHandler(async (req: Request, res: Response) => {
   const user = req.res?.locals.user;
@@ -19,6 +20,7 @@ const createProduct = asyncHandler(async (req: Request, res: Response) => {
     data: {
       id: createId(),
       ...productData,
+      slug: slugify(productData.name),
     },
   });
 
@@ -58,7 +60,10 @@ const updateProduct = asyncHandler(async (req: Request, res: Response) => {
   const { id } = req.params;
 
   const product = await db.product.update({
-    data: productData,
+    data: {
+      ...productData,
+      slug: slugify(productData.name),
+    },
     where: { id, store: { ownerId: user.id } },
   });
 

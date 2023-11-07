@@ -50,12 +50,13 @@ model Product {
   category    String
   quantity    Int      @default(1)
   storeSlug   String
+  slug        String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
   store Store @relation(fields: [storeSlug], references: [slug], onDelete: Cascade)
 
-  @@index([storeSlug])
+  @@index([storeSlug, slug])
   @@map(name: "products")
 }
 
