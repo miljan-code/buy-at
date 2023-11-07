@@ -1,0 +1,8 @@
+<section class="category" *ngIf="data$ | async as data">
+  <!-- TODO: change coverImage later when add to API -->
+  <app-billboard [data]="{ coverImage: '', title: data.billboard.bilboard }" />
+
+  <div class="products">
+    <app-product *ngFor="let product of data.products" [product]="product" />
+  </div>
+</section>

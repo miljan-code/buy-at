@@ -2,29 +2,6 @@
 @import 'variables';
 @import 'functions';
 
-.hero {
-  position: relative;
-
-  max-width: $bp-largest;
-  margin: 0 auto;
-  padding: rem(12px) 0;
-
-  &__img {
-    width: 100%;
-    height: rem(400px);
-
-    object-fit: cover;
-    border-radius: rem(12px);
-  }
-
-  &__title {
-    @include center-absolute;
-
-    font-family: $font-heading;
-    font-size: rem(64px);
-  }
-}
-
 .featured {
   max-width: $bp-largest;
   margin: 0 auto;
@@ -40,40 +17,5 @@
     display: flex;
     gap: rem(12px);
     flex-wrap: wrap;
-  }
-}
-
-.product {
-  display: flex;
-  flex-direction: column;
-  gap: rem(18px);
-
-  border: 1px solid $color-border;
-  border-radius: rem(6px);
-  padding: rem(12px);
-  height: rem(340px);
-
-  &__image {
-    width: rem(200px);
-    height: rem(200px);
-    border-radius: rem(6px);
-    object-fit: cover;
-  }
-
-  &__info {
-    display: flex;
-    flex-direction: column;
-    gap: rem(4px);
-
-    & p:last-child {
-      font-size: rem(15px);
-      color: $color-white-hover;
-    }
-  }
-
-  &__price {
-    margin-top: auto;
-    font-size: rem(18px);
-    font-weight: 600;
   }
 }
