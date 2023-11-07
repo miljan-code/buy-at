@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, map, Observable, tap } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 
 import { siteConfig, type SiteConfig } from '~config/site';
 
@@ -8,12 +8,11 @@ import { siteConfig, type SiteConfig } from '~config/site';
   providedIn: 'root',
 })
 export class ConfigService {
+  private readonly http = inject(HttpClient);
   private mainAppUrl = 'http://localhost:4201/';
   private config = new BehaviorSubject<SiteConfig | null>(siteConfig);
-  apiUrl = 'http://localhost:5000/api/template';
+  private apiUrl = 'http://localhost:5000/api/template';
   config$ = this.config.asObservable();
-
-  constructor(private readonly http: HttpClient) {}
 
   getConfig(): Observable<SiteConfig | null> | null {
     const currentLocation = window.location.href;

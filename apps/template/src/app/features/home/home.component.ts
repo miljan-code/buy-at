@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { ConfigService } from '~core/services/config.service';
@@ -12,12 +12,10 @@ import { map } from 'rxjs';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent {
-  config$ = this.configService.config$;
+  config$ = inject(ConfigService).config$;
   featured$ = this.config$.pipe(
     map(
       (config) => config?.products.filter((product) => product.featured) || [],
     ),
   );
-
-  constructor(private readonly configService: ConfigService) {}
 }
