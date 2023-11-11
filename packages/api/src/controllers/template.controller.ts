@@ -21,7 +21,7 @@ const getTemplate = asyncHandler(async (req: Request, res: Response) => {
   const template = {
     title: store.name,
     categories: store.categories,
-    coverImage: store.coverImage || 'src/assets/images/background-2.png',
+    coverImage: store.coverImage || 'assets/images/background-2.png',
     logo: store.logo,
     favicon: store.favicon,
     products: store.products,
