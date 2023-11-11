@@ -12,6 +12,6 @@ const productRoutes = express.Router();
 productRoutes.post('/', createProduct);
 productRoutes.delete('/:id', deleteProduct);
 productRoutes.patch('/:id', updateProduct);
-productRoutes.get('/:slug', getProducts);
+productRoutes.get('/:storeSlug', getProducts);
 
 export { productRoutes };

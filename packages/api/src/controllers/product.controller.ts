@@ -30,10 +30,10 @@ const createProduct = asyncHandler(async (req: Request, res: Response) => {
 const getProducts = asyncHandler(async (req: Request, res: Response) => {
   const user = req.res?.locals.user;
   if (!user) throw new CustomError('Unauthorized', 401);
-  const { slug } = req.params;
+  const { storeSlug } = req.params;
 
   const products = await db.product.findMany({
-    where: { storeSlug: slug },
+    where: { storeSlug },
   });
 
   res.status(200).json(products);
