@@ -4,7 +4,7 @@ import type { Category } from '~core/models/category.model';
 export const siteConfig: SiteConfig = {
   title: 'BuyAt.store',
   categories: [],
-  coverImage: 'src/assets/images/background-1.png',
+  coverImage: 'assets/images/background-1.png',
   logo: '',
   favicon: '',
   products: [],
