@@ -1,0 +1,14 @@
+@import 'mixins';
+@import 'variables';
+@import 'functions';
+
+.product {
+  max-width: $bp-largest;
+  margin: 0 auto;
+  padding: rem(24px) 0;
+
+  &__info {
+    display: flex;
+    gap: rem(48px);
+  }
+}

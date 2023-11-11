@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 
 import { categoryResolver } from '~shared/resolvers/category.resolver';
+import { productResolver } from '~shared/resolvers/product.resolver';
 
 export const routes: Routes = [
   {
@@ -16,6 +17,16 @@ export const routes: Routes = [
       ),
     resolve: {
       category: categoryResolver,
+    },
+  },
+  {
+    path: 'category/:category/:product',
+    loadComponent: () =>
+      import('./features/product/product.component').then(
+        (c) => c.ProductComponent,
+      ),
+    resolve: {
+      product: productResolver,
     },
   },
 ];
