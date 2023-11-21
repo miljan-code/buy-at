@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 import { ConfigService } from '../services/config.service';
+import { CartService } from '~core/services/cart.service';
 
 @Component({
   selector: 'app-header',
@@ -14,4 +15,5 @@ import { ConfigService } from '../services/config.service';
 })
 export class HeaderComponent {
   config$ = inject(ConfigService).config$;
+  count$ = inject(CartService).cartCount$;
 }

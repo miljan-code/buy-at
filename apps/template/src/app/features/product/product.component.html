@@ -1,6 +1,18 @@
-<section class="product">
+<section class="product" *ngIf="product$ | async as product">
   <div class="product__info">
-    <div class="product__image">Hi</div>
-    <div class="product__details">There</div>
+    <img [src]="product.image" class="product__image" />
+    <div class="product__details">
+      <h2 class="product__name">{{ product.name }}</h2>
+      <p class="product__price">{{ product.price | currency }}</p>
+      <div class="divider"></div>
+      <button
+        class="product__button"
+        pButton
+        icon="pi pi-shopping-cart"
+        label="Add to cart"
+        type="button"
+        (click)="cart.addToCart(product)"
+      ></button>
+    </div>
   </div>
 </section>

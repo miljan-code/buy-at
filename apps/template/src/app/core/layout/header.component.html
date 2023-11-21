@@ -12,9 +12,9 @@
       </nav>
     </div>
     <div class="header__right">
-      <a class="header__cart-button" [routerLink]="'/cart'">
+      <a class="header__cart-button">
         <span class="pi pi-shopping-bag" style="font-size: 16px"></span>
-        <span class="">0</span>
+        <span class="">{{ count$ | async }}</span>
       </a>
     </div>
   </div>

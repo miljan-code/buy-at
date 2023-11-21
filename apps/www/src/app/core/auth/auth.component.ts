@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { Subject, takeUntil } from 'rxjs';
+import { takeUntil } from 'rxjs';
 
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
@@ -16,6 +16,7 @@ import { DialogModule } from 'primeng/dialog';
 
 import { AuthService } from '~core/services/auth.service';
 import { LocalService } from '~core/services/local.service';
+import { onDestroy } from '~shared/utils/destroy';
 import type { User } from '~core/models/user.model';
 import type { Error } from '~core/models/error.model';
 
@@ -47,7 +48,7 @@ export class AuthComponent implements OnInit {
   dialogVisible = false;
   loginForm!: FormGroup<LoginForm>;
   registerForm!: FormGroup<RegisterForm>;
-  private destroy$ = new Subject<void>();
+  private destroy$ = onDestroy();
 
   constructor(
     private readonly authService: AuthService,
