@@ -20,8 +20,8 @@
   </div>
 
   <p-sidebar [(visible)]="sidebarVisible" position="right">
-    <div class="sidebar" *ngIf="cart.cart$ | async as items">
-      <h2 class="sidebar__title">Cart ({{ count.innerText }})</h2>
+    <div class="cart" *ngIf="cart.cart$ | async as items">
+      <h2 class="cart__title">Cart ({{ count.innerText }})</h2>
       <div class="item" *ngFor="let item of items">
         <img [src]="item.product.image" class="item__image" />
         <div class="item__details">
@@ -39,7 +39,13 @@
           </div>
         </div>
       </div>
-      <div class="sidebar__empty" *ngIf="!items.length">
+      <div class="cart__checkout" *ngIf="items.length">
+        <button pButton label="Checkout" class="cart__checkout-btn"></button>
+        <span class="cart__checkout-total"
+          >Total: {{ cart.cartTotal$ | async | currency }}</span
+        >
+      </div>
+      <div class="cart__empty" *ngIf="!items.length">
         <p>The cart is empty</p>
       </div>
     </div>

@@ -61,7 +61,7 @@
   }
 }
 
-.sidebar {
+.cart {
   display: flex;
   flex-direction: column;
   gap: rem(12px);
@@ -69,6 +69,17 @@
 
   &__title {
     margin-bottom: rem(16px);
+  }
+
+  &__checkout {
+    margin-top: rem(24px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &-btn {
+      padding: rem(8px) rem(12px);
+    }
   }
 }
 

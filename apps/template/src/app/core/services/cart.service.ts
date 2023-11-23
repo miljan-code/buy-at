@@ -8,28 +8,17 @@ import type { Product } from '~core/models/product.model';
   providedIn: 'root',
 })
 export class CartService {
-  private cart = new BehaviorSubject<CartItem[]>([
-    {
-      product: {
-        id: 'jljwd5avlz8ppg3lw9uo227q',
-        name: 'Nike Air Force',
-        description: 'Nice shoes.',
-        image:
-          'https://res.cloudinary.com/dbwfcqbx8/image/upload/v1699358603/eb3lqdpoellesfmslqc1.webp',
-        featured: true,
-        price: 119,
-        category: 'Shoes',
-        quantity: 10,
-        storeSlug: 'my-cool-shop',
-        slug: 'nike-air-force',
-        createdAt: new Date('2023-11-07T12:03:26.343Z'),
-        updatedAt: new Date('2023-11-07T12:03:26.343Z'),
-      },
-      quantity: 1,
-    },
-  ]);
+  private cart = new BehaviorSubject<CartItem[]>([]);
   cart$ = this.cart.asObservable();
   cartCount$ = this.cart$.pipe(map((cart) => cart.length));
+  cartTotal$ = this.cart$.pipe(
+    map((cart) =>
+      cart.reduce((acc, cartItem) => {
+        const itemTotal = cartItem.product.price * cartItem.quantity;
+        return acc + itemTotal;
+      }, 0),
+    ),
+  );
 
   addToCart(product: Product): void {
     const existingProducts = this.cart.value;
