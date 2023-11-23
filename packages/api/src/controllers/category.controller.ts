@@ -21,7 +21,27 @@ const createCategory = asyncHandler(async (req: Request, res: Response) => {
       id: createId(),
       slug: slugify(categoryData.name),
       ...categoryData,
+      attributes: {},
     },
+    include: {
+      attributes: {
+        include: {
+          options: true,
+        },
+      },
+    },
+  });
+
+  const attributesMap = categoryData.attributes.map((attr) => ({
+    id: createId(),
+    name: attr.name,
+    storeSlug: categoryData.storeSlug,
+    options: attr.options,
+    categoryId: category.id,
+  }));
+
+  await db.attribute.createMany({
+    data: attributesMap,
   });
 
   res.status(201).json(category);
@@ -34,6 +54,13 @@ const getCategories = asyncHandler(async (req: Request, res: Response) => {
 
   const categories = await db.category.findMany({
     where: { storeSlug: slug, store: { ownerId: user.id } },
+    include: {
+      attributes: {
+        include: {
+          options: true,
+        },
+      },
+    },
   });
 
   res.status(200).json(categories);
@@ -58,7 +85,7 @@ const updateCategory = asyncHandler(async (req: Request, res: Response) => {
   const { id } = req.params;
 
   const category = await db.category.update({
-    data: categoryData,
+    data: { ...categoryData, attributes: {} },
     where: { id, store: { ownerId: user.id } },
   });
 

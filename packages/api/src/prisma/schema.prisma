@@ -69,8 +69,34 @@ model Category {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  store Store @relation(fields: [storeSlug], references: [slug], onDelete: Cascade)
+  store      Store       @relation(fields: [storeSlug], references: [slug], onDelete: Cascade)
+  attributes Attribute[]
 
   @@index([storeSlug])
   @@map(name: "categories")
+}
+
+model Attribute {
+  id         String   @id @unique
+  name       String
+  categoryId String
+  storeSlug  String
+  options    Option[]
+
+  category Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@unique([name, categoryId, storeSlug])
+  @@index([categoryId])
+  @@map(name: "attributes")
+}
+
+model Option {
+  id          String @id @unique
+  name        String
+  attributeId String
+
+  attribute Attribute @relation(fields: [attributeId], references: [id], onDelete: Cascade)
+
+  @@index([attributeId])
+  @@map(name: "options")
 }
