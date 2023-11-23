@@ -2,18 +2,21 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
-import { ConfigService } from '../services/config.service';
+import { SidebarModule } from 'primeng/sidebar';
+
+import { ConfigService } from '~core/services/config.service';
 import { CartService } from '~core/services/cart.service';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, SidebarModule],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent {
   config$ = inject(ConfigService).config$;
-  count$ = inject(CartService).cartCount$;
+  cart = inject(CartService);
+  sidebarVisible = true;
 }

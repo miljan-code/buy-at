@@ -12,10 +12,33 @@
       </nav>
     </div>
     <div class="header__right">
-      <a class="header__cart-button">
+      <a class="header__cart-button" (click)="sidebarVisible = true">
         <span class="pi pi-shopping-bag" style="font-size: 16px"></span>
-        <span class="">{{ count$ | async }}</span>
+        <span #count>{{ cart.cartCount$ | async }}</span>
       </a>
     </div>
   </div>
+
+  <p-sidebar [(visible)]="sidebarVisible" position="right">
+    <div class="sidebar" *ngIf="cart.cart$ | async as items">
+      <h2 class="sidebar__title">Cart ({{ count.innerText }})</h2>
+      <div class="item" *ngFor="let item of items">
+        <img [src]="item.product.image" class="item__image" />
+        <div class="item__details">
+          <h3 class="item__name">{{ item.product.name }}</h3>
+          <p class="item__quantity">Quantity: {{ item.quantity }}</p>
+          <div class="item__change-quantity">
+            <span
+              (click)="cart.addToCart(item.product)"
+              class="pi pi-plus item__button"
+            ></span>
+            <span class="pi pi-minus item__button"></span>
+          </div>
+        </div>
+      </div>
+      <div class="sidebar__empty" *ngIf="!items.length">
+        <p>The cart is empty</p>
+      </div>
+    </div>
+  </p-sidebar>
 </header>
