@@ -32,7 +32,10 @@
               (click)="cart.addToCart(item.product)"
               class="pi pi-plus item__button"
             ></span>
-            <span class="pi pi-minus item__button"></span>
+            <span
+              (click)="cart.removeFromCart(item.product)"
+              class="pi pi-minus item__button"
+            ></span>
           </div>
         </div>
       </div>

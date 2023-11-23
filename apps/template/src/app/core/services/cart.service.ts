@@ -33,19 +33,36 @@ export class CartService {
 
   addToCart(product: Product): void {
     const existingProducts = this.cart.value;
-    const itemInCart = existingProducts.find(
+    const itemIndex = existingProducts.findIndex(
       (i) => i.product.id === product.id,
     );
-    if (itemInCart) {
-      const filteredProducts = existingProducts.filter(
-        (i) => i.product.id !== itemInCart.product.id,
-      );
-      this.cart.next([
-        ...filteredProducts,
-        { product, quantity: itemInCart.quantity + 1 },
-      ]);
+    if (itemIndex !== -1) {
+      const itemInCart = existingProducts[itemIndex];
+      existingProducts.splice(itemIndex, 1, {
+        product,
+        quantity: itemInCart.quantity + 1,
+      });
+      this.cart.next(existingProducts);
     } else {
       this.cart.next([...existingProducts, { product, quantity: 1 }]);
+    }
+  }
+
+  removeFromCart(product: Product): void {
+    const existingProducts = this.cart.value;
+    const itemIndex = existingProducts.findIndex(
+      (i) => i.product.id === product.id,
+    );
+    const itemInCart = existingProducts[itemIndex];
+    if (itemInCart.quantity > 1) {
+      existingProducts.splice(itemIndex, 1, {
+        product,
+        quantity: itemInCart.quantity - 1,
+      });
+      this.cart.next(existingProducts);
+    } else {
+      existingProducts.splice(itemIndex, 1);
+      this.cart.next(existingProducts);
     }
   }
 }
