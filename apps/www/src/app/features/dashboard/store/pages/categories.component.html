@@ -53,12 +53,69 @@
   >
     <div class="form__group">
       <label for="name">Category name</label>
-      <input id="name" type="text" pInputText formControlName="name" />
+      <input
+        id="name"
+        type="text"
+        pInputText
+        formControlName="name"
+        placeholder="Shoes"
+      />
     </div>
     <div class="form__group">
       <label for="bilboard">Bilboard</label>
-      <input id="bilboard" type="text" pInputText formControlName="bilboard" />
+      <input
+        id="bilboard"
+        type="text"
+        pInputText
+        formControlName="bilboard"
+        placeholder="Awesome shoes"
+      />
     </div>
+
+    <div class="form__group form__group--array" formArrayName="attributes">
+      <label for="bilboard">Attributes</label>
+      <div
+        class="form__array"
+        *ngFor="
+          let attr of attributes.controls;
+          let i = index;
+          let firstAttr = first;
+          let lastAttr = last
+        "
+      >
+        <div class="form__group--sided">
+          <input
+            type="text"
+            pInputText
+            [placeholder]="firstAttr ? 'Size' : ''"
+          />
+        </div>
+        <div class="form__subgroup">
+          <div
+            class="form__group--sided"
+            *ngFor="
+              let option of options.controls;
+              let firstOption = first;
+              let lastOption = last
+            "
+          >
+            <span
+              *ngIf="lastOption"
+              class="pi pi-plus form__plus"
+              (click)="addOption()"
+            ></span>
+            <input
+              type="text"
+              pInputText
+              class="form__subarray"
+              [placeholder]="firstOption && firstAttr ? '43' : ''"
+            />
+          </div>
+        </div>
+      </div>
+      <span (click)="addAttribute()">Add new attribute</span>
+    </div>
+
     <button
       pButton
       label="{{ editId ? 'Edit' : 'Add' }} category"

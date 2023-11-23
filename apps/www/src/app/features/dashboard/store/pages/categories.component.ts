@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormArray, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { switchMap, takeUntil } from 'rxjs';
 
@@ -13,8 +13,12 @@ import { SectionComponent } from '~shared/components/section.component';
 import { CategoryService } from '~core/services/category.service';
 import { StoreService } from '~core/services/store.service';
 import { onDestroy } from '~shared/utils/destroy';
+import {
+  attrOptionField,
+  attributeGroup,
+  categoryForm,
+} from '~shared/forms/category.form';
 import type { Category } from '~core/models/categories.model';
-import { categoryForm } from '~shared/forms/category.form';
 
 @Component({
   selector: 'app-categories',
@@ -34,7 +38,7 @@ import { categoryForm } from '~shared/forms/category.form';
 export class CategoriesComponent {
   categories: Category[] = this.route.snapshot.data['categories'];
   categoryForm = categoryForm;
-  dialogVisible = false;
+  dialogVisible = true;
   editId = '';
   private destroy$ = onDestroy();
 
@@ -43,6 +47,22 @@ export class CategoriesComponent {
     private readonly storeService: StoreService,
     private readonly categoryService: CategoryService,
   ) {}
+
+  get attributes(): FormArray {
+    return this.categoryForm.get('attributes') as FormArray;
+  }
+
+  get options(): FormArray {
+    return this.attributes.controls[0].get('options') as FormArray;
+  }
+
+  addAttribute(): void {
+    this.attributes.push(attributeGroup);
+  }
+
+  addOption(): void {
+    this.options.push(attrOptionField);
+  }
 
   openDialog(categoryId: string | null = null): void {
     if (categoryId) {

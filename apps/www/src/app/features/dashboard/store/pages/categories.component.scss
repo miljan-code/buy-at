@@ -1,5 +1,6 @@
 @import 'mixins';
 @import 'functions';
+@import 'variables';
 
 :host ::ng-deep {
   .p-datatable-header {
@@ -48,6 +49,18 @@
   &__group {
     @include form-group;
 
+    &--array {
+      display: flex;
+      flex-direction: column;
+      gap: rem(8px);
+    }
+
+    &--sided {
+      display: flex;
+      align-items: center;
+      gap: rem(8px);
+    }
+
     & input {
       width: 100%;
     }
@@ -55,5 +68,29 @@
 
   & button {
     margin-top: rem(24px);
+  }
+
+  &__array {
+    display: flex;
+    flex-direction: column;
+    gap: rem(4px);
+  }
+
+  &__subarray {
+    margin-left: rem(86px);
+  }
+
+  &__subgroup {
+    display: flex;
+    flex-direction: column;
+    gap: rem(4px);
+  }
+
+  &__sub-icon {
+    margin-right: rem(64px);
+  }
+
+  &__plus {
+    cursor: pointer;
   }
 }
