@@ -72,48 +72,55 @@
       />
     </div>
 
-    <div class="form__group form__group--array" formArrayName="attributes">
+    <div class="form__group form__group--list" formArrayName="attributes">
       <label for="bilboard">Attributes</label>
       <div
-        class="form__array"
+        class="form__list"
         *ngFor="
           let attr of attributes.controls;
           let i = index;
           let firstAttr = first;
           let lastAttr = last
         "
+        [formGroupName]="i"
       >
-        <div class="form__group--sided">
-          <input
-            type="text"
-            pInputText
-            [placeholder]="firstAttr ? 'Size' : ''"
-          />
-        </div>
-        <div class="form__subgroup">
+        <input
+          type="text"
+          pInputText
+          [placeholder]="firstAttr ? 'Size' : ''"
+          formControlName="name"
+        />
+        <div class="form__list">
           <div
             class="form__group--sided"
             *ngFor="
-              let option of options.controls;
+              let option of options(i).controls;
+              let j = index;
               let firstOption = first;
               let lastOption = last
             "
+            formArrayName="options"
           >
             <span
               *ngIf="lastOption"
-              class="pi pi-plus form__plus"
-              (click)="addOption()"
+              class="pi pi-plus form__plus-icon"
+              (click)="addOption(i)"
             ></span>
             <input
               type="text"
               pInputText
-              class="form__subarray"
+              [class]="
+                lastOption ? 'form__field--icon' : 'form__field--no-icon'
+              "
               [placeholder]="firstOption && firstAttr ? '43' : ''"
+              [formControlName]="j"
             />
           </div>
         </div>
       </div>
-      <span (click)="addAttribute()">Add new attribute</span>
+      <span class="form__add-attr" (click)="addAttribute()"
+        >Add new attribute</span
+      >
     </div>
 
     <button

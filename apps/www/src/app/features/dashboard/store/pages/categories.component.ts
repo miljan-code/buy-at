@@ -1,6 +1,12 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormArray, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormArray,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { switchMap, takeUntil } from 'rxjs';
 
@@ -13,11 +19,7 @@ import { SectionComponent } from '~shared/components/section.component';
 import { CategoryService } from '~core/services/category.service';
 import { StoreService } from '~core/services/store.service';
 import { onDestroy } from '~shared/utils/destroy';
-import {
-  attrOptionField,
-  attributeGroup,
-  categoryForm,
-} from '~shared/forms/category.form';
+import { categoryForm } from '~shared/forms/category.form';
 import type { Category } from '~core/models/categories.model';
 
 @Component({
@@ -38,7 +40,7 @@ import type { Category } from '~core/models/categories.model';
 export class CategoriesComponent {
   categories: Category[] = this.route.snapshot.data['categories'];
   categoryForm = categoryForm;
-  dialogVisible = true;
+  dialogVisible = false;
   editId = '';
   private destroy$ = onDestroy();
 
@@ -52,16 +54,34 @@ export class CategoriesComponent {
     return this.categoryForm.get('attributes') as FormArray;
   }
 
-  get options(): FormArray {
-    return this.attributes.controls[0].get('options') as FormArray;
+  options(i: number): FormArray {
+    return this.attributes.controls[i].get('options') as FormArray;
   }
 
   addAttribute(): void {
-    this.attributes.push(attributeGroup);
+    const newAttr = new FormGroup({
+      name: new FormControl('', {
+        validators: [Validators.required],
+        nonNullable: true,
+      }),
+      options: new FormArray([
+        new FormControl('', {
+          validators: Validators.required,
+          nonNullable: true,
+        }),
+      ]),
+    });
+
+    this.attributes.push(newAttr);
   }
 
-  addOption(): void {
-    this.options.push(attrOptionField);
+  addOption(i: number): void {
+    const newControl = new FormControl('', {
+      validators: Validators.required,
+      nonNullable: true,
+    });
+
+    this.options(i).push(newControl);
   }
 
   openDialog(categoryId: string | null = null): void {
@@ -79,6 +99,8 @@ export class CategoriesComponent {
 
   addCategory(): void {
     const formData = this.categoryForm.getRawValue();
+
+    console.log(formData);
 
     this.storeService.activeStore$
       .pipe(

@@ -11,19 +11,6 @@ interface CategoryForm {
   attributes: FormArray<FormGroup<Attribute>>;
 }
 
-export const attrOptionField = new FormControl('', {
-  validators: Validators.required,
-  nonNullable: true,
-});
-
-export const attributeGroup = new FormGroup({
-  name: new FormControl('', {
-    validators: [Validators.required],
-    nonNullable: true,
-  }),
-  options: new FormArray([attrOptionField]),
-});
-
 export const categoryForm = new FormGroup<CategoryForm>({
   name: new FormControl('', {
     validators: [Validators.required],
@@ -33,5 +20,18 @@ export const categoryForm = new FormGroup<CategoryForm>({
     validators: [Validators.required],
     nonNullable: true,
   }),
-  attributes: new FormArray([attributeGroup]),
+  attributes: new FormArray([
+    new FormGroup({
+      name: new FormControl('', {
+        validators: [Validators.required],
+        nonNullable: true,
+      }),
+      options: new FormArray([
+        new FormControl('', {
+          validators: Validators.required,
+          nonNullable: true,
+        }),
+      ]),
+    }),
+  ]),
 });
