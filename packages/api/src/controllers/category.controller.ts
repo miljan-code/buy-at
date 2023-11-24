@@ -16,33 +16,55 @@ const createCategory = asyncHandler(async (req: Request, res: Response) => {
 
   const categoryData = createCategorySchema.parse(req.body);
 
+  const categoryId = createId();
+
+  const attributesAndOptions = categoryData.attributes
+    .filter((attr) => attr.name)
+    .map((attr) => ({
+      id: createId(),
+      name: attr.name,
+      storeSlug: categoryData.storeSlug,
+      options: attr.options.filter((opt) => opt),
+      categoryId: categoryId,
+    }));
+
+  const attributesMap = attributesAndOptions.map((attr) => {
+    const { options, categoryId, ...rest } = attr;
+    return rest;
+  });
+
   const category = await db.category.create({
     data: {
-      id: createId(),
+      id: categoryId,
       slug: slugify(categoryData.name),
-      ...categoryData,
-      attributes: {},
-    },
-    include: {
+      name: categoryData.name,
+      bilboard: categoryData.bilboard,
+      storeSlug: categoryData.storeSlug,
       attributes: {
-        include: {
-          options: true,
+        createMany: {
+          data: attributesMap,
+          skipDuplicates: true,
         },
       },
     },
   });
 
-  const attributesMap = categoryData.attributes.map((attr) => ({
-    id: createId(),
-    name: attr.name,
-    storeSlug: categoryData.storeSlug,
-    options: attr.options,
-    categoryId: category.id,
-  }));
+  const [optionsMap] = attributesAndOptions.map((attr) => {
+    const options = attr.options.map((opt) => ({
+      id: createId(),
+      name: opt,
+      attributeId: attr.id,
+    }));
 
-  await db.attribute.createMany({
-    data: attributesMap,
+    return options;
   });
+
+  if (optionsMap.length) {
+    await db.option.createMany({
+      data: optionsMap,
+      skipDuplicates: true,
+    });
+  }
 
   res.status(201).json(category);
 });

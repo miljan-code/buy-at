@@ -77,15 +77,14 @@ model Category {
 }
 
 model Attribute {
-  id         String   @id @unique
+  id         String @id @unique
   name       String
   categoryId String
   storeSlug  String
-  options    Option[]
 
   category Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  options  Option[]
 
-  @@unique([name, categoryId, storeSlug])
   @@index([categoryId])
   @@map(name: "attributes")
 }
