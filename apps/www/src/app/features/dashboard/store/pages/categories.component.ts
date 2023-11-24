@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Attribute, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormArray,
@@ -88,7 +88,12 @@ export class CategoriesComponent {
     if (categoryId) {
       const category = this.categories.find((item) => item.id === categoryId);
       if (!category) return;
-      this.categoryForm.patchValue(category);
+      const attributes = this.handleAttributes(category);
+      this.categoryForm.patchValue({
+        name: category.name,
+        bilboard: category.bilboard,
+        attributes,
+      });
       this.editId = categoryId;
     } else {
       this.categoryForm.reset();
@@ -99,8 +104,6 @@ export class CategoriesComponent {
 
   addCategory(): void {
     const formData = this.categoryForm.getRawValue();
-
-    console.log(formData);
 
     this.storeService.activeStore$
       .pipe(
@@ -145,5 +148,21 @@ export class CategoriesComponent {
           (item) => item.id !== category.id,
         );
       });
+  }
+
+  private handleAttributes(category: Category) {
+    const attributes = category.attributes.map((attr) => ({
+      name: attr.name,
+      options: attr.options.map((opt) => opt.name),
+    }));
+    this.attributes.clear();
+    this.addAttribute();
+    for (let i = 0; i < attributes.length; i++) {
+      this.addAttribute();
+      for (let j = 1; j < attributes[i].options.length; j++) {
+        this.addOption(i);
+      }
+    }
+    return attributes;
   }
 }

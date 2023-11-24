@@ -1,3 +1,17 @@
+export interface Attribute {
+  id: string;
+  name: string;
+  categoryId: string;
+  storeSlug: string;
+  options: Option[];
+}
+
+export interface Option {
+  id: string;
+  name: string;
+  attributeId: string;
+}
+
 export interface Category {
   id: string;
   name: string;
@@ -6,6 +20,7 @@ export interface Category {
   storeSlug: string;
   createdAt: Date;
   updatedAt: Date;
+  attributes: Attribute[];
 }
 
 export type CreateCategoryOpts = Pick<
